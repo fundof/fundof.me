@@ -9,7 +9,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-tmvrTe2SjQkj4w3/cqQ8t3lhsHN15asmHLvLLG7/HZs=' 'sha256-rtrbKoQDyVIFU0I7ua9FkxXTmI2UqUQj0ROn62arNCk=' 'sha256-sFzrOmJEH9T29osiwTzPIKqZX9p8E4k/EB+yA2zDfuc='; style-src 'sha256-c9STpIHTvSqNd2PcVMUl2+ECarkGj99sRlg/fVhq3lk=' 'sha256-IZMVtL1O3yWqAI7FLBwKaxC89oaUyUQnAh6+u8ASztM='; img-src 'self'; media-src 'self'; font-src 'self'; manifest-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-tmvrTe2SjQkj4w3/cqQ8t3lhsHN15asmHLvLLG7/HZs=' 'sha256-rtrbKoQDyVIFU0I7ua9FkxXTmI2UqUQj0ROn62arNCk=' 'sha256-1j5OXNOrNxGGL11r1VDE0YY/u1XDbGbq1H+8RN1S5EI='; style-src 'sha256-i2VYokpEgKdEtgXKen2WGIK/Vs9n78SttVOZo/T8XBs=' 'sha256-IZMVtL1O3yWqAI7FLBwKaxC89oaUyUQnAh6+u8ASztM='; img-src 'self'; media-src 'self'; font-src 'self'; manifest-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="dark">
 <meta name="format-detection" content="telephone=no">
@@ -74,7 +74,7 @@ a:hover { color: #ffffff; }
 .rl .h1 { font-size: clamp(33px, 3.4vw, 52px); line-height: 1.04; font-weight: 400; letter-spacing: -.035em; text-wrap: balance; }
 .rl .sub { margin-top: 24px; max-width: 470px; }
 .rl .plate { position: absolute; z-index: 2; right: var(--pad); bottom: 58px; }
-.rl .now { margin-top: 14px; color: var(--ink); }
+.rl .now { color: var(--ink); }
 
 .rl .sec { position: relative; padding: 150px var(--pad) 0; }
 .rl .head { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 24px; align-items: start; }
@@ -101,7 +101,6 @@ a:hover { color: #ffffff; }
 @keyframes rl-fb { 0% { color: #fff; text-shadow: 0 0 14px rgba(255,255,255,.9); } 100% { color: #9d9d97; text-shadow: 0 0 0 rgba(255,255,255,0); } }
 
 .rl .under { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 24px; align-items: start; margin-top: 44px; }
-.rl .cap { grid-column: 1 / span 3; }
 .rl .say { grid-column: 4 / span 5; font-size: 20px; line-height: 1.4; color: var(--ink); text-wrap: pretty; }
 .rl .act { grid-column: 10 / span 3; display: flex; justify-content: flex-end; }
 .rl .btn { --lw: 1px; appearance: none; -webkit-appearance: none; border: 0; border-radius: 0; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; min-width: 190px; height: 54px; padding: 0 22px; background: repeating-linear-gradient(to bottom, #f3f3ef 0, #f3f3ef var(--lw), transparent var(--lw), transparent 4px); font: 500 12px/1 "Geist Mono", ui-monospace, Menlo, monospace; letter-spacing: .1em; text-transform: uppercase; color: var(--ink); transition: --lw .5s cubic-bezier(.2, .8, .2, 1); }
@@ -138,7 +137,7 @@ a:hover { color: #ffffff; }
 .rl .ink { display: none; }
 
 .rl .show { position: relative; margin-top: 150px; height: var(--sh); min-height: 420px; }
-.rl .splate { position: absolute; z-index: 2; right: var(--pad); bottom: 30px; }
+.rl .splate { position: absolute; z-index: 2; right: var(--pad); bottom: 30px; color: var(--ink); }
 .rl .fin { position: relative; margin-top: 170px; height: var(--fh); min-height: 560px; }
 .rl .fin .cv { height: calc(100% - 78px); }
 .rl .ftext { position: absolute; z-index: 2; left: var(--pad); bottom: 136px; width: min(760px, calc(100% - 2 * var(--pad))); }
@@ -147,7 +146,6 @@ a:hover { color: #ffffff; }
 .rl .dn { --mx: 50%; position: relative; padding-bottom: 10px; font-size: clamp(27px, 2.5vw, 38px); line-height: 1.1; letter-spacing: -.03em; color: var(--ink); background: linear-gradient(currentColor, currentColor) 0 100% / 100% 1px no-repeat; }
 .rl .dn::after { content: ""; position: absolute; left: 0; right: 0; bottom: -3px; height: 7px; background: radial-gradient(70px 3.5px at var(--mx) 50%, currentColor 35%, transparent 100%); opacity: 0; transition: opacity .25s; }
 .rl .door:hover .dn::after { opacity: 1; }
-.rl .fplate { position: absolute; z-index: 2; right: var(--pad); bottom: 136px; }
 .rl .foot { position: absolute; z-index: 2; left: var(--pad); right: var(--pad); bottom: 28px; display: flex; justify-content: space-between; gap: 20px; padding-top: 16px; border-top: 1px solid var(--hair); }
 
 .rl .wm { display: inline-flex; align-items: center; gap: 10px; }
@@ -171,6 +169,7 @@ html { color-scheme: dark; }
 .rl .grid6 li:focus-visible { outline: 1px solid var(--ink); outline-offset: 10px; }
 .rl .skip { position: absolute; z-index: 5; left: var(--pad); top: -80px; padding: 10px 14px; background: var(--ink); color: #000; }
 .rl .skip:focus { top: 12px; }
+.rl section:focus { outline: none; }
 #rl-err { position: fixed; z-index: 9; left: 0; right: 0; top: 0; margin: 0; padding: 10px 12px; background: #f3f3ef; color: #000; font: 400 10px/1.5 ui-monospace, Menlo, Consolas, monospace; white-space: pre-wrap; word-break: break-all; }
 #rl-check { position: fixed; z-index: 9; left: 0; right: 0; bottom: 0; max-height: 64vh; overflow: auto; margin: 0; padding: 10px 12px; border-top: 1px solid rgba(243,243,239,.3); background: rgba(0,0,0,.93); color: #f3f3ef; font: 400 10px/1.5 ui-monospace, Menlo, Consolas, monospace; white-space: pre-wrap; word-break: break-all; -webkit-user-select: text; user-select: text; }
 @media (prefers-contrast: more) { .rl { --mute: #d2d2cc; --hair: rgba(243,243,239,.5); } }
@@ -208,8 +207,6 @@ html { color-scheme: dark; }
   .rl .htext { bottom: 34px; }
   .rl .sub { margin-top: 18px; }
   .rl .plate { right: auto; left: var(--pad); bottom: auto; top: 76px; }
-  .rl .plate .more { display: none; }
-  .rl .now { margin-top: 0; }
   .rl .sec { padding-top: 104px; }
   .rl .head { display: block; }
   .rl .tag { padding-top: 0; margin-bottom: 18px; }
@@ -244,7 +241,6 @@ html { color-scheme: dark; }
   .rl .fin .cv { height: calc(100% - 118px); }
   .rl .ftext { bottom: 150px; }
   .rl .doors { gap: 22px 40px; margin-top: 30px; }
-  .rl .fplate { display: none; }
   .rl .foot { flex-direction: column; gap: 2px; bottom: 22px; }
 }
 @media (max-width: 520px) {
@@ -314,7 +310,6 @@ html { color-scheme: dark; }
 <p class="mono sub"><span class="pt">Coming soon.</span> One place where your income lands, stays yours and gets spent.</p>
 </div>
 <div id="rl-pl" class="plate">
-<p class="mono more"><span class="pt">Rails, 2026</span></p>
 <p class="mono now">Now showing <span id="rl-who">nova</span><button id="rl-mo" class="mo" type="button" aria-label="Pause films"></button></p>
 </div>
 </section>
@@ -336,7 +331,6 @@ html { color-scheme: dark; }
 <button id="rl-pay" class="btn pay" type="button"><span>Pay</span></button>
 </div>
 <div class="under">
-<p class="mono cap"><span class="pt">Balance, 2026</span></p>
 <p class="say">No chains, addresses or network fees on screen. One balance in dollars and one button to pay.</p>
 </div>
 <div class="plates" id="rl-g2">
@@ -370,7 +364,6 @@ html { color-scheme: dark; }
 <a class="door" href="https://fundof.com"><span class="mono">For platforms</span><span class="dn">fundof.com</span></a>
 </div>
 </div>
-<p id="rl-fp" class="mono fplate"><span class="pt">Within reach, 2026</span></p>
 <footer class="foot mono"><span class="pt nm">fundof.me</span><svg class="hm" width="172" height="20" viewBox="0 0 172 20" role="img" aria-label="Fundof, USDT, Hedles, 2026"><path d="M4 0H16L20 4V16L16 20H4L0 16V4Z" fill="#c8a96e"/><rect x="6" y="5.24" width="8.74" height="1.21" fill="#000"/><rect x="6" y="7.32" width="2.97" height="1.21" fill="#000"/><rect x="6" y="9.4" width="6.46" height="1.21" fill="#000"/><rect x="6" y="11.48" width="2.97" height="1.21" fill="#000"/><rect x="6" y="13.56" width="2.97" height="1.21" fill="#000"/><path d="M36 0H57A10 10 0 0 1 57 20H36A10 10 0 0 1 36 0Z" fill="#c8a96e"/><text x="46.9" y="12.88" text-anchor="middle" font-family="Geist Mono, ui-monospace, Menlo, monospace" font-size="8" font-weight="500" letter-spacing="0.64" fill="#000">USDT</text><path d="M79.4 0H121.6L128 10L121.6 20H79.4L73 10Z" fill="#c8a96e"/><text x="100.9" y="12.88" text-anchor="middle" font-family="Geist Mono, ui-monospace, Menlo, monospace" font-size="8" font-weight="500" letter-spacing="0.64" fill="#000">HEDLES</text><path d="M138 0H168L172 4V16L168 20H138L134 16V4Z" fill="#c8a96e"/><text x="153.4" y="12.88" text-anchor="middle" font-family="Geist Mono, ui-monospace, Menlo, monospace" font-size="8" font-weight="500" letter-spacing="0.64" fill="#000">2026</text></svg></footer>
 </section>
 <p class="legal">Fundof is a technology provider. Fundof is not a bank, does not accept deposits and does not hold or control user funds. Accounts are self-custody: only the user can access them. &quot;Digital dollars&quot; refers to USDT, which is issued by Tether and is not issued, backed or guaranteed by Fundof. Card, bank transfer and conversion services are provided by licensed third parties under their own terms, are subject to identity checks and are not available in all countries. Nothing on this site is financial, legal or tax advice.</p>
@@ -427,6 +420,7 @@ this.fn = { vid: 'rl-vr', inn: 0, has: false, film: false, vt: -1 };
 this.pa = { c: 's4', img: 'rl-ga', vid: 'rl-gva', box: 'rl-g1', op: new Float32Array(6), tiles: new Float32Array(24), has: false, lastA: -1 };
 this.pb = { c: 's5', img: 'rl-gb', vid: 'rl-gvb', box: 'rl-g2', op: new Float32Array(6), tiles: new Float32Array(24), has: false, lastA: -1 };
 this.el = (id) => document.getElementById(id);
+this.refused = new WeakSet();
 this.money = (c) => {
 const n = Math.abs(Math.round(c));
 const d = Math.floor(n / 100);
@@ -724,6 +718,7 @@ this.soft = (gl) => {
 const x = gl.getExtension('WEBGL_debug_renderer_info');
 return /swiftshader|llvmpipe|softpipe|software|basic render/i.test(String(gl.getParameter(x ? x.UNMASKED_RENDERER_WEBGL : gl.RENDERER)));
 };
+// One WebGL2 context for each piece: a single triangle over the canvas and one fragment shader.
 this.mk = (id, fs, names, old) => {
 const c = this.el(id);
 if (!c) return null;
@@ -807,7 +802,7 @@ if (!v) return;
 v.muted = true;
 v.playsInline = true;
 const p = v.play();
-if (p && p.catch) p.catch((e) => { v.__pe = e && e.name; if (e && e.name === 'NotAllowedError') this.block(v); });
+if (p && p.catch) p.catch((e) => { v.dataset.no = (e && e.name) || ''; if (e && e.name === 'NotAllowedError') this.block(v); });
 };
 this.fitFor = (sc, f, at, tx, ty) => {
 const ac = sc.cw / sc.ch;
@@ -835,6 +830,7 @@ if (r.width < 2) return [0, 0, 0, 0];
 const d = sc.w / sc.cw;
 return [(r.left + r.width / 2 - sc.rect.left) * d, (r.top + r.height / 2 - sc.rect.top) * d, r.width * kx * d, r.height * ky * d];
 };
+// The lens. Where the pointer rests the lines open and the film shows through. Left alone, it drifts by itself.
 this.lensFor = (sc, key, t, dt, fx, fy, ghost) => {
 let S = this.ls[key];
 if (!S) { S = { x: sc.cw * fx, y: sc.ch * fy, w: 0, gt: t + 4 + Math.random() * 3, ph: Math.random() * 6 }; this.ls[key] = S; }
@@ -878,6 +874,7 @@ gl.uniform1f(u.uT, t);
 gl.uniform1f(u.uDpr, sc.w / sc.cw);
 };
 
+// A stage shows its films one after another and crosses from each to the next: the hero, and the jacket.
 this.drawStage = (S, t, dt) => {
 const sc = this[S.c];
 if (!sc || sc.lost || this.filmOff) return;
@@ -903,13 +900,13 @@ if (im && im.complete && im.naturalWidth) { if (this.put(sc, sc.ta, im)) H.poste
 }
 if (fresh || v.ended || !H.went || this.still) H.stall = 0; else H.stall += dt;
 const loading = !v.paused && v.readyState < 3;
-if ((v.__blk || H.stall > (loading ? 14 : 4)) && H.nxt < 0) {
-fc.dead = true; if (!v.__blk && !loading) fc.gone = true;
+if ((this.refused.has(v) || H.stall > (loading ? 14 : 4)) && H.nxt < 0) {
+fc.dead = true; if (!this.refused.has(v) && !loading) fc.gone = true;
 H.ts = t; H.stillPut = -1; H.stall = 0; A = this.srcOf(fc);
 }
 } else if (fc.dead && !fc.still && !fc.gone && !this.still && H.nxt < 0) {
 const v = this.el(fc.v);
-if (v && !v.__blk && v.readyState >= 3) {
+if (v && !this.refused.has(v) && v.readyState >= 3) {
 fc.dead = false; H.stall = 0; H.lastA = -1; H.stillPut = -1;
 try { v.currentTime = 0; } catch (e) {}
 this.play(v);
@@ -923,7 +920,7 @@ else if (A.el && A.el.duration) { late = A.el.ended || A.el.currentTime > A.el.d
 if (!this.still && H.nxt < 0 && H.has && F.length > 1) {
 const n = (H.cur + 1) % F.length;
 const fn = F[n];
-if (fn.dead && !fn.gone && fn.v) { const bv = this.el(fn.v); if (bv && !bv.__blk && bv.readyState >= 3) fn.dead = false; }
+if (fn.dead && !fn.gone && fn.v) { const bv = this.el(fn.v); if (bv && !this.refused.has(bv) && bv.readyState >= 3) fn.dead = false; }
 let B = this.srcOf(fn);
 if (!B.still && B.el) {
 if (!B.el.dataset.rq) { B.el.dataset.rq = '1'; B.el.preload = 'auto'; try { B.el.load(); } catch (e) {} }
@@ -986,6 +983,7 @@ gl.uniform3f(u.uEv, -100, 0, 1);
 gl.drawArrays(gl.TRIANGLES, 0, 3);
 };
 
+// One hundred lines run from the fans through the checkout and part into the shares.
 this.drawSplit = (t, dt) => {
 const sc = this.s1;
 if (!sc || sc.lost) return;
@@ -1065,6 +1063,7 @@ const f = (this.state.feed || []).map((e) => ({ label: e.label, amt: e.amt, cls:
 f.unshift({ label: label, amt: amt, cls: cls + ' new' });
 this.setState({ feed: f.slice(0, 4) });
 };
+// The balance: the number is written on a 2D canvas, and the lines draw it like a film.
 this.drawBal = (t, dt) => {
 const sc = this.s2;
 if (!sc || sc.lost) return;
@@ -1113,6 +1112,7 @@ gl.uniform3f(u.uEv, B.evT, B.evN, B.dir);
 gl.drawArrays(gl.TRIANGLES, 0, 3);
 };
 
+// The closing piece: the lines open on the film behind them and close again.
 this.drawFin = (t, dt) => {
 const sc = this.s3;
 if (!sc || sc.lost || this.filmOff) return;
@@ -1124,7 +1124,7 @@ let S = { el: this.el('rl-ir'), still: true };
 if (!N.has && this.okSrc(S)) { if (this.put(sc, sc.ta, S.el)) N.has = true; }
 // the film takes over from the photograph with its first frame
 if (fv && !this.still) {
-if (fv.paused && !fv.__blk && !(N.pt > t)) { N.pt = t + 1; this.play(fv); }
+if (fv.paused && !this.refused.has(fv) && !(N.pt > t)) { N.pt = t + 1; this.play(fv); }
 if (fv.readyState >= 2 && fv.currentTime !== N.vt) { if (this.put(sc, sc.ta, fv)) { N.vt = fv.currentTime; N.has = true; N.film = true; } }
 }
 if (N.film) S = { el: fv, still: false };
@@ -1155,13 +1155,15 @@ gl.uniform2f(u.uSh, 0, 0);
 gl.uniform1f(u.uSb, sc.cw >= 900 ? 0 : 0.6);
 const L = this.lensFor(sc, 'f', t, dt, tx, 0.4, false);
 gl.uniform4f(u.uPtr, L[0], L[1], L[2], L[3] * (1 - op));
-const z0 = this.zone(sc, 'rl-ft', 0.72, 0.9), z1 = this.zone(sc, 'rl-fp', 0.8, 1.1);
+const z0 = this.zone(sc, 'rl-ft', 0.72, 0.9);
 gl.uniform4f(u.uQ0, z0[0], z0[1], z0[2], z0[3]);
-gl.uniform4f(u.uQ1, z1[0], z1[1], z1[2], z1[3]);
+gl.uniform4f(u.uQ1, 0, 0, 0, 0);
 gl.uniform3f(u.uEv, -100, 0, 1);
 gl.drawArrays(gl.TRIANGLES, 0, 3);
 };
 
+// Six squares drawn by one canvas behind them. One film holds all six signs in turn, five seconds each;
+// the square under the pointer or the keyboard plays its own.
 this.drawPlates = (K, t, dt) => {
 const sc = this[K.c];
 if (!sc || sc.lost || this.filmOff) return;
@@ -1172,7 +1174,7 @@ const im = this.el(K.img);
 if (!K.has && im && im.complete && im.naturalWidth) { if (this.put(sc, sc.ta, im)) K.has = true; }
 let rolling = false;
 if (fv && !this.still) {
-if (fv.paused && !fv.__blk && !(K.pt > t)) { K.pt = t + 1; this.play(fv); }
+if (fv.paused && !this.refused.has(fv) && !(K.pt > t)) { K.pt = t + 1; this.play(fv); }
 if (fv.readyState >= 2 && fv.currentTime !== K.vt) { if (this.put(sc, sc.ta, fv)) { K.vt = fv.currentTime; K.has = true; } }
 rolling = !fv.paused && fv.readyState >= 2;
 }
@@ -1183,6 +1185,7 @@ const d = sc.w / sc.cw;
 const r0 = sc.rect;
 const P = this.ptr;
 const live = P.on;
+const ORD = [0, 4, 2, 5, 1, 3];
 let hov = -1;
 let ah = 200;
 let fe = document.activeElement;
@@ -1202,7 +1205,6 @@ if (P.x >= li.left && P.x <= li.right && P.y >= li.top && P.y <= li.bottom) hov 
 if (hov < 0 && fe === arts[i].parentNode) hov = i;
 }
 if (rolling) {
-const ORD = [0, 4, 2, 5, 1, 3];
 const ct = fv.currentTime;
 const k = Math.floor(ct / 5) % 6;
 const tau = ct - Math.floor(ct / 5) * 5;
@@ -1220,7 +1222,7 @@ if (K.an === undefined) K.an = t + 2.2;
 const a = t - K.an;
 if (a > 0) {
 const slot = Math.floor(a / 3.6);
-if (a - slot * 3.6 < 2.3) hov = [0, 4, 2, 5, 1, 3][slot % 6];
+if (a - slot * 3.6 < 2.3) hov = ORD[slot % 6];
 }
 }
 for (let i = 0; i < 6; i++) {
@@ -1348,12 +1350,12 @@ if (this.blocked) { this.blocked = false; this.freed = true; this.label(); }
 [this.top, this.show].forEach((S) => {
 const H = S.st;
 const vids = S.films.map((f) => (f.v ? this.el(f.v) : null));
-if (!vids.some((v) => v && v.__blk)) return;
-S.films.forEach((f, i) => { if (vids[i]) { vids[i].__blk = false; f.dead = false; } });
+if (!vids.some((v) => v && this.refused.has(v))) return;
+S.films.forEach((f, i) => { if (vids[i]) { this.refused.delete(vids[i]); f.dead = false; } });
 if (vids[H.cur] && !H.held && H.went) this.play(vids[H.cur]);
 H.stillPut = -1; H.stall = 0; H.lastA = -1;
 });
-[this.pa, this.pb, this.fn].forEach((K) => { const v = K.vid ? this.el(K.vid) : null; if (v && v.__blk) { v.__blk = false; K.pt = 0; this.play(v); } });
+[this.pa, this.pb, this.fn].forEach((K) => { const v = K.vid ? this.el(K.vid) : null; if (v && this.refused.has(v)) { this.refused.delete(v); K.pt = 0; this.play(v); } });
 };
 // The visitor can pause the films and play them again. A device that asks for less motion starts paused.
 this.fresh = () => {
@@ -1370,7 +1372,7 @@ b.classList.toggle('off', off);
 b.setAttribute('aria-label', off ? 'Play films' : 'Pause films');
 };
 // A browser can refuse to start a film on its own. The control then shows play, and the first touch starts the films.
-this.block = (v) => { v.__blk = true; if (!this.blocked) { this.blocked = true; this.label(); } };
+this.block = (v) => { this.refused.add(v); if (!this.blocked) { this.blocked = true; this.label(); } };
 this.setMotion = (on) => {
 this.still = !on;
 if (on) this.blocked = false;
@@ -1378,7 +1380,7 @@ this.label();
 try { window.sessionStorage.setItem('rl-motion', on ? 'on' : 'off'); } catch (e) {}
 const vids = Array.prototype.slice.call(document.querySelectorAll('#rl-root video'));
 if (!on) { vids.forEach((v) => { if (!v.paused) v.pause(); }); return; }
-vids.forEach((v) => { v.__blk = false; });
+vids.forEach((v) => { this.refused.delete(v); });
 [this.top, this.show].forEach((S) => { S.films.forEach((f) => { f.dead = false; }); S.st.stillPut = -1; S.st.stall = 0; });
 [this.pa, this.pb, this.fn].forEach((K) => { K.pt = 0; });
 const f0 = this.top.films[this.top.st.cur];
@@ -1394,7 +1396,7 @@ const yn = (q) => ((window.matchMedia && window.matchMedia(q).matches) ? 'yes' :
 const now = Date.now();
 const fps = this.ckT ? Math.round(((this.fN || 0) - this.ckN) * 1000 / Math.max(1, now - this.ckT)) : 0;
 this.ckT = now; this.ckN = this.fN || 0;
-L.push('build 1118-1859  ' + navigator.userAgent);
+L.push('build 1118-1913  ' + navigator.userAgent);
 L.push('view ' + window.innerWidth + 'x' + window.innerHeight + '  dpr ' + window.devicePixelRatio + '  q ' + this.q.toFixed(2) + '  fps ' + fps);
 L.push('less motion ' + yn('(prefers-reduced-motion: reduce)') + '  still ' + (this.still ? 'YES' : 'no') + '  webgl ' + (this.nogl ? 'NO' : 'yes') + '  plain ' + (this.filmOff ? 'YES' : 'no') + '  errors ' + (this.err || 0) + '  lost ' + (this.lostN || 0));
 let pk = '-';
@@ -1407,7 +1409,7 @@ const H = this.top.st;
 L.push('hero film ' + H.cur + '  has ' + (H.has ? 1 : 0) + '  went ' + (H.went ? 1 : 0) + '  gain ' + (H.gain || 0).toFixed(2) + '  dead ' + this.top.films.map((f, i) => (f.dead ? i : '')).join(''));
 Array.prototype.slice.call(document.querySelectorAll('#rl-root video')).forEach((v) => {
 if (!v.getAttribute('src')) return;
-L.push(v.id.replace('rl-', '') + '  ready ' + v.readyState + '  ' + (v.paused ? 'paused' : 'PLAYING') + '  t ' + v.currentTime.toFixed(1) + (v.error ? '  ERROR ' + v.error.code : '') + (v.__blk ? '  BLOCKED' : '') + (v.__pe ? '  ' + v.__pe : ''));
+L.push(v.id.replace('rl-', '') + '  ready ' + v.readyState + '  ' + (v.paused ? 'paused' : 'PLAYING') + '  t ' + v.currentTime.toFixed(1) + (v.error ? '  ERROR ' + v.error.code : '') + (this.refused.has(v) ? '  BLOCKED' : '') + (v.dataset.no ? '  ' + v.dataset.no : ''));
 });
 let box = this.el('rl-check');
 if (!box) { box = document.createElement('pre'); box.id = 'rl-check'; document.body.appendChild(box); }
@@ -1490,12 +1492,9 @@ const s = this.state || {};
 const h = s.hov === undefined ? -1 : s.hov;
 const lc = (g) => ((h < 0 || (h < 4) !== (g < 4)) ? '' : (h === g ? 'on' : 'off'));
 return {
-yes: true,
 who: s.who || 'nova',
 ttl: s.ttl || 'The silhouette',
 feed: s.feed || [],
-send: this.onSend,
-pay: this.onPay,
 c0: lc(0), c1: lc(1), c2: lc(2), c3: lc(3), c4: lc(4), c5: lc(5), c6: lc(6),
 amtcls: 'amt ' + ((s.flash || 0) === 0 ? '' : ((s.flash % 2) ? 'fa' : 'fb'))
 };
@@ -1542,6 +1541,7 @@ const t = document.getElementById(a.getAttribute('href').slice(1));
 if (!t) return;
 e.preventDefault();
 t.scrollIntoView({ behavior: this.still ? 'auto' : 'smooth', block: 'start' });
+if (a.classList.contains('skip')) { t.setAttribute('tabindex', '-1'); t.focus({ preventScroll: true }); }
 });
 });
 }
@@ -1550,7 +1550,7 @@ const site = new Site();
 site.render();
 site.wire();
 site.start();
-try { console.log('%cfundof.me', 'font: 500 20px Geist, Helvetica, Arial, sans-serif', '\nThe account for creators that only you control.'); } catch (e) {}
+try { console.log('\n━━━━━━━━━━━━\n━━━━\n━━━━━━━━━\n━━━━\n━━━━\n'); } catch (e) {}
 </script>
 </body>
 </html>
