@@ -9,7 +9,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-tmvrTe2SjQkj4w3/cqQ8t3lhsHN15asmHLvLLG7/HZs=' 'sha256-rtrbKoQDyVIFU0I7ua9FkxXTmI2UqUQj0ROn62arNCk=' 'sha256-r95sCoNpQ4ldLrgkOMcWjDA7thu/OahNuklSjqH+1sY='; style-src 'sha256-MMEHDx2npa7jnRRoDd4izB0UDjoz3mC6VFco3Z/AVEE=' 'sha256-dSxyEBYqy8lOqIJcyBZTms5JMDvomwofEuBVOwscwKI='; img-src 'self'; media-src 'self'; font-src 'self'; manifest-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-tmvrTe2SjQkj4w3/cqQ8t3lhsHN15asmHLvLLG7/HZs=' 'sha256-rtrbKoQDyVIFU0I7ua9FkxXTmI2UqUQj0ROn62arNCk=' 'sha256-X/Ghrr+MyLHsxfbHNNIrqR/7IuSIMsFV/09xN9DwQuo='; style-src 'sha256-MMEHDx2npa7jnRRoDd4izB0UDjoz3mC6VFco3Z/AVEE=' 'sha256-dSxyEBYqy8lOqIJcyBZTms5JMDvomwofEuBVOwscwKI='; img-src 'self'; media-src 'self'; font-src 'self'; manifest-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="dark">
 <meta name="format-detection" content="telephone=no">
@@ -1414,7 +1414,7 @@ const yn = (q) => ((window.matchMedia && window.matchMedia(q).matches) ? 'yes' :
 const now = Date.now();
 const fps = this.ckT ? Math.round(((this.fN || 0) - this.ckN) * 1000 / Math.max(1, now - this.ckT)) : 0;
 this.ckT = now; this.ckN = this.fN || 0;
-L.push('build 1118-1927  ' + navigator.userAgent);
+L.push('build 1118-2020  ' + navigator.userAgent);
 L.push('view ' + window.innerWidth + 'x' + window.innerHeight + '  dpr ' + window.devicePixelRatio + '  q ' + this.q.toFixed(2) + '  fps ' + fps);
 L.push('less motion ' + yn('(prefers-reduced-motion: reduce)') + '  still ' + (this.still ? 'YES' : 'no') + '  webgl ' + (this.nogl ? 'NO' : 'yes') + '  plain ' + (this.filmOff ? 'YES' : 'no') + '  errors ' + (this.err || 0) + '  lost ' + (this.lostN || 0));
 let pk = '-';
