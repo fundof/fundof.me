@@ -9,7 +9,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-tmvrTe2SjQkj4w3/cqQ8t3lhsHN15asmHLvLLG7/HZs=' 'sha256-rtrbKoQDyVIFU0I7ua9FkxXTmI2UqUQj0ROn62arNCk=' 'sha256-2dV2gJ8Dr7rWIFzFrqOumGB+VnWurfe9e15hh2APMr4='; style-src 'sha256-mynlft4anQmZ9MmMljB1QOG6jamjaHwEy5KgnVi9P5Q=' 'sha256-IZMVtL1O3yWqAI7FLBwKaxC89oaUyUQnAh6+u8ASztM='; img-src 'self'; media-src 'self'; font-src 'self'; manifest-src 'self'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-tmvrTe2SjQkj4w3/cqQ8t3lhsHN15asmHLvLLG7/HZs=' 'sha256-rtrbKoQDyVIFU0I7ua9FkxXTmI2UqUQj0ROn62arNCk=' 'sha256-x95pY07RsVmEvDGEzlbuCpb7vDhVrs2PK5bzEGX6I2Y='; style-src 'sha256-mynlft4anQmZ9MmMljB1QOG6jamjaHwEy5KgnVi9P5Q=' 'sha256-IZMVtL1O3yWqAI7FLBwKaxC89oaUyUQnAh6+u8ASztM='; img-src 'self'; media-src 'self'; font-src 'self'; manifest-src 'self'; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="dark">
 <meta name="format-detection" content="telephone=no">
@@ -360,6 +360,7 @@ html { color-scheme: dark; }
 <canvas id="rl-c3" class="cv" aria-hidden="true"></canvas>
 <div class="films" aria-hidden="true">
 <img id="rl-ir" src="media/reach.jpg" alt="" decoding="async" fetchpriority="low">
+<video id="rl-vr" src="media/reach.mp4" preload="none" playsinline muted loop></video>
 </div>
 <div id="rl-ft" class="ftext">
 <h2 class="h1">You earned it. fundof.me keeps it within your reach.</h2>
@@ -420,7 +421,7 @@ pos: () => [0.5, 0.5], sh: () => [0, 0, 0],
 z0: ['rl-sp', 0.75, 1.05, 0.75, 1.05], z1: null, say: (f) => this.setState({ ttl: f.title }) };
 this.sp = { inn: 0, wave: -100, gap: 0.6, done: true };
 this.bl = { cents: 1248000, shown: 1248000, from: 1248000, t0: 0, evT: -100, evN: 0, dir: 1, next: -1, i: 0, b: 0, inn: 0, dirty: true, iw: 0, ih: 0 };
-this.fn = { inn: 0, has: false, ph: 0, lastA: -1 };
+this.fn = { vid: 'rl-vr', inn: 0, has: false, film: false, vt: -1 };
 this.pa = { c: 's4', img: 'rl-ga', vid: 'rl-gva', box: 'rl-g1', op: new Float32Array(6), tiles: new Float32Array(24), has: false, lastA: -1 };
 this.pb = { c: 's5', img: 'rl-gb', vid: 'rl-gvb', box: 'rl-g2', op: new Float32Array(6), tiles: new Float32Array(24), has: false, lastA: -1 };
 this.el = (id) => document.getElementById(id);
@@ -442,7 +443,7 @@ uniform vec2 uRes;
 uniform float uN, uT, uDpr, uMix, uOpen, uIn, uGain, uGl, uDisp;
 // One value per film, each from its own height, so a film of any size is read at the same share per line.
 uniform vec2 uLod;
-// The curve the light is read through. x: steepness, y: gain, z: lift. 1, 1, 0 draws exactly as before.
+// The curve the light is read through. x: steepness, y: gain, z: lift. 1, 1, 0 leaves the light as it is.
 // For her films: 1.95, 1.22, 0.9.
 uniform vec3 uCurve;
 uniform sampler2D uA, uB;
@@ -621,7 +622,7 @@ uniform vec4 uTile[6];
 uniform float uOp[6];
 uniform int uCount;
 uniform vec2 uGrid;
-// The curve the light is read through. x: steepness, y: gain, z: lift. 1, 1, 0 draws exactly as before.
+// The curve the light is read through. x: steepness, y: gain, z: lift. 1, 1, 0 leaves the light as it is.
 // For her squares: 1.95, 1.22, 0.9, so her face and her shoulders read in full.
 uniform vec3 uCurve;
 out vec4 o;
@@ -1107,10 +1108,17 @@ this.drawFin = (t, dt) => {
 const sc = this.s3;
 if (!sc || sc.lost || this.filmOff) return;
 const N = this.fn;
-if (!this.size(sc)) return;
+const fv = this.el(N.vid);
+if (!this.size(sc)) { if (fv && !fv.paused) fv.pause(); return; }
 const gl = sc.gl, u = sc.u;
-const S = { el: this.el('rl-ir'), still: true };
+let S = { el: this.el('rl-ir'), still: true };
 if (!N.has && this.okSrc(S)) { if (this.put(sc, sc.ta, S.el)) N.has = true; }
+// the film takes over from the photograph with its first frame
+if (fv && !this.still) {
+if (fv.paused && !fv.__blk && !(N.pt > t)) { N.pt = t + 1; this.play(fv); }
+if (fv.readyState >= 2 && fv.currentTime !== N.vt) { if (this.put(sc, sc.ta, fv)) { N.vt = fv.currentTime; N.has = true; N.film = true; } }
+}
+if (N.film) S = { el: fv, still: false };
 if (N.ti === undefined) N.ti = t;
 N.inn = Math.min(1, (t - N.ti) / 1.5);
 let op = 0;
@@ -1228,6 +1236,29 @@ gl.uniform2f(u.uGrid, 3, 2);
 gl.drawArrays(gl.TRIANGLES, 0, 3);
 };
 
+// Frame pacing. When frames run slow the page draws at a lower resolution. When that does not make them
+// faster, the device is only holding the page back (low power, a window in the background) and the full
+// resolution returns for good. After a slow spell has passed, the resolution climbs back step by step.
+this.pc = { acc: 0.016, n: 0, slow: 0, wait: 12, up: 0, tried: false, fix: false };
+this.pace = (raw, t) => {
+const P = this.pc;
+if (P.fix || t < 3 || !(raw > 0 && raw < 0.25)) return;
+P.acc = P.acc * 0.95 + raw * 0.05;
+if (++P.n < 90) return;
+const slow = P.acc > 0.026;
+if (slow && this.q > 0.62) {
+if (this.q === 1) P.slow = P.acc;
+// a step up that had to be taken back: wait twice as long before the next try
+if (P.tried) { P.wait = Math.min(240, P.wait * 2); P.tried = false; }
+this.q = Math.max(0.6, this.q - 0.14);
+P.n = 0; P.acc = 0.016; P.up = t + P.wait;
+} else if (slow && P.acc > P.slow * 0.8) {
+this.q = 1; P.fix = true;
+} else if (!slow && this.q < 1 && t > P.up) {
+this.q = Math.min(1, this.q + 0.14);
+P.n = 0; P.acc = 0.016; P.tried = true; P.up = t + P.wait;
+}
+};
 this.frame = (ts) => {
 this.raf = requestAnimationFrame(this.frame);
 if (this.tb === undefined) this.tb = ts || 0;
@@ -1239,11 +1270,7 @@ this.fN = (this.fN || 0) + 1;
 // a surface that stays away for six seconds: the plain pictures are shown instead of a frozen one
 this.lostT = this.all.some((sc) => sc.lost) ? (this.lostT || 0) + Math.max(0, Math.min(0.25, raw)) : 0;
 if (this.lostT > 6 && !this.filmOff) this.plain();
-if (raw > 0 && raw < 0.25) {
-this.acc = (this.acc || 0) * 0.95 + raw * 0.05;
-this.fc = (this.fc || 0) + 1;
-if (this.fc > 90 && this.acc > 0.026 && this.q > 0.62) { this.q = Math.max(0.6, this.q - 0.14); this.fc = 0; this.acc = 0.016; }
-}
+this.pace(raw, t);
 if ((this.err || 0) > 40 && !this.filmOff) this.plain();
 this.drawStage(this.top, t, dt);
 this.drawSplit(t, dt);
@@ -1317,12 +1344,12 @@ S.films.forEach((f, i) => { if (vids[i]) { vids[i].__blk = false; f.dead = false
 if (vids[H.cur] && !H.held && H.went) this.play(vids[H.cur]);
 H.stillPut = -1; H.stall = 0; H.lastA = -1;
 });
-[this.pa, this.pb].forEach((K) => { const v = K.vid ? this.el(K.vid) : null; if (v && v.__blk) { v.__blk = false; K.pt = 0; this.play(v); } });
+[this.pa, this.pb, this.fn].forEach((K) => { const v = K.vid ? this.el(K.vid) : null; if (v && v.__blk) { v.__blk = false; K.pt = 0; this.play(v); } });
 };
 // The visitor can pause the films and play them again. A device that asks for less motion starts paused.
 this.fresh = () => {
 [this.top, this.show].forEach((S) => { const H = S.st; H.has = false; H.poster = false; H.stillPut = -1; H.lastA = -1; H.bok = false; });
-this.fn.has = false;
+this.fn.has = false; this.fn.film = false; this.fn.vt = -1;
 [this.pa, this.pb].forEach((K) => { K.has = false; K.vt = -1; });
 this.bl.dirty = true;
 };
@@ -1344,7 +1371,7 @@ const vids = Array.prototype.slice.call(document.querySelectorAll('#rl-root vide
 if (!on) { vids.forEach((v) => { if (!v.paused) v.pause(); }); return; }
 vids.forEach((v) => { v.__blk = false; });
 [this.top, this.show].forEach((S) => { S.films.forEach((f) => { f.dead = false; }); S.st.stillPut = -1; S.st.stall = 0; });
-[this.pa, this.pb].forEach((K) => { K.pt = 0; });
+[this.pa, this.pb, this.fn].forEach((K) => { K.pt = 0; });
 const f0 = this.top.films[this.top.st.cur];
 const v0 = f0 && f0.v ? this.el(f0.v) : null;
 if (v0 && v0.getAttribute('src')) { if (this.nogl) v0.loop = true; else this.top.st.went = true; this.play(v0); }
@@ -1358,7 +1385,7 @@ const yn = (q) => ((window.matchMedia && window.matchMedia(q).matches) ? 'yes' :
 const now = Date.now();
 const fps = this.ckT ? Math.round(((this.fN || 0) - this.ckN) * 1000 / Math.max(1, now - this.ckT)) : 0;
 this.ckT = now; this.ckN = this.fN || 0;
-L.push('build 1118-1824  ' + navigator.userAgent);
+L.push('build 1118-1843  ' + navigator.userAgent);
 L.push('view ' + window.innerWidth + 'x' + window.innerHeight + '  dpr ' + window.devicePixelRatio + '  q ' + this.q.toFixed(2) + '  fps ' + fps);
 L.push('less motion ' + yn('(prefers-reduced-motion: reduce)') + '  still ' + (this.still ? 'YES' : 'no') + '  webgl ' + (this.nogl ? 'NO' : 'yes') + '  plain ' + (this.filmOff ? 'YES' : 'no') + '  errors ' + (this.err || 0) + '  lost ' + (this.lostN || 0));
 let pk = '-';
@@ -1410,7 +1437,7 @@ this.calm = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: 
 this.still = pick ? pick === 'off' : this.calm;
 this.label();
 // phones get lighter films
-if (window.innerWidth <= 900) ['rl-gva', 'rl-gvb', 'rl-w0', 'rl-w1', 'rl-w2', 'rl-w3', 'rl-w4'].forEach((id) => { const v = this.el(id); const u = v && v.getAttribute('src'); if (u) v.setAttribute('src', u.replace('.mp4', '-s.mp4')); });
+if (window.innerWidth <= 900) ['rl-gva', 'rl-gvb', 'rl-vr', 'rl-w0', 'rl-w1', 'rl-w2', 'rl-w3', 'rl-w4'].forEach((id) => { const v = this.el(id); const u = v && v.getAttribute('src'); if (u) v.setAttribute('src', u.replace('.mp4', '-s.mp4')); });
 if (window.location.hash === '#check') { this.check(); window.setInterval(this.check, 1000); }
 // nothing plays while the page is in the background
 document.addEventListener('visibilitychange', () => {
