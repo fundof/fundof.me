@@ -3,6 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<link rel="preload" href="fonts/geist-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/geist-mono-400.woff2" as="font" type="font/woff2" crossorigin>
 <title>fundof.me: the account for creators that only you control</title>
 <meta name="description" content="One place where your income lands, stays yours and gets spent. Open in seconds, with no application and no bank in the middle.">
 <link rel="canonical" href="https://fundof.me/">
@@ -146,6 +149,15 @@ a:hover { color: #ffffff; }
 .rl .legal { margin: 0; padding: 22px var(--pad) 36px; max-width: 1180px; font: 400 10.5px/1.6 "Geist Mono", ui-monospace, Menlo, monospace; letter-spacing: .02em; color: var(--mute); }
 .rl.site-com #account, .rl.site-me #platform, .rl.site-me #jacket { display: none; }
 
+html { color-scheme: dark; }
+::selection { background: #f3f3ef; color: #000; }
+.rl a, .rl button { -webkit-tap-highlight-color: transparent; }
+.rl .mo { appearance: none; -webkit-appearance: none; display: inline-block; margin: 4px 0 0; padding: 4px 0 3px; border: 0; border-bottom: 1px solid rgba(243,243,239,.45); border-radius: 0; background: none; color: var(--ink); cursor: pointer; transition: border-color .25s; }
+.rl .mo:hover { border-bottom-color: var(--ink); }
+.rl .nav .lk { white-space: nowrap; }
+.rl .mo:focus-visible { outline: 1px solid var(--ink); outline-offset: 4px; }
+.rl .nav .lk::before { content: ""; position: absolute; left: -8px; right: -8px; top: -14px; bottom: -8px; }
+
 @supports (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) {
     .rl .rv { animation: rl-in linear both; animation-timeline: view(); animation-range: entry 0% entry 90%; }
@@ -159,7 +171,16 @@ a:hover { color: #ffffff; }
 .rl.nogl .hero::after, .rl.nogl .fin::after, .rl.nogl .show::after, .rl.nofilm .hero::after, .rl.nofilm .fin::after, .rl.nofilm .show::after { content: ""; position: absolute; left: 0; top: 0; width: 100%; height: 100%; background: repeating-linear-gradient(to bottom, transparent 0, transparent 3px, #000 3px, #000 8px); }
 .rl.nogl .hero .cv, .rl.nogl .fin .cv, .rl.nogl .show .cv, .rl.nofilm .hero .cv, .rl.nofilm .fin .cv, .rl.nofilm .show .cv { display: none; }
 .rl.nogl .split, .rl.nogl .bal { aspect-ratio: auto; min-height: 120px; }
-.rl.nogl .art, .rl.nofilm .art { display: none; }
+.rl.nogl .art, .rl.nofilm .art { position: relative; background-repeat: no-repeat; background-size: 333.34% auto; }
+.rl.nogl .art::after, .rl.nofilm .art::after { content: ""; position: absolute; left: 0; top: 0; width: 100%; height: 100%; background: repeating-linear-gradient(to bottom, transparent 0, transparent 3px, #000 3px, #000 8px); }
+.rl.nogl .grid6 li:nth-child(1) .art, .rl.nofilm .grid6 li:nth-child(1) .art { background-position: 2.38% 0; }
+.rl.nogl .grid6 li:nth-child(2) .art, .rl.nofilm .grid6 li:nth-child(2) .art { background-position: 50% 0; }
+.rl.nogl .grid6 li:nth-child(3) .art, .rl.nofilm .grid6 li:nth-child(3) .art { background-position: 97.62% 0; }
+.rl.nogl .grid6 li:nth-child(4) .art, .rl.nofilm .grid6 li:nth-child(4) .art { background-position: 2.38% 100%; }
+.rl.nogl .grid6 li:nth-child(5) .art, .rl.nofilm .grid6 li:nth-child(5) .art { background-position: 50% 100%; }
+.rl.nogl .grid6 li:nth-child(6) .art, .rl.nofilm .grid6 li:nth-child(6) .art { background-position: 97.62% 100%; }
+.rl.nogl .plates .cv, .rl.nofilm .plates .cv { display: none; }
+.rl.nogl #rl-g2 .art, .rl.nofilm #rl-g2 .art { background-image: url(media/grid-creators.jpg); }
 
 @media (max-width: 900px) {
   .rl { --pad: 20px; font-size: 16px; }
@@ -221,7 +242,30 @@ a:hover { color: #ffffff; }
   .rl .fin .cv { height: calc(100% - 156px); }
   .rl .ftext { bottom: 186px; }
 }
+@media (max-width: 389px) {
+  .rl .nav .lk[href^="#"] { display: none; }
+}
 </style>
+<noscript><style>
+.rl .hero .films, .rl .fin .films, .rl .show .films { width: 100%; height: 100%; opacity: 1; }
+.rl .films video, .rl .films img { display: none; }
+.rl #rl-v0, .rl #rl-ir, .rl #rl-m5 { display: block; width: 100%; height: 100%; object-fit: cover; }
+.rl .hero::after, .rl .fin::after, .rl .show::after { content: ""; position: absolute; left: 0; top: 0; width: 100%; height: 100%; background: repeating-linear-gradient(to bottom, transparent 0, transparent 3px, #000 3px, #000 8px); }
+.rl .hero .cv, .rl .fin .cv, .rl .show .cv { display: none; }
+.rl .split, .rl .bal { aspect-ratio: auto; min-height: 120px; }
+.rl .art { position: relative; background-repeat: no-repeat; background-size: 333.34% auto; }
+.rl .art::after { content: ""; position: absolute; left: 0; top: 0; width: 100%; height: 100%; background: repeating-linear-gradient(to bottom, transparent 0, transparent 3px, #000 3px, #000 8px); }
+.rl .grid6 li:nth-child(1) .art { background-position: 2.38% 0; }
+.rl .grid6 li:nth-child(2) .art { background-position: 50% 0; }
+.rl .grid6 li:nth-child(3) .art { background-position: 97.62% 0; }
+.rl .grid6 li:nth-child(4) .art { background-position: 2.38% 100%; }
+.rl .grid6 li:nth-child(5) .art { background-position: 50% 100%; }
+.rl .grid6 li:nth-child(6) .art { background-position: 97.62% 100%; }
+.rl .plates .cv { display: none; }
+.rl #rl-g2 .art { background-image: url(media/grid-creators.jpg); }
+.rl #rl-v0, .rl .mo, .rl .btn, .rl .sun { display: none; }
+.rl #rl-p0 { display: block; width: 100%; height: 100%; object-fit: cover; }
+</style></noscript>
 </head>
 <body>
 <div id="rl-root" class="rl site-me">
@@ -234,16 +278,16 @@ a:hover { color: #ffffff; }
 <section id="top" class="hero">
 <canvas id="rl-c0" class="cv" aria-hidden="true"></canvas>
 <div class="films" aria-hidden="true">
-<img id="rl-p0" src="media/nova.jpg" alt="" decoding="async">
-<img id="rl-p1" src="media/iris.jpg" alt="" decoding="async">
-<img id="rl-p2" src="media/sable.jpg" alt="" decoding="async">
-<img id="rl-p3" src="media/kai.jpg" alt="" decoding="async">
-<img id="rl-p4" src="media/lux.jpg" alt="" decoding="async">
-<img id="rl-p5" src="media/rio.jpg" alt="" decoding="async">
-<img id="rl-p6" src="media/zola.jpg" alt="" decoding="async">
-<img id="rl-p7" src="media/sol.jpg" alt="" decoding="async">
-<img id="rl-p8" src="media/atlas.jpg" alt="" decoding="async">
-<video id="rl-v0" src="media/nova.mp4" preload="auto" playsinline muted></video>
+<img id="rl-p0" src="media/nova.jpg" alt="" decoding="async" fetchpriority="high">
+<img id="rl-p1" src="media/iris.jpg" alt="" decoding="async" fetchpriority="low">
+<img id="rl-p2" src="media/sable.jpg" alt="" decoding="async" fetchpriority="low">
+<img id="rl-p3" src="media/kai.jpg" alt="" decoding="async" fetchpriority="low">
+<img id="rl-p4" src="media/lux.jpg" alt="" decoding="async" fetchpriority="low">
+<img id="rl-p5" src="media/rio.jpg" alt="" decoding="async" fetchpriority="low">
+<img id="rl-p6" src="media/zola.jpg" alt="" decoding="async" fetchpriority="low">
+<img id="rl-p7" src="media/sol.jpg" alt="" decoding="async" fetchpriority="low">
+<img id="rl-p8" src="media/atlas.jpg" alt="" decoding="async" fetchpriority="low">
+<video id="rl-v0" src="media/nova.mp4" poster="media/nova.jpg" preload="auto" playsinline muted></video>
 <video id="rl-v1" src="media/iris.mp4" preload="none" playsinline muted></video>
 <video id="rl-v2" src="media/sable.mp4" preload="none" playsinline muted></video>
 <video id="rl-v3" src="media/kai.mp4" preload="none" playsinline muted></video>
@@ -260,6 +304,7 @@ a:hover { color: #ffffff; }
 <div id="rl-pl" class="plate">
 <p class="mono more"><span class="pt">Rails, 2026</span><br>Live film drawn by one hundred lines<br>Each line is one dollar</p>
 <p class="mono now">Now showing <span id="rl-who">nova</span></p>
+<button id="rl-mo" class="mono mo" type="button">Pause films</button>
 </div>
 </section>
 
@@ -352,7 +397,7 @@ a:hover { color: #ffffff; }
 </div>
 <div class="plates" id="rl-g2">
 <canvas id="rl-c5" class="cv" aria-hidden="true"></canvas>
-<div class="films" aria-hidden="true"><img id="rl-gb" src="media/grid-creators.jpg" alt="" decoding="async"><video id="rl-gvb" src="media/grid-creators.mp4" preload="none" playsinline muted loop></video></div>
+<div class="films" aria-hidden="true"><img id="rl-gb" src="media/grid-creators.jpg" alt="" decoding="async" fetchpriority="low"><video id="rl-gvb" src="media/grid-creators.mp4" preload="none" playsinline muted loop></video></div>
 <ul class="grid6">
 <li><div class="art"></div><p class="mono word"><span class="pt">LFG</span></p><h3>Open in seconds</h3><p>No application and no waiting. Sign up with your phone or email and you are in.</p></li>
 <li><div class="art"></div><p class="mono word"><span class="pt">The bag</span></p><h3>One dollar balance</h3><p>Everything you earn arrives as digital dollars (USDT) in a single balance.</p></li>
@@ -372,7 +417,7 @@ a:hover { color: #ffffff; }
 <section id="reach" class="fin">
 <canvas id="rl-c3" class="cv" aria-hidden="true"></canvas>
 <div class="films" aria-hidden="true">
-<img id="rl-ir" src="media/reach.jpg" alt="" decoding="async">
+<img id="rl-ir" src="media/reach.jpg" alt="" decoding="async" fetchpriority="low">
 </div>
 <div id="rl-ft" class="ftext">
 <h2 class="h1">You earned it. fundof.me keeps it within your reach.</h2>
@@ -1315,8 +1360,24 @@ if (p && p.then) p.then(() => { if (!cur) v.pause(); }).catch((e) => { if (e && 
 });
 H.stillPut = -1; H.stall = 0; H.lastA = -1;
 });
-[this.pa, this.pb].forEach((K) => { const v = K.vid ? this.el(K.vid) : null; if (v && v.__blk) { v.__blk = false; K.pt = 0; } });
+[this.pa, this.pb].forEach((K) => { const v = K.vid ? this.el(K.vid) : null; if (v && v.__blk) { v.__blk = false; K.pt = 0; this.play(v); } });
 };
+// The visitor can pause the films and play them again. A device that asks for less motion starts paused.
+this.label = () => { const b = this.el('rl-mo'); if (b) b.textContent = this.still ? 'Play films' : 'Pause films'; };
+this.setMotion = (on) => {
+this.still = !on;
+this.label();
+try { window.sessionStorage.setItem('rl-motion', on ? 'on' : 'off'); } catch (e) {}
+const vids = Array.prototype.slice.call(document.querySelectorAll('#rl-root video'));
+if (!on) { vids.forEach((v) => { if (v.id !== 'rl-vs' && !v.paused) v.pause(); }); return; }
+vids.forEach((v) => { v.__blk = false; });
+[this.top, this.show].forEach((S) => { S.films.forEach((f) => { f.dead = false; }); S.st.stillPut = -1; S.st.stall = 0; });
+[this.pa, this.pb].forEach((K) => { K.pt = 0; });
+const f0 = this.top.films[this.top.st.cur];
+const v0 = f0 && f0.v ? this.el(f0.v) : null;
+if (v0 && v0.getAttribute('src')) { if (this.nogl) v0.loop = true; else this.top.st.went = true; this.play(v0); }
+};
+this.onMo = () => { this.setMotion(this.still); };
 this.onOut = () => { this.ptr.on = false; if (this.state.hov !== -1) this.setState({ hov: -1 }); };
 this.onResize = () => {
 const root = this.el('rl-root');
@@ -1359,7 +1420,11 @@ k++;
 };
 }
 start() {
-this.still = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+let pick = null;
+try { pick = window.sessionStorage.getItem('rl-motion'); } catch (e) {}
+this.calm = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+this.still = pick ? pick === 'off' : this.calm;
+this.label();
 this.fitPage();
 const R = ['uRes', 'uN', 'uT', 'uDpr', 'uMix', 'uOpen', 'uIn', 'uGain', 'uLod', 'uCurve', 'uGl', 'uDisp', 'uA', 'uB', 'uFa', 'uFb', 'uPtr', 'uQ0', 'uQ1', 'uEv', 'uGn', 'uSh', 'uSb'];
 this.s0 = this.mk('rl-c0', this.FS, R);
@@ -1373,6 +1438,7 @@ this.s6 = this.mk('rl-c6', this.FS, R);
 const root = this.el('rl-root');
 if (!this.s0 || !this.s1 || !this.s2 || !this.s3 || !this.s4 || !this.s5 || !this.s6) {
 if (root) root.classList.add('nogl');
+this.nogl = true;
 const v0 = this.el('rl-v0');
 if (v0 && !this.still) { v0.loop = true; this.play(v0); }
 return;
@@ -1380,7 +1446,7 @@ return;
 [this.s0, this.s2, this.s3, this.s4, this.s5, this.s6].forEach((sc) => { sc.ta = this.tex(sc); sc.tb = this.tex(sc); });
 window.addEventListener('resize', this.onResize);
 window.addEventListener('pointermove', this.onMove, { passive: true });
-window.addEventListener('pointerdown', this.onTouch, { passive: true });
+['pointerdown', 'pointerup', 'touchend', 'click', 'keydown'].forEach((ev) => window.addEventListener(ev, this.onTouch, { passive: true }));
 document.documentElement.addEventListener('pointerleave', this.onOut);
 if (document.fonts && document.fonts.load) {
 document.fonts.load('700 120px Geist').then(() => { this.bl.dirty = true; }).catch(() => {});
@@ -1447,6 +1513,7 @@ on('rl-pay', 'click', this.onPay);
 on('rl-sun', 'pointerenter', this.sunIn);
 on('rl-sun', 'pointerleave', this.sunOut);
 on('rl-sun', 'click', this.sunTap);
+on('rl-mo', 'click', this.onMo);
 document.querySelectorAll('#rl-root a[href^="#"]').forEach((a) => {
 a.addEventListener('click', (e) => {
 const t = document.getElementById(a.getAttribute('href').slice(1));
@@ -1461,6 +1528,7 @@ const site = new Site();
 site.render();
 site.wire();
 site.start();
+try { console.log('%cfundof.me', 'font: 500 20px Geist, Helvetica, Arial, sans-serif', '\nThe account for creators that only you control.'); } catch (e) {}
 </script>
 </body>
 </html>
