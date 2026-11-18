@@ -1,9 +1,25 @@
 <!DOCTYPE html>
+<!--
+━━━━━━━━━━━━
+━━━━
+━━━━━━━━━
+━━━━
+━━━━
+-->
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-tmvrTe2SjQkj4w3/cqQ8t3lhsHN15asmHLvLLG7/HZs=' 'sha256-rtrbKoQDyVIFU0I7ua9FkxXTmI2UqUQj0ROn62arNCk=' 'sha256-2dV2gJ8Dr7rWIFzFrqOumGB+VnWurfe9e15hh2APMr4='; style-src 'sha256-mynlft4anQmZ9MmMljB1QOG6jamjaHwEy5KgnVi9P5Q=' 'sha256-IZMVtL1O3yWqAI7FLBwKaxC89oaUyUQnAh6+u8ASztM='; img-src 'self'; media-src 'self'; font-src 'self'; manifest-src 'self'; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="dark">
+<meta name="format-detection" content="telephone=no">
+<script>if (location.hash === '#check') {
+  addEventListener('error', function (e) {
+    var b = document.getElementById('rl-err');
+    if (!b) { b = document.createElement('pre'); b.id = 'rl-err'; (document.body || document.documentElement).appendChild(b); }
+    b.textContent += (e.message || 'error') + ' ' + (e.lineno || 0) + ':' + (e.colno || 0) + '\n';
+  });
+}</script>
 <link rel="preload" href="fonts/geist-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/geist-mono-400.woff2" as="font" type="font/woff2" crossorigin>
 <title>fundof.me: the account for creators that only you control</title>
@@ -16,10 +32,12 @@
 <meta property="og:description" content="One place where your income lands, stays yours and gets spent. Open in seconds, with no application and no bank in the middle.">
 <meta property="og:url" content="https://fundof.me/">
 <meta property="og:image" content="https://fundof.me/og.jpg">
+<meta property="og:image:alt" content="A portrait drawn in horizontal lines of light on black.">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="site.webmanifest">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <style>
 @font-face { font-family: Geist; font-style: normal; font-weight: 400; font-display: swap; src: url(fonts/geist-400.woff2) format("woff2"); }
@@ -62,18 +80,6 @@ a:hover { color: #ffffff; }
 .rl .h2 { grid-column: 4 / span 8; max-width: 860px; font-size: clamp(29px, 3vw, 46px); line-height: 1.06; font-weight: 400; letter-spacing: -.032em; text-wrap: balance; }
 .rl .lead { grid-column: 4 / span 6; margin-top: 20px; font-size: 20px; color: var(--mute); }
 .rl .piece { position: relative; margin-top: 70px; }
-.rl .sun { position: absolute; z-index: 2; right: var(--pad); top: 84px; width: 380px; height: 210px; padding: 0; border: 0; border-radius: 0; background: none; cursor: pointer; text-align: left; appearance: none; -webkit-appearance: none; }
-.rl .sun:focus-visible { outline: 1px solid var(--ink); outline-offset: 6px; }
-.rl .sunv { position: absolute; left: 0; top: 0; width: 100%; height: 100%; clip-path: polygon(60% 0, 60.8% 0, 44.8% 100%, 44% 100%); transition: clip-path .95s cubic-bezier(.22, .8, .2, 1); }
-.rl .sunv video { display: block; width: 100%; height: 100%; object-fit: cover; }
-.rl .sun.on .sunv { clip-path: polygon(16% 0, 100% 0, 84% 100%, 0 100%); }
-.rl .sunb { position: absolute; left: 0; top: 0; width: 100%; height: 100%; pointer-events: none; filter: drop-shadow(0 0 4px rgba(255,176,88,.85)) drop-shadow(0 0 14px rgba(255,150,60,.42)); transition: opacity .5s; }
-.rl .sunb span { position: absolute; left: 0; top: 0; width: 100%; height: 100%; background: linear-gradient(to bottom, #ffe6b8, #ffb45c); clip-path: polygon(59.95% 0, 60.75% 0, 44.75% 100%, 43.95% 100%); }
-.rl .sun.on .sunb { opacity: 0; }
-.rl .sunl { position: absolute; left: 12%; bottom: 12px; opacity: 0; color: #f3f3ef; text-shadow: 0 1px 10px rgba(0,0,0,.75); transition: opacity .4s; }
-.rl .sunl .pt { color: #fff; }
-.rl .nb { display: none; }
-.rl .sun.on .sunl { opacity: 1; transition: opacity .6s .45s; }
 .rl .split { aspect-ratio: 1328 / 640; }
 .rl .lbs { display: contents; }
 .rl .lb { position: absolute; transform: translateY(-50%); transition: opacity .3s; }
@@ -147,16 +153,25 @@ a:hover { color: #ffffff; }
 .rl .foot .hm { display: block; flex: none; }
 .rl .mono .nm { text-transform: none; }
 .rl .legal { margin: 0; padding: 22px var(--pad) 36px; max-width: 1180px; font: 400 10.5px/1.6 "Geist Mono", ui-monospace, Menlo, monospace; letter-spacing: .02em; color: var(--mute); }
-.rl.site-com #account, .rl.site-me #platform, .rl.site-me #jacket { display: none; }
 
 html { color-scheme: dark; }
 ::selection { background: #f3f3ef; color: #000; }
 .rl a, .rl button { -webkit-tap-highlight-color: transparent; }
-.rl .mo { appearance: none; -webkit-appearance: none; display: inline-block; margin: 4px 0 0; padding: 4px 0 3px; border: 0; border-bottom: 1px solid rgba(243,243,239,.45); border-radius: 0; background: none; color: var(--ink); cursor: pointer; transition: border-color .25s; }
-.rl .mo:hover { border-bottom-color: var(--ink); }
+.rl .mo { appearance: none; -webkit-appearance: none; position: relative; display: inline-block; box-sizing: border-box; width: 8px; height: 10px; margin: 0 0 0 14px; padding: 0; border: 0 solid var(--ink); border-width: 0 2px; border-radius: 0; background: none; vertical-align: -1px; cursor: pointer; opacity: .72; transition: opacity .25s; }
+.rl .mo::before { content: ""; position: absolute; left: -18px; right: -18px; top: -17px; bottom: -17px; }
+.rl .mo.off { width: 9px; border-width: 5px 0 5px 9px; border-color: transparent transparent transparent var(--ink); }
+.rl .mo:hover { opacity: 1; }
 .rl .nav .lk { white-space: nowrap; }
-.rl .mo:focus-visible { outline: 1px solid var(--ink); outline-offset: 4px; }
+.rl .mo:focus-visible { outline: 1px solid var(--ink); outline-offset: 8px; opacity: 1; }
 .rl .nav .lk::before { content: ""; position: absolute; left: -8px; right: -8px; top: -14px; bottom: -8px; }
+
+.rl .grid6 li:focus { outline: none; }
+.rl .grid6 li:focus-visible { outline: 1px solid var(--ink); outline-offset: 10px; }
+.rl .skip { position: absolute; z-index: 5; left: var(--pad); top: -80px; padding: 10px 14px; background: var(--ink); color: #000; }
+.rl .skip:focus { top: 12px; }
+#rl-err { position: fixed; z-index: 9; left: 0; right: 0; top: 0; margin: 0; padding: 10px 12px; background: #f3f3ef; color: #000; font: 400 10px/1.5 ui-monospace, Menlo, Consolas, monospace; white-space: pre-wrap; word-break: break-all; }
+#rl-check { position: fixed; z-index: 9; left: 0; right: 0; bottom: 0; max-height: 64vh; overflow: auto; margin: 0; padding: 10px 12px; border-top: 1px solid rgba(243,243,239,.3); background: rgba(0,0,0,.93); color: #f3f3ef; font: 400 10px/1.5 ui-monospace, Menlo, Consolas, monospace; white-space: pre-wrap; word-break: break-all; -webkit-user-select: text; user-select: text; }
+@media (prefers-contrast: more) { .rl { --mute: #d2d2cc; --hair: rgba(243,243,239,.5); } }
 
 @supports (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) {
@@ -198,9 +213,6 @@ html { color-scheme: dark; }
   .rl .tag { padding-top: 0; margin-bottom: 18px; }
   .rl .lead { margin-top: 16px; font-size: 18px; }
   .rl .piece { margin-top: 44px; }
-  .rl .sun { top: 14px; width: 250px; height: 150px; }
-  .rl .sunl { left: auto; right: 103%; bottom: auto; top: 8px; font-size: 10.5px; line-height: 1.55; white-space: nowrap; text-shadow: none; }
-  .rl .nb { display: inline; }
   .rl .split { aspect-ratio: auto; display: flex; flex-direction: column; margin-left: calc(-1 * var(--pad)); margin-right: calc(-1 * var(--pad)); }
   .rl .split .cv { position: relative; order: 2; height: 300px; }
   .rl .lbs { display: flex; flex-wrap: wrap; gap: 4px 18px; padding: 0 var(--pad); }
@@ -235,12 +247,9 @@ html { color-scheme: dark; }
 }
 @media (max-width: 520px) {
   .rl .grid6 { grid-template-columns: 1fr; }
-  .rl .sun { width: 216px; height: 132px; }
 }
 @media (max-width: 900px) {
   .rl .foot .hm { margin-top: 12px; }
-  .rl .fin .cv { height: calc(100% - 156px); }
-  .rl .ftext { bottom: 186px; }
 }
 @media (max-width: 389px) {
   .rl .nav .lk[href^="#"] { display: none; }
@@ -263,12 +272,13 @@ html { color-scheme: dark; }
 .rl .grid6 li:nth-child(6) .art { background-position: 97.62% 100%; }
 .rl .plates .cv { display: none; }
 .rl #rl-g2 .art { background-image: url(media/grid-creators.jpg); }
-.rl #rl-v0, .rl .mo, .rl .btn, .rl .sun { display: none; }
+.rl #rl-v0, .rl .mo, .rl .btn { display: none; }
 .rl #rl-p0 { display: block; width: 100%; height: 100%; object-fit: cover; }
 </style></noscript>
 </head>
 <body>
-<div id="rl-root" class="rl site-me">
+<div id="rl-root" class="rl">
+<a class="skip mono" href="#account">Skip to content</a>
 
 <header class="bar">
 <a class="wm" href="#top"><svg class="mk" width="16.8" height="20" viewBox="0 0 16.8 20" aria-hidden="true"><rect x="0" y="0.84" width="16.8" height="2.32" fill="currentColor"/><rect x="0" y="4.84" width="5.71" height="2.32" fill="currentColor"/><rect x="0" y="8.84" width="12.43" height="2.32" fill="currentColor"/><rect x="0" y="12.84" width="5.71" height="2.32" fill="currentColor"/><rect x="0" y="16.84" width="5.71" height="2.32" fill="currentColor"/></svg>fundof.me</a>
@@ -299,75 +309,12 @@ html { color-scheme: dark; }
 </div>
 <div id="rl-ht" class="htext">
 <h1 class="h1">The account for<br>creators that only<br>you control.</h1>
-<p class="mono sub"><span class="pt">Coming soon.</span> One place where your income lands, stays yours and gets spent. Built on <span class="nm">Fundof</span>, money rails for the creator economy.</p>
+<p class="mono sub"><span class="pt">Coming soon.</span> One place where your income lands, stays yours and gets spent.</p>
 </div>
 <div id="rl-pl" class="plate">
-<p class="mono more"><span class="pt">Rails, 2026</span><br>Live film drawn by one hundred lines<br>Each line is one dollar</p>
-<p class="mono now">Now showing <span id="rl-who">nova</span></p>
-<button id="rl-mo" class="mono mo" type="button">Pause films</button>
+<p class="mono more"><span class="pt">Rails, 2026</span></p>
+<p class="mono now">Now showing <span id="rl-who">nova</span><button id="rl-mo" class="mo" type="button" aria-label="Pause films"></button></p>
 </div>
-</section>
-
-<section id="platform" class="sec">
-<div class="head rv">
-<p class="mono tag"><span class="pt"><span class="nm">Fundof</span> platform</span><br>For creator platforms</p>
-<h2 class="h2">One API to get paid by fans and pay creators in seconds, anywhere in the world.</h2>
-</div>
-<div class="piece split">
-<canvas id="rl-c1" class="cv" aria-hidden="true"></canvas>
-<div class="lbs lin">
-<p id="rl-lb0" class="mono lb l0">Subscriptions</p>
-<p id="rl-lb1" class="mono lb l1">Tips</p>
-<p id="rl-lb2" class="mono lb l2">Pay-per-view</p>
-<p id="rl-lb3" class="mono lb l3">Custom requests</p>
-</div>
-<p class="mono lb m0"><span class="pt"><span class="nm">Fundof</span> checkout</span><br>Fans pay with the asset they hold</p>
-<div class="lbs lout">
-<p id="rl-lb4" class="mono lb r0"><span class="pt">Creator 80%</span><br><span class="amt">$80.00</span></p>
-<p id="rl-lb5" class="mono lb r1"><span class="pt">Platform 15%</span><br><span class="amt">$15.00</span></p>
-<p id="rl-lb6" class="mono lb r2"><span class="pt">Agency 5%</span><br><span class="amt">$5.00</span></p>
-</div>
-</div>
-<div class="under">
-<p class="mono cap"><span class="pt">One hundred dollars, 2026</span><br>One payment, one line for each dollar</p>
-<p class="say">An example: one sale of $100, split the way you set it. Every party is paid at the same moment, into an account only they control.</p>
-<div class="act"><button id="rl-send" class="btn" type="button"><span>Send $100</span></button></div>
-</div>
-<div class="plates" id="rl-g1">
-<canvas id="rl-c4" class="cv" aria-hidden="true"></canvas>
-<div class="films" aria-hidden="true"><img id="rl-ga" alt="" decoding="async"><video id="rl-gva" preload="none" playsinline muted loop></video></div>
-<ul class="grid6">
-<li><div class="art"></div><p class="mono word"><span class="pt">W</span></p><h3>Every way fans pay</h3><p>Subscriptions, tips, pay-per-view and custom requests in one API.</p></li>
-<li><div class="art"></div><p class="mono word"><span class="pt">One tap</span></p><h3>Card checkout <span class="bdg">Coming soon</span></h3><p>Fans without digital dollars pay by card inside your checkout.</p><p class="fine">Provided by a licensed partner. Availability depends on your country and requires a short identity check.</p></li>
-<li><div class="art"></div><p class="mono word"><span class="pt">Splits</span></p><h3>Automatic splits</h3><p>Platform, creator, agency and referrer are each paid their share on every sale.</p></li>
-<li><div class="art"></div><p class="mono word"><span class="pt">Ping</span></p><h3>Payouts in seconds</h3><p>Earnings reach the creator at once. No weekly cycle, no minimum.</p></li>
-<li><div class="art"></div><p class="mono word"><span class="pt">Locked in</span></p><h3>Own your funds</h3><p>Platforms and creators hold their own keys. Nothing is pooled.</p></li>
-<li><div class="art"></div><p class="mono word"><span class="pt">AFK</span></p><h3>Built for developers</h3><p>A clear API, a sandbox with test funds, ready-made checkout components and webhooks for every event. Free to sign up.</p></li>
-</ul>
-</div>
-<ul class="row3">
-<li class="mono">Payments are final</li>
-<li class="mono">No merchant account to apply for</li>
-<li class="mono">No payout holds</li>
-</ul>
-</section>
-
-<section id="jacket" class="show">
-<canvas id="rl-c6" class="cv" aria-hidden="true"></canvas>
-<div class="films" aria-hidden="true">
-<img id="rl-m0" alt="" loading="lazy" decoding="async">
-<img id="rl-m1" alt="" loading="lazy" decoding="async">
-<img id="rl-m2" alt="" loading="lazy" decoding="async">
-<img id="rl-m3" alt="" loading="lazy" decoding="async">
-<img id="rl-m4" alt="" loading="lazy" decoding="async">
-<img id="rl-m5" alt="" loading="lazy" decoding="async">
-<video id="rl-w0" preload="none" playsinline muted></video>
-<video id="rl-w1" preload="none" playsinline muted></video>
-<video id="rl-w2" preload="none" playsinline muted></video>
-<video id="rl-w3" preload="none" playsinline muted></video>
-<video id="rl-w4" preload="none" playsinline muted></video>
-</div>
-<p id="rl-sp" class="mono splate"><span class="pt">The jacket, 2026</span><br>Live film drawn by one hundred lines<br><span id="rl-ttl">The silhouette</span></p>
 </section>
 
 <section id="account" class="sec">
@@ -376,11 +323,6 @@ html { color-scheme: dark; }
 <h2 class="h2">Your earnings, in your hands.</h2>
 <p class="lead">Open in seconds, with no application and no bank in the middle.</p>
 </div>
-<button id="rl-sun" class="sun" type="button" aria-label="Seeker">
-<span class="sunv"><video id="rl-vs" src="media/seeker.mp4" poster="media/seeker.jpg" preload="none" playsinline muted loop></video></span>
-<span class="sunb"><span></span></span>
-<span class="mono sunl"><span class="pt">Seeker, 2026</span><br>Color film,<br class="nb"> one line of light</span>
-</button>
 <div class="piece bal">
 <canvas id="rl-c2" class="cv" aria-hidden="true"></canvas>
 <canvas id="rl-ink" class="ink" width="1600" height="602" aria-hidden="true"></canvas>
@@ -392,19 +334,19 @@ html { color-scheme: dark; }
 <button id="rl-pay" class="btn pay" type="button"><span>Pay</span></button>
 </div>
 <div class="under">
-<p class="mono cap"><span class="pt">Balance, 2026</span><br>A number drawn by one hundred lines</p>
+<p class="mono cap"><span class="pt">Balance, 2026</span></p>
 <p class="say">No chains, addresses or network fees on screen. One balance in dollars and one button to pay.</p>
 </div>
 <div class="plates" id="rl-g2">
 <canvas id="rl-c5" class="cv" aria-hidden="true"></canvas>
 <div class="films" aria-hidden="true"><img id="rl-gb" src="media/grid-creators.jpg" alt="" decoding="async" fetchpriority="low"><video id="rl-gvb" src="media/grid-creators.mp4" preload="none" playsinline muted loop></video></div>
 <ul class="grid6">
-<li><div class="art"></div><p class="mono word"><span class="pt">LFG</span></p><h3>Open in seconds</h3><p>No application and no waiting. Sign up with your phone or email and you are in.</p></li>
-<li><div class="art"></div><p class="mono word"><span class="pt">The bag</span></p><h3>One dollar balance</h3><p>Everything you earn arrives as digital dollars (USDT) in a single balance.</p></li>
-<li><div class="art"></div><p class="mono word"><span class="pt">Receipts</span></p><h3>Income at a glance</h3><p>Earnings by source and by month, ready to export for your accountant.</p></li>
-<li><div class="art"></div><p class="mono word"><span class="pt">IRL</span></p><h3>A card on your balance <span class="bdg">Coming soon</span></h3><p>Pay online and in stores straight from your balance.</p><p class="fine">Provided by a licensed partner. Availability depends on your country and requires a short identity check.</p></li>
-<li><div class="art"></div><p class="mono word"><span class="pt">GG</span></p><h3>Pay any invoice <span class="bdg">Coming soon</span></h3><p>Rent, staff and suppliers paid to their bank account in local currency.</p><p class="fine">Provided by a licensed partner. Availability depends on your country and requires a short identity check.</p></li>
-<li><div class="art"></div><p class="mono word"><span class="pt">Link in bio</span></p><h3>Your pay page</h3><p>fundof.me/yourname for tips, commissions and invoices, under the name your audience knows.</p></li>
+<li tabindex="0"><div class="art"></div><p class="mono word"><span class="pt">LFG</span></p><h3>Open in seconds</h3><p>No application and no waiting. Sign up with your phone or email and you are in.</p></li>
+<li tabindex="0"><div class="art"></div><p class="mono word"><span class="pt">The bag</span></p><h3>One dollar balance</h3><p>Everything you earn arrives as digital dollars (USDT) in a single balance.</p></li>
+<li tabindex="0"><div class="art"></div><p class="mono word"><span class="pt">Receipts</span></p><h3>Income at a glance</h3><p>Earnings by source and by month, ready to export for your accountant.</p></li>
+<li tabindex="0"><div class="art"></div><p class="mono word"><span class="pt">IRL</span></p><h3>A card on your balance <span class="bdg">Coming soon</span></h3><p>Pay online and in stores straight from your balance.</p><p class="fine">Provided by a licensed partner. Availability depends on your country and requires a short identity check.</p></li>
+<li tabindex="0"><div class="art"></div><p class="mono word"><span class="pt">GG</span></p><h3>Pay any invoice <span class="bdg">Coming soon</span></h3><p>Rent, staff and suppliers paid to their bank account in local currency.</p><p class="fine">Provided by a licensed partner. Availability depends on your country and requires a short identity check.</p></li>
+<li tabindex="0"><div class="art"></div><p class="mono word"><span class="pt">Link in bio</span></p><h3>Your pay page</h3><p>fundof.me/yourname for tips, commissions and invoices, under the name your audience knows.</p></li>
 </ul>
 </div>
 <ul class="row3">
@@ -425,12 +367,13 @@ html { color-scheme: dark; }
 <a class="door" href="https://fundof.com"><span class="mono">For platforms</span><span class="dn">fundof.com</span></a>
 </div>
 </div>
-<p id="rl-fp" class="mono fplate"><span class="pt">Within reach, 2026</span><br>A photograph behind one hundred lines</p>
-<footer class="foot mono"><span class="pt nm">fundof.me</span><span>Built on <span class="nm">Fundof</span>. <span class="nm">Fundof</span> is built on Hedles, infrastructure that is already live.</span><svg class="hm" width="172" height="20" viewBox="0 0 172 20" role="img" aria-label="Fundof, USDT, Hedles, 2026"><path d="M4 0H16L20 4V16L16 20H4L0 16V4Z" fill="#c8a96e"/><rect x="6" y="5.24" width="8.74" height="1.21" fill="#000"/><rect x="6" y="7.32" width="2.97" height="1.21" fill="#000"/><rect x="6" y="9.4" width="6.46" height="1.21" fill="#000"/><rect x="6" y="11.48" width="2.97" height="1.21" fill="#000"/><rect x="6" y="13.56" width="2.97" height="1.21" fill="#000"/><path d="M36 0H57A10 10 0 0 1 57 20H36A10 10 0 0 1 36 0Z" fill="#c8a96e"/><text x="46.9" y="12.88" text-anchor="middle" font-family="Geist Mono, ui-monospace, Menlo, monospace" font-size="8" font-weight="500" letter-spacing="0.64" fill="#000">USDT</text><path d="M79.4 0H121.6L128 10L121.6 20H79.4L73 10Z" fill="#c8a96e"/><text x="100.9" y="12.88" text-anchor="middle" font-family="Geist Mono, ui-monospace, Menlo, monospace" font-size="8" font-weight="500" letter-spacing="0.64" fill="#000">HEDLES</text><path d="M138 0H168L172 4V16L168 20H138L134 16V4Z" fill="#c8a96e"/><text x="153.4" y="12.88" text-anchor="middle" font-family="Geist Mono, ui-monospace, Menlo, monospace" font-size="8" font-weight="500" letter-spacing="0.64" fill="#000">2026</text></svg></footer>
+<p id="rl-fp" class="mono fplate"><span class="pt">Within reach, 2026</span></p>
+<footer class="foot mono"><span class="pt nm">fundof.me</span><svg class="hm" width="172" height="20" viewBox="0 0 172 20" role="img" aria-label="Fundof, USDT, Hedles, 2026"><path d="M4 0H16L20 4V16L16 20H4L0 16V4Z" fill="#c8a96e"/><rect x="6" y="5.24" width="8.74" height="1.21" fill="#000"/><rect x="6" y="7.32" width="2.97" height="1.21" fill="#000"/><rect x="6" y="9.4" width="6.46" height="1.21" fill="#000"/><rect x="6" y="11.48" width="2.97" height="1.21" fill="#000"/><rect x="6" y="13.56" width="2.97" height="1.21" fill="#000"/><path d="M36 0H57A10 10 0 0 1 57 20H36A10 10 0 0 1 36 0Z" fill="#c8a96e"/><text x="46.9" y="12.88" text-anchor="middle" font-family="Geist Mono, ui-monospace, Menlo, monospace" font-size="8" font-weight="500" letter-spacing="0.64" fill="#000">USDT</text><path d="M79.4 0H121.6L128 10L121.6 20H79.4L73 10Z" fill="#c8a96e"/><text x="100.9" y="12.88" text-anchor="middle" font-family="Geist Mono, ui-monospace, Menlo, monospace" font-size="8" font-weight="500" letter-spacing="0.64" fill="#000">HEDLES</text><path d="M138 0H168L172 4V16L168 20H138L134 16V4Z" fill="#c8a96e"/><text x="153.4" y="12.88" text-anchor="middle" font-family="Geist Mono, ui-monospace, Menlo, monospace" font-size="8" font-weight="500" letter-spacing="0.64" fill="#000">2026</text></svg></footer>
 </section>
 <p class="legal">Fundof is a technology provider. Fundof is not a bank, does not accept deposits and does not hold or control user funds. Accounts are self-custody: only the user can access them. &quot;Digital dollars&quot; refers to USDT, which is issued by Tether and is not issued, backed or guaranteed by Fundof. Card, bank transfer and conversion services are provided by licensed third parties under their own terms, are subject to identity checks and are not available in all countries. Nothing on this site is financial, legal or tax advice.</p>
 
 </div>
+<script type="speculationrules">{"prefetch":[{"urls":["https://fundof.com/"],"eagerness":"moderate"}]}</script>
 <script>
 class Site {
 constructor() {
@@ -457,7 +400,7 @@ this.reach = { cx: 0.49, cy: 0.5, w: 0.48 };
 this.incomes = [['Tip', 500], ['Subscription', 1200], ['Pay-per-view', 800], ['Tip', 2000], ['Custom request', 6000], ['Subscription', 1200], ['Tip', 1000], ['Pay-per-view', 1500]];
 this.bills = [['Editor', 30000], ['Manager', 45000], ['Agency', 60000]];
 this.state = {
-who: 'nova', ttl: 'The silhouette', hov: -1, flash: 0, sun: false,
+who: 'nova', ttl: 'The silhouette', hov: -1, flash: 0,
 feed: [
 { label: 'Custom request', amt: '+$60.00', cls: 'in' },
 { label: 'Tip', amt: '+$5.00', cls: 'in' },
@@ -772,7 +715,7 @@ void main(){
   o = vec4(col, 1.);
 }`;
 
-this.mk = (id, fs, names) => {
+this.mk = (id, fs, names, old) => {
 const c = this.el(id);
 if (!c) return null;
 let gl = null;
@@ -802,8 +745,16 @@ gl.enableVertexAttribArray(0);
 gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0);
 const u = {};
 names.forEach((n) => { u[n] = gl.getUniformLocation(p, n); });
+if (old) { old.gl = gl; old.u = u; old.w = 0; old.h = 0; old.lost = false; return old; }
 const sc = { c: c, gl: gl, u: u, w: 0, h: 0, cw: 0, ch: 0, rect: null, lost: false, ta: null, tb: null };
-c.addEventListener('webglcontextlost', (e) => { e.preventDefault(); sc.lost = true; });
+// A phone can take the drawing surface away, for instance while the page is in the background.
+// When it comes back, the program and the textures are built again.
+c.addEventListener('webglcontextlost', (e) => { e.preventDefault(); sc.lost = true; this.lostN = (this.lostN || 0) + 1; });
+c.addEventListener('webglcontextrestored', () => {
+if (!this.mk(id, fs, names, sc)) { this.plain(); return; }
+if (sc.ta) { sc.ta = this.tex(sc); sc.tb = this.tex(sc); }
+this.fresh();
+});
 return sc;
 };
 this.tex = (sc) => {
@@ -846,7 +797,7 @@ if (!v) return;
 v.muted = true;
 v.playsInline = true;
 const p = v.play();
-if (p && p.catch) p.catch((e) => { if (e && e.name === 'NotAllowedError') v.__blk = true; });
+if (p && p.catch) p.catch((e) => { v.__pe = e && e.name; if (e && e.name === 'NotAllowedError') this.block(v); });
 };
 this.fitFor = (sc, f, at, tx, ty) => {
 const ac = sc.cw / sc.ch;
@@ -1217,6 +1168,8 @@ const P = this.ptr;
 const live = P.on;
 let hov = -1;
 let ah = 200;
+let fe = document.activeElement;
+try { if (fe && !fe.matches(':focus-visible')) fe = null; } catch (e) {}
 const n = Math.min(6, arts.length);
 for (let i = 0; i < n; i++) {
 const r = arts[i].getBoundingClientRect();
@@ -1229,6 +1182,7 @@ if (live) {
 const li = arts[i].parentNode.getBoundingClientRect();
 if (P.x >= li.left && P.x <= li.right && P.y >= li.top && P.y <= li.bottom) hov = i;
 }
+if (hov < 0 && fe === arts[i].parentNode) hov = i;
 }
 if (rolling) {
 const ORD = [0, 4, 2, 5, 1, 3];
@@ -1281,6 +1235,10 @@ const t = ((ts || 0) - this.tb) / 1000;
 const dt = Math.max(0, Math.min(0.05, t - (this.pt === undefined ? t : this.pt)));
 const raw = t - (this.pt === undefined ? t : this.pt);
 this.pt = t;
+this.fN = (this.fN || 0) + 1;
+// a surface that stays away for six seconds: the plain pictures are shown instead of a frozen one
+this.lostT = this.all.some((sc) => sc.lost) ? (this.lostT || 0) + Math.max(0, Math.min(0.25, raw)) : 0;
+if (this.lostT > 6 && !this.filmOff) this.plain();
 if (raw > 0 && raw < 0.25) {
 this.acc = (this.acc || 0) * 0.95 + raw * 0.05;
 this.fc = (this.fc || 0) + 1;
@@ -1297,6 +1255,7 @@ this.drawFin(t, dt);
 };
 this.plain = () => {
 this.filmOff = true;
+this.setState({ who: this.films[0].who });
 const root = this.el('rl-root');
 if (root) root.classList.add('nofilm');
 const v0 = this.el('rl-v0');
@@ -1343,33 +1302,46 @@ for (let g = 0; g < 3; g++) { const top = 0.06 + 0.0068 * st[g] + 0.1 * g; if (v
 }
 if (hv !== this.state.hov) this.setState({ hov: hv });
 };
-this.onTouch = () => {
+// A touch or a key: films the browser held back start now. One touch is enough for a browser to allow the rest,
+// so only the film on screen is started here.
+this.onTouch = (e) => {
+const first = e && (e.type === 'pointerdown' || e.type === 'keydown');
+if (first) this.freed = false;
 if (this.still) return;
+if (this.blocked) { this.blocked = false; this.freed = true; this.label(); }
 [this.top, this.show].forEach((S) => {
 const H = S.st;
 const vids = S.films.map((f) => (f.v ? this.el(f.v) : null));
 if (!vids.some((v) => v && v.__blk)) return;
-S.films.forEach((f, i) => {
-const v = vids[i];
-if (!v) return;
-v.__blk = false; f.dead = false;
-const cur = i === H.cur && !H.held && H.went;
-v.muted = true;
-const p = v.play();
-if (p && p.then) p.then(() => { if (!cur) v.pause(); }).catch((e) => { if (e && e.name === 'NotAllowedError') v.__blk = true; });
-});
+S.films.forEach((f, i) => { if (vids[i]) { vids[i].__blk = false; f.dead = false; } });
+if (vids[H.cur] && !H.held && H.went) this.play(vids[H.cur]);
 H.stillPut = -1; H.stall = 0; H.lastA = -1;
 });
 [this.pa, this.pb].forEach((K) => { const v = K.vid ? this.el(K.vid) : null; if (v && v.__blk) { v.__blk = false; K.pt = 0; this.play(v); } });
 };
 // The visitor can pause the films and play them again. A device that asks for less motion starts paused.
-this.label = () => { const b = this.el('rl-mo'); if (b) b.textContent = this.still ? 'Play films' : 'Pause films'; };
+this.fresh = () => {
+[this.top, this.show].forEach((S) => { const H = S.st; H.has = false; H.poster = false; H.stillPut = -1; H.lastA = -1; H.bok = false; });
+this.fn.has = false;
+[this.pa, this.pb].forEach((K) => { K.has = false; K.vt = -1; });
+this.bl.dirty = true;
+};
+this.label = () => {
+const b = this.el('rl-mo');
+if (!b) return;
+const off = this.still || !!this.blocked;
+b.classList.toggle('off', off);
+b.setAttribute('aria-label', off ? 'Play films' : 'Pause films');
+};
+// A browser can refuse to start a film on its own. The control then shows play, and the first touch starts the films.
+this.block = (v) => { v.__blk = true; if (!this.blocked) { this.blocked = true; this.label(); } };
 this.setMotion = (on) => {
 this.still = !on;
+if (on) this.blocked = false;
 this.label();
 try { window.sessionStorage.setItem('rl-motion', on ? 'on' : 'off'); } catch (e) {}
 const vids = Array.prototype.slice.call(document.querySelectorAll('#rl-root video'));
-if (!on) { vids.forEach((v) => { if (v.id !== 'rl-vs' && !v.paused) v.pause(); }); return; }
+if (!on) { vids.forEach((v) => { if (!v.paused) v.pause(); }); return; }
 vids.forEach((v) => { v.__blk = false; });
 [this.top, this.show].forEach((S) => { S.films.forEach((f) => { f.dead = false; }); S.st.stillPut = -1; S.st.stall = 0; });
 [this.pa, this.pb].forEach((K) => { K.pt = 0; });
@@ -1377,28 +1349,40 @@ const f0 = this.top.films[this.top.st.cur];
 const v0 = f0 && f0.v ? this.el(f0.v) : null;
 if (v0 && v0.getAttribute('src')) { if (this.nogl) v0.loop = true; else this.top.st.went = true; this.play(v0); }
 };
-this.onMo = () => { this.setMotion(this.still); };
+// a touch that has just started held-back films is not also a wish to pause them
+this.onMo = () => { if (this.freed) { this.freed = false; return; } this.setMotion(this.still); };
+// The address ending in #check shows what this device is doing.
+this.check = () => {
+const L = [];
+const yn = (q) => ((window.matchMedia && window.matchMedia(q).matches) ? 'yes' : 'no');
+const now = Date.now();
+const fps = this.ckT ? Math.round(((this.fN || 0) - this.ckN) * 1000 / Math.max(1, now - this.ckT)) : 0;
+this.ckT = now; this.ckN = this.fN || 0;
+L.push('build 1118-1824  ' + navigator.userAgent);
+L.push('view ' + window.innerWidth + 'x' + window.innerHeight + '  dpr ' + window.devicePixelRatio + '  q ' + this.q.toFixed(2) + '  fps ' + fps);
+L.push('less motion ' + yn('(prefers-reduced-motion: reduce)') + '  still ' + (this.still ? 'YES' : 'no') + '  webgl ' + (this.nogl ? 'NO' : 'yes') + '  plain ' + (this.filmOff ? 'YES' : 'no') + '  errors ' + (this.err || 0) + '  lost ' + (this.lostN || 0));
+let pk = '-';
+try { pk = window.sessionStorage.getItem('rl-motion') || '-'; } catch (e) { pk = 'x'; }
+L.push('held back ' + (this.blocked ? 'YES' : 'no') + '  choice ' + pk + '  page ' + document.visibilityState);
+const g = this.s0 && this.s0.gl;
+if (g) { try { L.push(g.getParameter(g.VERSION) + '  max ' + g.getParameter(g.MAX_TEXTURE_SIZE)); } catch (e) {} }
+L.push(['s0', 's1', 's2', 's3', 's4', 's5', 's6'].map((k) => { const x = this[k]; return k + (x ? (x.lost ? ':LOST' : ':' + x.w + 'x' + x.h) : ':none'); }).join(' '));
+const H = this.top.st;
+L.push('hero film ' + H.cur + '  has ' + (H.has ? 1 : 0) + '  went ' + (H.went ? 1 : 0) + '  gain ' + (H.gain || 0).toFixed(2) + '  dead ' + this.top.films.map((f, i) => (f.dead ? i : '')).join(''));
+Array.prototype.slice.call(document.querySelectorAll('#rl-root video')).forEach((v) => {
+if (!v.getAttribute('src')) return;
+L.push(v.id.replace('rl-', '') + '  ready ' + v.readyState + '  ' + (v.paused ? 'paused' : 'PLAYING') + '  t ' + v.currentTime.toFixed(1) + (v.error ? '  ERROR ' + v.error.code : '') + (v.__blk ? '  BLOCKED' : '') + (v.__pe ? '  ' + v.__pe : ''));
+});
+let box = this.el('rl-check');
+if (!box) { box = document.createElement('pre'); box.id = 'rl-check'; document.body.appendChild(box); }
+box.textContent = L.join('\n');
+};
 this.onOut = () => { this.ptr.on = false; if (this.state.hov !== -1) this.setState({ hov: -1 }); };
 this.onResize = () => {
 const root = this.el('rl-root');
 const iw = root ? root.clientWidth : window.innerWidth;
 if (iw !== this.fw || Math.abs(window.innerHeight - this.fhh) > 130) this.fitPage();
 this.bl.dirty = true;
-};
-this.sunSet = (on) => {
-if (on === !!this.state.sun) return;
-this.setState({ sun: on });
-const v = this.el('rl-vs');
-if (!v) return;
-if (on) { v.loop = true; this.play(v); }
-else setTimeout(() => { if (!this.state.sun) v.pause(); }, 1100);
-};
-this.sunIn = (e) => { if (e && e.pointerType === 'mouse') this.sunSet(true); };
-this.sunOut = (e) => { if (e && e.pointerType === 'mouse') this.sunSet(false); };
-this.sunTap = (e) => {
-const pt = e && e.pointerType ? e.pointerType : '';
-if (pt === 'mouse') return;
-this.sunSet(!this.state.sun);
 };
 this.onSend = () => { const S = this.sp; S.wave = (this.pt || 0); S.gap = 7.4; S.done = false; };
 this.onPay = () => {
@@ -1425,25 +1409,37 @@ try { pick = window.sessionStorage.getItem('rl-motion'); } catch (e) {}
 this.calm = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
 this.still = pick ? pick === 'off' : this.calm;
 this.label();
+// phones get lighter films
+if (window.innerWidth <= 900) ['rl-gva', 'rl-gvb', 'rl-w0', 'rl-w1', 'rl-w2', 'rl-w3', 'rl-w4'].forEach((id) => { const v = this.el(id); const u = v && v.getAttribute('src'); if (u) v.setAttribute('src', u.replace('.mp4', '-s.mp4')); });
+if (window.location.hash === '#check') { this.check(); window.setInterval(this.check, 1000); }
+// nothing plays while the page is in the background
+document.addEventListener('visibilitychange', () => {
+const vids = Array.prototype.slice.call(document.querySelectorAll('#rl-root video'));
+if (document.hidden) { vids.forEach((v) => { if (!v.paused) v.pause(); }); return; }
+if ((this.nogl || this.filmOff) && !this.still) { const v0 = this.el('rl-v0'); if (v0) this.play(v0); }
+});
 this.fitPage();
 const R = ['uRes', 'uN', 'uT', 'uDpr', 'uMix', 'uOpen', 'uIn', 'uGain', 'uLod', 'uCurve', 'uGl', 'uDisp', 'uA', 'uB', 'uFa', 'uFb', 'uPtr', 'uQ0', 'uQ1', 'uEv', 'uGn', 'uSh', 'uSb'];
-this.s0 = this.mk('rl-c0', this.FS, R);
-this.s1 = this.mk('rl-c1', this.FS2, ['uRes', 'uT', 'uDpr', 'uWave', 'uHov', 'uIn', 'uThin', 'uDur', 'uX', 'uXe', 'uL', 'uR', 'uM']);
-this.s2 = this.mk('rl-c2', this.FS, R);
-this.s3 = this.mk('rl-c3', this.FS, R);
+const R2 = ['uRes', 'uT', 'uDpr', 'uWave', 'uHov', 'uIn', 'uThin', 'uDur', 'uX', 'uXe', 'uL', 'uR', 'uM'];
 const R3 = ['uRes', 'uT', 'uDpr', 'uIn', 'uPitch', 'uLod', 'uCurve', 'uA', 'uTile', 'uOp', 'uCount', 'uGrid'];
-this.s4 = this.mk('rl-c4', this.FS3, R3);
-this.s5 = this.mk('rl-c5', this.FS3, R3);
-this.s6 = this.mk('rl-c6', this.FS, R);
+// One drawing surface for each piece that is on this page. A phone allows only a few.
+let ok = true;
+[['s0', 'rl-c0', this.FS, R], ['s1', 'rl-c1', this.FS2, R2], ['s2', 'rl-c2', this.FS, R], ['s3', 'rl-c3', this.FS, R], ['s4', 'rl-c4', this.FS3, R3], ['s5', 'rl-c5', this.FS3, R3], ['s6', 'rl-c6', this.FS, R]].forEach((p) => {
+this[p[0]] = null;
+if (!this.el(p[1])) return;
+this[p[0]] = this.mk(p[1], p[2], p[3]);
+if (!this[p[0]]) ok = false;
+});
 const root = this.el('rl-root');
-if (!this.s0 || !this.s1 || !this.s2 || !this.s3 || !this.s4 || !this.s5 || !this.s6) {
+if (!ok) {
 if (root) root.classList.add('nogl');
 this.nogl = true;
 const v0 = this.el('rl-v0');
 if (v0 && !this.still) { v0.loop = true; this.play(v0); }
 return;
 }
-[this.s0, this.s2, this.s3, this.s4, this.s5, this.s6].forEach((sc) => { sc.ta = this.tex(sc); sc.tb = this.tex(sc); });
+[this.s0, this.s2, this.s3, this.s4, this.s5, this.s6].forEach((sc) => { if (sc) { sc.ta = this.tex(sc); sc.tb = this.tex(sc); } });
+this.all = [this.s0, this.s1, this.s2, this.s3, this.s4, this.s5, this.s6].filter((sc) => sc);
 window.addEventListener('resize', this.onResize);
 window.addEventListener('pointermove', this.onMove, { passive: true });
 ['pointerdown', 'pointerup', 'touchend', 'click', 'keydown'].forEach((ev) => window.addEventListener(ev, this.onTouch, { passive: true }));
@@ -1465,10 +1461,6 @@ ttl: s.ttl || 'The silhouette',
 feed: s.feed || [],
 send: this.onSend,
 pay: this.onPay,
-suncls: s.sun ? 'on' : '',
-sunIn: this.sunIn,
-sunOut: this.sunOut,
-sunTap: this.sunTap,
 c0: lc(0), c1: lc(1), c2: lc(2), c3: lc(3), c4: lc(4), c5: lc(5), c6: lc(6),
 amtcls: 'amt ' + ((s.flash || 0) === 0 ? '' : ((s.flash % 2) ? 'fa' : 'fb'))
 };
@@ -1503,16 +1495,11 @@ p.appendChild(a); p.appendChild(b); box.appendChild(p);
 });
 }
 }
-const sun = this.el('rl-sun');
-if (sun) sun.classList.toggle('on', v.suncls === 'on');
 }
 wire() {
 const on = (id, ev, fn) => { const e = this.el(id); if (e) e.addEventListener(ev, fn); };
 on('rl-send', 'click', this.onSend);
 on('rl-pay', 'click', this.onPay);
-on('rl-sun', 'pointerenter', this.sunIn);
-on('rl-sun', 'pointerleave', this.sunOut);
-on('rl-sun', 'click', this.sunTap);
 on('rl-mo', 'click', this.onMo);
 document.querySelectorAll('#rl-root a[href^="#"]').forEach((a) => {
 a.addEventListener('click', (e) => {

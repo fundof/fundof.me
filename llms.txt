@@ -1,0 +1,8 @@
+# Fundof
+
+> Money rails for the creator economy. No gatekeepers.
+
+## Sites
+
+- [Fundof](https://fundof.com/): One API to get paid by fans and pay creators in seconds, anywhere in the world.
+- [fundof.me](https://fundof.me/): The account for creators that only you control.
