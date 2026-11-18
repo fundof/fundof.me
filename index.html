@@ -9,7 +9,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-tmvrTe2SjQkj4w3/cqQ8t3lhsHN15asmHLvLLG7/HZs=' 'sha256-rtrbKoQDyVIFU0I7ua9FkxXTmI2UqUQj0ROn62arNCk=' 'sha256-eKDIQQ5HCA08sgf9LRhk9taArQ0PQVBMt9BZecoBCxw='; style-src 'sha256-MMEHDx2npa7jnRRoDd4izB0UDjoz3mC6VFco3Z/AVEE=' 'sha256-dSxyEBYqy8lOqIJcyBZTms5JMDvomwofEuBVOwscwKI='; img-src 'self'; media-src 'self'; font-src 'self'; manifest-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-tmvrTe2SjQkj4w3/cqQ8t3lhsHN15asmHLvLLG7/HZs=' 'sha256-rtrbKoQDyVIFU0I7ua9FkxXTmI2UqUQj0ROn62arNCk=' 'sha256-GMW8CnvhPRC50tUrQ0eB2SwsO/MNvUInleSiw7KuX6Q='; style-src 'sha256-MMEHDx2npa7jnRRoDd4izB0UDjoz3mC6VFco3Z/AVEE=' 'sha256-dSxyEBYqy8lOqIJcyBZTms5JMDvomwofEuBVOwscwKI='; img-src 'self'; media-src 'self'; font-src 'self'; manifest-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="dark">
 <meta name="format-detection" content="telephone=no">
@@ -327,7 +327,7 @@ html { color-scheme: dark; }
 <p class="mono sub"><span class="pt">Coming soon.</span> One place where your income lands, stays yours and gets spent.</p>
 </div>
 <div id="rl-pl" class="plate">
-<p class="mono now"><span id="rl-who">nova</span><button id="rl-mo" class="mo" type="button" aria-label="Pause films"></button></p>
+<p class="mono now"><span id="rl-who">precious</span><button id="rl-mo" class="mo" type="button" aria-label="Pause films"></button></p>
 </div>
 </section>
 
@@ -392,15 +392,15 @@ html { color-scheme: dark; }
 class Site {
 constructor() {
 this.films = [
-{ v: 'rl-v0', img: 'rl-p0', who: 'nova', cx: 0.5, cy: 0.46, g: 1.4 },
-{ v: 'rl-v1', img: 'rl-p1', who: 'iris', cx: 0.5, cy: 0.5, g: 1.1, full: true },
-{ v: 'rl-v2', img: 'rl-p2', who: 'sable', cx: 0.5, cy: 0.46, g: 1.07 },
-{ v: 'rl-v3', img: 'rl-p3', who: 'kai', cx: 0.5, cy: 0.46, g: 1.05 },
-{ v: 'rl-v4', img: 'rl-p4', who: 'lux', cx: 0.5, cy: 0.5, g: 1 },
-{ v: 'rl-v5', img: 'rl-p5', who: 'rio', cx: 0.5, cy: 0.44, g: 1.05 },
-{ v: 'rl-v6', img: 'rl-p6', who: 'zola', cx: 0.5, cy: 0.5, g: 1.05 },
-{ v: 'rl-v7', img: 'rl-p7', who: 'sol', cx: 0.5, cy: 0.5, g: 1, full: true },
-{ v: 'rl-v8', img: 'rl-p8', who: 'atlas', cx: 0.5, cy: 0.5, g: 1.1, full: true }
+{ v: 'rl-v0', img: 'rl-p0', who: 'precious', cx: 0.5, cy: 0.46, g: 1.4 },
+{ v: 'rl-v1', img: 'rl-p1', who: 'reward', cx: 0.5, cy: 0.5, g: 1.1, full: true },
+{ v: 'rl-v2', img: 'rl-p2', who: 'mercy', cx: 0.5, cy: 0.46, g: 1.07 },
+{ v: 'rl-v3', img: 'rl-p3', who: 'faith', cx: 0.5, cy: 0.46, g: 1.05 },
+{ v: 'rl-v4', img: 'rl-p4', who: 'grace', cx: 0.5, cy: 0.5, g: 1 },
+{ v: 'rl-v5', img: 'rl-p5', who: 'yield', cx: 0.5, cy: 0.44, g: 1.05 },
+{ v: 'rl-v6', img: 'rl-p6', who: 'tender', cx: 0.5, cy: 0.5, g: 1.05 },
+{ v: 'rl-v7', img: 'rl-p7', who: 'praise', cx: 0.5, cy: 0.5, g: 1, full: true },
+{ v: 'rl-v8', img: 'rl-p8', who: 'tribute', cx: 0.5, cy: 0.5, g: 1.1, full: true }
 ];
 this.moments = [
 { v: 'rl-w0', img: 'rl-m0', cx: 0.5, cy: 0.3, w: 0.38 },
@@ -414,7 +414,7 @@ this.reach = { cx: 0.49, cy: 0.5, w: 0.48 };
 this.incomes = [['Tip', 500], ['Subscription', 1200], ['Pay-per-view', 800], ['Tip', 2000], ['Custom request', 6000], ['Subscription', 1200], ['Tip', 1000], ['Pay-per-view', 1500]];
 this.bills = [['Editor', 30000], ['Manager', 45000], ['Agency', 60000]];
 this.state = {
-who: 'nova', hov: -1, flash: 0,
+who: 'precious', hov: -1, flash: 0,
 feed: [
 { label: 'Custom request', amt: '+$60.00', cls: 'in' },
 { label: 'Tip', amt: '+$5.00', cls: 'in' },
@@ -1459,7 +1459,7 @@ const now = Date.now();
 const per = (n, was) => (this.ckT ? Math.round((n - was) * 1000 / Math.max(1, now - this.ckT)) : 0);
 const fps = per(this.fN || 0, this.ckN), up = per(this.sent, this.ckU);
 this.ckT = now; this.ckN = this.fN || 0; this.ckU = this.sent;
-L.push('build 1118-2113  ' + navigator.userAgent);
+L.push('build 1118-2212  ' + navigator.userAgent);
 L.push('view ' + window.innerWidth + 'x' + window.innerHeight + '  dpr ' + window.devicePixelRatio + '  q ' + this.q.toFixed(2) + '  fps ' + fps);
 L.push('film pictures sent ' + up + ' a second  reports ' + (window.HTMLVideoElement && HTMLVideoElement.prototype.requestVideoFrameCallback ? 'yes' : 'no'));
 L.push('less motion ' + yn('(prefers-reduced-motion: reduce)') + '  still ' + (this.still ? 'YES' : 'no') + '  webgl ' + (this.nogl ? 'NO' : 'yes') + '  plain ' + (this.filmOff ? 'YES' : 'no') + '  errors ' + (this.err || 0) + '  lost ' + (this.lostN || 0) + '  resting ' + (this.rest ? 'YES' : 'no'));
@@ -1569,7 +1569,7 @@ const s = this.state || {};
 const h = s.hov === undefined ? -1 : s.hov;
 const lc = (g) => ((h < 0 || (h < 4) !== (g < 4)) ? '' : (h === g ? 'on' : 'off'));
 return {
-who: s.who || 'nova',
+who: s.who || 'precious',
 feed: s.feed || [],
 c0: lc(0), c1: lc(1), c2: lc(2), c3: lc(3), c4: lc(4), c5: lc(5), c6: lc(6),
 amtcls: 'amt ' + ((s.flash || 0) === 0 ? '' : ((s.flash % 2) ? 'fa' : 'fb'))
