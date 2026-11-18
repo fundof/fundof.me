@@ -1,0 +1,1466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>fundof.me: the account for creators that only you control</title>
+<meta name="description" content="One place where your income lands, stays yours and gets spent. Open in seconds, with no application and no bank in the middle.">
+<link rel="canonical" href="https://fundof.me/">
+<meta name="theme-color" content="#000000">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Fundof">
+<meta property="og:title" content="fundof.me: the account for creators that only you control">
+<meta property="og:description" content="One place where your income lands, stays yours and gets spent. Open in seconds, with no application and no bank in the middle.">
+<meta property="og:url" content="https://fundof.me/">
+<meta property="og:image" content="https://fundof.me/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<style>
+@font-face { font-family: Geist; font-style: normal; font-weight: 400; font-display: swap; src: url(fonts/geist-400.woff2) format("woff2"); }
+@font-face { font-family: Geist; font-style: normal; font-weight: 500; font-display: swap; src: url(fonts/geist-500.woff2) format("woff2"); }
+@font-face { font-family: Geist; font-style: normal; font-weight: 700; font-display: swap; src: url(fonts/geist-700.woff2) format("woff2"); }
+@font-face { font-family: "Geist Mono"; font-style: normal; font-weight: 400; font-display: swap; src: url(fonts/geist-mono-400.woff2) format("woff2"); }
+@font-face { font-family: "Geist Mono"; font-style: normal; font-weight: 500; font-display: swap; src: url(fonts/geist-mono-500.woff2) format("woff2"); }
+@property --lw { syntax: '<length>'; inherits: false; initial-value: 1px; }
+html, body { margin: 0; background: #000; }
+a { color: #f3f3ef; }
+a:hover { color: #ffffff; }
+.rl { --ink: #f3f3ef; --mute: #9d9d97; --hair: rgba(243,243,239,.17); --pad: 56px; --hh: 860px; --fh: 820px; --sh: 760px; position: relative; overflow: hidden; background: #000; color: var(--ink); font-family: Geist, "Helvetica Neue", Arial, sans-serif; font-size: 17px; line-height: 1.45; -webkit-font-smoothing: antialiased; }
+.rl * { box-sizing: border-box; }
+.rl h1, .rl h2, .rl h3, .rl p, .rl ul { margin: 0; padding: 0; }
+.rl ul { list-style: none; }
+.rl a { text-decoration: none; }
+.rl .mono { font-family: "Geist Mono", ui-monospace, Menlo, monospace; font-size: 12px; line-height: 1.7; letter-spacing: .08em; text-transform: uppercase; color: var(--mute); }
+.rl .pt { color: var(--ink); font-weight: 500; }
+.rl .cv { position: absolute; left: 0; top: 0; width: 100%; height: 100%; display: block; }
+.rl .films { position: absolute; left: 0; top: 0; width: 2px; height: 2px; overflow: hidden; opacity: .01; }
+.rl .films video, .rl .films img { display: block; width: 2px; height: 2px; }
+
+.rl .bar { position: absolute; z-index: 3; left: 0; right: 0; top: 0; display: flex; justify-content: space-between; align-items: center; padding: 34px var(--pad) 0; }
+.rl .wm { font-size: 23px; font-weight: 500; letter-spacing: -.02em; }
+.rl .nav { display: flex; gap: 38px; }
+.rl .lk { --mx: 50%; position: relative; padding-bottom: 8px; color: var(--ink); background: linear-gradient(currentColor, currentColor) 0 100% / 100% 1px no-repeat; }
+.rl .lk::after { content: ""; position: absolute; left: 0; right: 0; bottom: -2px; height: 5px; background: radial-gradient(46px 2.5px at var(--mx) 50%, currentColor 35%, transparent 100%); opacity: 0; transition: opacity .25s; }
+.rl .lk:hover::after { opacity: 1; }
+
+.rl .hero { position: relative; height: var(--hh); min-height: 560px; }
+.rl .htext { position: absolute; z-index: 2; left: var(--pad); bottom: 58px; width: min(580px, calc(100% - 2 * var(--pad))); }
+.rl .h1 { font-size: clamp(33px, 3.4vw, 52px); line-height: 1.04; font-weight: 400; letter-spacing: -.035em; text-wrap: balance; }
+.rl .sub { margin-top: 24px; max-width: 470px; }
+.rl .plate { position: absolute; z-index: 2; right: var(--pad); bottom: 58px; }
+.rl .now { margin-top: 14px; color: var(--ink); }
+
+.rl .sec { position: relative; padding: 150px var(--pad) 0; }
+.rl .head { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 24px; align-items: start; }
+.rl .tag { grid-column: 1 / span 3; padding-top: 12px; }
+.rl .h2 { grid-column: 4 / span 8; max-width: 860px; font-size: clamp(29px, 3vw, 46px); line-height: 1.06; font-weight: 400; letter-spacing: -.032em; text-wrap: balance; }
+.rl .lead { grid-column: 4 / span 6; margin-top: 20px; font-size: 20px; color: var(--mute); }
+.rl .piece { position: relative; margin-top: 70px; }
+.rl .sun { position: absolute; z-index: 2; right: var(--pad); top: 84px; width: 380px; height: 210px; padding: 0; border: 0; border-radius: 0; background: none; cursor: pointer; text-align: left; appearance: none; -webkit-appearance: none; }
+.rl .sun:focus-visible { outline: 1px solid var(--ink); outline-offset: 6px; }
+.rl .sunv { position: absolute; left: 0; top: 0; width: 100%; height: 100%; clip-path: polygon(60% 0, 60.8% 0, 44.8% 100%, 44% 100%); transition: clip-path .95s cubic-bezier(.22, .8, .2, 1); }
+.rl .sunv video { display: block; width: 100%; height: 100%; object-fit: cover; }
+.rl .sun.on .sunv { clip-path: polygon(16% 0, 100% 0, 84% 100%, 0 100%); }
+.rl .sunb { position: absolute; left: 0; top: 0; width: 100%; height: 100%; pointer-events: none; filter: drop-shadow(0 0 4px rgba(255,176,88,.85)) drop-shadow(0 0 14px rgba(255,150,60,.42)); transition: opacity .5s; }
+.rl .sunb span { position: absolute; left: 0; top: 0; width: 100%; height: 100%; background: linear-gradient(to bottom, #ffe6b8, #ffb45c); clip-path: polygon(59.95% 0, 60.75% 0, 44.75% 100%, 43.95% 100%); }
+.rl .sun.on .sunb { opacity: 0; }
+.rl .sunl { position: absolute; left: 12%; bottom: 12px; opacity: 0; color: #f3f3ef; text-shadow: 0 1px 10px rgba(0,0,0,.75); transition: opacity .4s; }
+.rl .sunl .pt { color: #fff; }
+.rl .nb { display: none; }
+.rl .sun.on .sunl { opacity: 1; transition: opacity .6s .45s; }
+.rl .split { aspect-ratio: 1328 / 640; }
+.rl .lbs { display: contents; }
+.rl .lb { position: absolute; transform: translateY(-50%); transition: opacity .3s; }
+.rl .lb.off { opacity: .32; }
+.rl .l0 { left: 0; top: 18.6%; }
+.rl .l1 { left: 0; top: 49.2%; }
+.rl .l2 { left: 0; top: 73.2%; }
+.rl .l3 { left: 0; top: 90.6%; }
+.rl .r0 { right: 0; top: 32.9%; text-align: right; }
+.rl .r1 { right: 0; top: 75.2%; text-align: right; }
+.rl .r2 { right: 0; top: 92%; text-align: right; }
+.rl .m0 { left: 50%; top: 77%; transform: translate(-50%, 0); text-align: center; white-space: nowrap; }
+.rl .amt { display: inline-block; color: var(--mute); }
+.rl .amt.fa { animation: rl-fa 1.5s ease-out; }
+.rl .amt.fb { animation: rl-fb 1.5s ease-out; }
+@keyframes rl-fa { 0% { color: #fff; text-shadow: 0 0 14px rgba(255,255,255,.9); } 100% { color: #9d9d97; text-shadow: 0 0 0 rgba(255,255,255,0); } }
+@keyframes rl-fb { 0% { color: #fff; text-shadow: 0 0 14px rgba(255,255,255,.9); } 100% { color: #9d9d97; text-shadow: 0 0 0 rgba(255,255,255,0); } }
+
+.rl .under { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 24px; align-items: start; margin-top: 44px; }
+.rl .cap { grid-column: 1 / span 3; }
+.rl .say { grid-column: 4 / span 5; font-size: 20px; line-height: 1.4; color: var(--ink); text-wrap: pretty; }
+.rl .act { grid-column: 10 / span 3; display: flex; justify-content: flex-end; }
+.rl .btn { --lw: 1px; appearance: none; -webkit-appearance: none; border: 0; border-radius: 0; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; min-width: 190px; height: 54px; padding: 0 22px; background: repeating-linear-gradient(to bottom, #f3f3ef 0, #f3f3ef var(--lw), transparent var(--lw), transparent 4px); font: 500 12px/1 "Geist Mono", ui-monospace, Menlo, monospace; letter-spacing: .1em; text-transform: uppercase; color: var(--ink); transition: --lw .5s cubic-bezier(.2, .8, .2, 1); }
+.rl .btn span { padding: 7px 12px; background: #000; transition: background-color .3s, color .3s; }
+.rl .btn:hover { --lw: 4px; }
+.rl .btn:hover span { background: transparent; color: #000; }
+.rl .btn:active { --lw: 2px; }
+.rl .btn:focus-visible { outline: 1px solid var(--ink); outline-offset: 4px; }
+
+.rl .plates { position: relative; margin-top: 96px; }
+.rl .grid6 { position: relative; z-index: 1; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: 24px; row-gap: 58px; }
+.rl .grid6 li { position: relative; }
+.rl .art { aspect-ratio: 16 / 10; }
+.rl .grid6 h3 { margin-top: 20px; font-size: 20px; line-height: 1.25; font-weight: 500; letter-spacing: -.015em; }
+.rl .grid6 p { margin-top: 8px; max-width: 34ch; font-size: 16px; color: var(--mute); transition: color .3s; }
+.rl .grid6 p.word { margin-top: 14px; max-width: none; font-size: 12px; }
+.rl .grid6 .word + h3 { margin-top: 5px; }
+.rl .grid6 li:hover p { color: var(--ink); }
+.rl .grid6 .bdg { display: inline-block; margin-left: 10px; padding: 4px 7px 3px; border: 1px solid var(--hair); font: 400 10px/1 "Geist Mono", ui-monospace, Menlo, monospace; letter-spacing: .08em; text-transform: uppercase; color: var(--mute); vertical-align: 3px; white-space: nowrap; }
+.rl .grid6 p.fine, .rl .grid6 li:hover p.fine { margin-top: 10px; max-width: 40ch; font: 400 10.5px/1.55 "Geist Mono", ui-monospace, Menlo, monospace; letter-spacing: .02em; color: var(--mute); }
+.rl .row3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: 24px; margin-top: 64px; padding-top: 20px; border-top: 1px solid var(--hair); }
+.rl .row3 li { color: var(--ink); }
+
+.rl .bal { aspect-ratio: 1328 / 440; }
+.rl .blab { position: absolute; left: 0; top: 0; }
+.rl .feed { position: absolute; right: 0; top: 0; width: 270px; }
+.rl .feed p { display: flex; justify-content: space-between; gap: 16px; padding: 9px 0; border-top: 1px solid var(--hair); }
+.rl .feed p.fh { border-top: 0; padding-top: 0; }
+.rl .feed .in span + span { color: var(--ink); }
+.rl .feed .out span + span { color: var(--mute); }
+.rl .feed p.new { animation: rl-new .8s ease-out; }
+@keyframes rl-new { from { opacity: 0; translate: -14px 0; } to { opacity: 1; translate: 0 0; } }
+.rl .pay { position: absolute; right: 0; bottom: 0; }
+.rl .ink { display: none; }
+
+.rl .show { position: relative; margin-top: 150px; height: var(--sh); min-height: 420px; }
+.rl .splate { position: absolute; z-index: 2; right: var(--pad); bottom: 30px; }
+.rl .fin { position: relative; margin-top: 170px; height: var(--fh); min-height: 560px; }
+.rl .fin .cv { height: calc(100% - 78px); }
+.rl .ftext { position: absolute; z-index: 2; left: var(--pad); bottom: 136px; width: min(760px, calc(100% - 2 * var(--pad))); }
+.rl .doors { display: flex; flex-wrap: wrap; gap: 28px 64px; margin-top: 46px; }
+.rl .door { display: flex; flex-direction: column; gap: 6px; }
+.rl .dn { --mx: 50%; position: relative; padding-bottom: 10px; font-size: clamp(27px, 2.5vw, 38px); line-height: 1.1; letter-spacing: -.03em; color: var(--ink); background: linear-gradient(currentColor, currentColor) 0 100% / 100% 1px no-repeat; }
+.rl .dn::after { content: ""; position: absolute; left: 0; right: 0; bottom: -3px; height: 7px; background: radial-gradient(70px 3.5px at var(--mx) 50%, currentColor 35%, transparent 100%); opacity: 0; transition: opacity .25s; }
+.rl .door:hover .dn::after { opacity: 1; }
+.rl .fplate { position: absolute; z-index: 2; right: var(--pad); bottom: 136px; }
+.rl .foot { position: absolute; z-index: 2; left: var(--pad); right: var(--pad); bottom: 28px; display: flex; justify-content: space-between; gap: 20px; padding-top: 16px; border-top: 1px solid var(--hair); }
+
+.rl .wm { display: inline-flex; align-items: center; gap: 10px; }
+.rl .wm .mk { display: block; flex: none; }
+.rl .foot .hm { display: block; flex: none; }
+.rl .mono .nm { text-transform: none; }
+.rl .legal { margin: 0; padding: 22px var(--pad) 36px; max-width: 1180px; font: 400 10.5px/1.6 "Geist Mono", ui-monospace, Menlo, monospace; letter-spacing: .02em; color: var(--mute); }
+.rl.site-com #account, .rl.site-me #platform, .rl.site-me #jacket { display: none; }
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .rl .rv { animation: rl-in linear both; animation-timeline: view(); animation-range: entry 0% entry 90%; }
+  }
+}
+@keyframes rl-in { from { opacity: 0; translate: 0 28px; } to { opacity: 1; translate: 0 0; } }
+
+.rl.nogl .hero .films, .rl.nogl .fin .films, .rl.nogl .show .films, .rl.nofilm .hero .films, .rl.nofilm .fin .films, .rl.nofilm .show .films { width: 100%; height: 100%; opacity: 1; }
+.rl.nogl .films video, .rl.nogl .films img, .rl.nofilm .films video, .rl.nofilm .films img { display: none; }
+.rl.nogl #rl-v0, .rl.nogl #rl-ir, .rl.nogl #rl-m5, .rl.nofilm #rl-v0, .rl.nofilm #rl-ir, .rl.nofilm #rl-m5 { display: block; width: 100%; height: 100%; object-fit: cover; }
+.rl.nogl .hero::after, .rl.nogl .fin::after, .rl.nogl .show::after, .rl.nofilm .hero::after, .rl.nofilm .fin::after, .rl.nofilm .show::after { content: ""; position: absolute; left: 0; top: 0; width: 100%; height: 100%; background: repeating-linear-gradient(to bottom, transparent 0, transparent 3px, #000 3px, #000 8px); }
+.rl.nogl .hero .cv, .rl.nogl .fin .cv, .rl.nogl .show .cv, .rl.nofilm .hero .cv, .rl.nofilm .fin .cv, .rl.nofilm .show .cv { display: none; }
+.rl.nogl .split, .rl.nogl .bal { aspect-ratio: auto; min-height: 120px; }
+.rl.nogl .art, .rl.nofilm .art { display: none; }
+
+@media (max-width: 900px) {
+  .rl { --pad: 20px; font-size: 16px; }
+  .rl .bar { padding-top: 22px; }
+  .rl .wm { font-size: 21px; }
+  .rl .nav { gap: 20px; }
+  .rl .nav .lk { font-size: 11px; }
+  .rl .htext { bottom: 34px; }
+  .rl .sub { margin-top: 18px; }
+  .rl .plate { right: auto; left: var(--pad); bottom: auto; top: 76px; }
+  .rl .plate .more { display: none; }
+  .rl .now { margin-top: 0; }
+  .rl .sec { padding-top: 104px; }
+  .rl .head { display: block; }
+  .rl .tag { padding-top: 0; margin-bottom: 18px; }
+  .rl .lead { margin-top: 16px; font-size: 18px; }
+  .rl .piece { margin-top: 44px; }
+  .rl .sun { top: 14px; width: 250px; height: 150px; }
+  .rl .sunl { left: auto; right: 103%; bottom: auto; top: 8px; font-size: 10.5px; line-height: 1.55; white-space: nowrap; text-shadow: none; }
+  .rl .nb { display: inline; }
+  .rl .split { aspect-ratio: auto; display: flex; flex-direction: column; margin-left: calc(-1 * var(--pad)); margin-right: calc(-1 * var(--pad)); }
+  .rl .split .cv { position: relative; order: 2; height: 300px; }
+  .rl .lbs { display: flex; flex-wrap: wrap; gap: 4px 18px; padding: 0 var(--pad); }
+  .rl .lbs.lin { order: 1; margin-bottom: 14px; }
+  .rl .lbs.lout { order: 4; margin-top: 6px; flex-direction: column; gap: 0; }
+  .rl .lb { position: static; transform: none; text-align: left; }
+  .rl .lbs.lout .lb { display: flex; justify-content: space-between; padding: 9px 0; border-top: 1px solid var(--hair); }
+  .rl .lbs.lout .lb br { display: none; }
+  .rl .m0 { order: 3; padding: 14px var(--pad) 18px; text-align: left; white-space: normal; }
+  .rl .under { display: block; margin-top: 30px; }
+  .rl .say { margin-top: 18px; font-size: 18px; }
+  .rl .act { margin-top: 26px; justify-content: flex-start; }
+  .rl .plates { margin-top: 60px; }
+  .rl .grid6 { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 16px; row-gap: 40px; }
+  .rl .grid6 h3 { margin-top: 14px; font-size: 18px; }
+  .rl .grid6 p { font-size: 15px; }
+  .rl .row3 { grid-template-columns: 1fr; row-gap: 6px; margin-top: 44px; }
+  .rl .bal { aspect-ratio: auto; display: flex; flex-direction: column; }
+  .rl .bal .cv { position: relative; order: 2; height: 230px; margin-top: 12px; }
+  .rl .blab { position: static; order: 1; }
+  .rl .feed { position: static; order: 3; width: 100%; margin-top: 16px; }
+  .rl .pay { position: static; order: 4; align-self: flex-start; margin-top: 22px; }
+  .rl .show { margin-top: 96px; }
+  .rl .show .cv { height: calc(100% - 92px); }
+  .rl .splate { right: auto; left: var(--pad); bottom: 0; }
+  .rl .fin { margin-top: 110px; }
+  .rl .fin .cv { height: calc(100% - 118px); }
+  .rl .ftext { bottom: 150px; }
+  .rl .doors { gap: 22px 40px; margin-top: 30px; }
+  .rl .fplate { display: none; }
+  .rl .foot { flex-direction: column; gap: 2px; bottom: 22px; }
+}
+@media (max-width: 520px) {
+  .rl .grid6 { grid-template-columns: 1fr; }
+  .rl .sun { width: 216px; height: 132px; }
+}
+@media (max-width: 900px) {
+  .rl .foot .hm { margin-top: 12px; }
+  .rl .fin .cv { height: calc(100% - 156px); }
+  .rl .ftext { bottom: 186px; }
+}
+</style>
+</head>
+<body>
+<div id="rl-root" class="rl site-me">
+
+<header class="bar">
+<a class="wm" href="#top"><svg class="mk" width="16.8" height="20" viewBox="0 0 16.8 20" aria-hidden="true"><rect x="0" y="0.84" width="16.8" height="2.32" fill="currentColor"/><rect x="0" y="4.84" width="5.71" height="2.32" fill="currentColor"/><rect x="0" y="8.84" width="12.43" height="2.32" fill="currentColor"/><rect x="0" y="12.84" width="5.71" height="2.32" fill="currentColor"/><rect x="0" y="16.84" width="5.71" height="2.32" fill="currentColor"/></svg>fundof.me</a>
+<nav class="nav"><a class="mono lk" href="https://fundof.com">For platforms</a><a class="mono lk" href="#account">For creators</a></nav>
+</header>
+
+<section id="top" class="hero">
+<canvas id="rl-c0" class="cv" aria-hidden="true"></canvas>
+<div class="films" aria-hidden="true">
+<img id="rl-p0" src="media/nova.jpg" alt="" decoding="async">
+<img id="rl-p1" src="media/iris.jpg" alt="" decoding="async">
+<img id="rl-p2" src="media/sable.jpg" alt="" decoding="async">
+<img id="rl-p3" src="media/kai.jpg" alt="" decoding="async">
+<img id="rl-p4" src="media/lux.jpg" alt="" decoding="async">
+<img id="rl-p5" src="media/rio.jpg" alt="" decoding="async">
+<img id="rl-p6" src="media/zola.jpg" alt="" decoding="async">
+<img id="rl-p7" src="media/sol.jpg" alt="" decoding="async">
+<img id="rl-p8" src="media/atlas.jpg" alt="" decoding="async">
+<video id="rl-v0" src="media/nova.mp4" preload="auto" playsinline muted></video>
+<video id="rl-v1" src="media/iris.mp4" preload="none" playsinline muted></video>
+<video id="rl-v2" src="media/sable.mp4" preload="none" playsinline muted></video>
+<video id="rl-v3" src="media/kai.mp4" preload="none" playsinline muted></video>
+<video id="rl-v4" src="media/lux.mp4" preload="none" playsinline muted></video>
+<video id="rl-v5" src="media/rio.mp4" preload="none" playsinline muted></video>
+<video id="rl-v6" src="media/zola.mp4" preload="none" playsinline muted></video>
+<video id="rl-v7" src="media/sol.mp4" preload="none" playsinline muted></video>
+<video id="rl-v8" src="media/atlas.mp4" preload="none" playsinline muted></video>
+</div>
+<div id="rl-ht" class="htext">
+<h1 class="h1">The account for<br>creators that only<br>you control.</h1>
+<p class="mono sub"><span class="pt">Coming soon.</span> One place where your income lands, stays yours and gets spent. Built on <span class="nm">Fundof</span>, money rails for the creator economy.</p>
+</div>
+<div id="rl-pl" class="plate">
+<p class="mono more"><span class="pt">Rails, 2026</span><br>Live film drawn by one hundred lines<br>Each line is one dollar</p>
+<p class="mono now">Now showing <span id="rl-who">nova</span></p>
+</div>
+</section>
+
+<section id="platform" class="sec">
+<div class="head rv">
+<p class="mono tag"><span class="pt"><span class="nm">Fundof</span> platform</span><br>For creator platforms</p>
+<h2 class="h2">One API to get paid by fans and pay creators in seconds, anywhere in the world.</h2>
+</div>
+<div class="piece split">
+<canvas id="rl-c1" class="cv" aria-hidden="true"></canvas>
+<div class="lbs lin">
+<p id="rl-lb0" class="mono lb l0">Subscriptions</p>
+<p id="rl-lb1" class="mono lb l1">Tips</p>
+<p id="rl-lb2" class="mono lb l2">Pay-per-view</p>
+<p id="rl-lb3" class="mono lb l3">Custom requests</p>
+</div>
+<p class="mono lb m0"><span class="pt"><span class="nm">Fundof</span> checkout</span><br>Fans pay with the asset they hold</p>
+<div class="lbs lout">
+<p id="rl-lb4" class="mono lb r0"><span class="pt">Creator 80%</span><br><span class="amt">$80.00</span></p>
+<p id="rl-lb5" class="mono lb r1"><span class="pt">Platform 15%</span><br><span class="amt">$15.00</span></p>
+<p id="rl-lb6" class="mono lb r2"><span class="pt">Agency 5%</span><br><span class="amt">$5.00</span></p>
+</div>
+</div>
+<div class="under">
+<p class="mono cap"><span class="pt">One hundred dollars, 2026</span><br>One payment, one line for each dollar</p>
+<p class="say">An example: one sale of $100, split the way you set it. Every party is paid at the same moment, into an account only they control.</p>
+<div class="act"><button id="rl-send" class="btn" type="button"><span>Send $100</span></button></div>
+</div>
+<div class="plates" id="rl-g1">
+<canvas id="rl-c4" class="cv" aria-hidden="true"></canvas>
+<div class="films" aria-hidden="true"><img id="rl-ga" alt="" decoding="async"><video id="rl-gva" preload="none" playsinline muted loop></video></div>
+<ul class="grid6">
+<li><div class="art"></div><p class="mono word"><span class="pt">W</span></p><h3>Every way fans pay</h3><p>Subscriptions, tips, pay-per-view and custom requests in one API.</p></li>
+<li><div class="art"></div><p class="mono word"><span class="pt">One tap</span></p><h3>Card checkout <span class="bdg">Coming soon</span></h3><p>Fans without digital dollars pay by card inside your checkout.</p><p class="fine">Provided by a licensed partner. Availability depends on your country and requires a short identity check.</p></li>
+<li><div class="art"></div><p class="mono word"><span class="pt">Splits</span></p><h3>Automatic splits</h3><p>Platform, creator, agency and referrer are each paid their share on every sale.</p></li>
+<li><div class="art"></div><p class="mono word"><span class="pt">Ping</span></p><h3>Payouts in seconds</h3><p>Earnings reach the creator at once. No weekly cycle, no minimum.</p></li>
+<li><div class="art"></div><p class="mono word"><span class="pt">Locked in</span></p><h3>Own your funds</h3><p>Platforms and creators hold their own keys. Nothing is pooled.</p></li>
+<li><div class="art"></div><p class="mono word"><span class="pt">AFK</span></p><h3>Built for developers</h3><p>A clear API, a sandbox with test funds, ready-made checkout components and webhooks for every event. Free to sign up.</p></li>
+</ul>
+</div>
+<ul class="row3">
+<li class="mono">Payments are final</li>
+<li class="mono">No merchant account to apply for</li>
+<li class="mono">No payout holds</li>
+</ul>
+</section>
+
+<section id="jacket" class="show">
+<canvas id="rl-c6" class="cv" aria-hidden="true"></canvas>
+<div class="films" aria-hidden="true">
+<img id="rl-m0" alt="" loading="lazy" decoding="async">
+<img id="rl-m1" alt="" loading="lazy" decoding="async">
+<img id="rl-m2" alt="" loading="lazy" decoding="async">
+<img id="rl-m3" alt="" loading="lazy" decoding="async">
+<img id="rl-m4" alt="" loading="lazy" decoding="async">
+<img id="rl-m5" alt="" loading="lazy" decoding="async">
+<video id="rl-w0" preload="none" playsinline muted></video>
+<video id="rl-w1" preload="none" playsinline muted></video>
+<video id="rl-w2" preload="none" playsinline muted></video>
+<video id="rl-w3" preload="none" playsinline muted></video>
+<video id="rl-w4" preload="none" playsinline muted></video>
+</div>
+<p id="rl-sp" class="mono splate"><span class="pt">The jacket, 2026</span><br>Live film drawn by one hundred lines<br><span id="rl-ttl">The silhouette</span></p>
+</section>
+
+<section id="account" class="sec">
+<div class="head rv">
+<p class="mono tag"><span class="pt nm">fundof.me</span><br>For creators</p>
+<h2 class="h2">Your earnings, in your hands.</h2>
+<p class="lead">Open in seconds, with no application and no bank in the middle.</p>
+</div>
+<button id="rl-sun" class="sun" type="button" aria-label="Seeker">
+<span class="sunv"><video id="rl-vs" src="media/seeker.mp4" poster="media/seeker.jpg" preload="none" playsinline muted loop></video></span>
+<span class="sunb"><span></span></span>
+<span class="mono sunl"><span class="pt">Seeker, 2026</span><br>Color film,<br class="nb"> one line of light</span>
+</button>
+<div class="piece bal">
+<canvas id="rl-c2" class="cv" aria-hidden="true"></canvas>
+<canvas id="rl-ink" class="ink" width="1600" height="602" aria-hidden="true"></canvas>
+<p class="mono blab"><span class="pt">Balance</span><br>In dollars</p>
+<div class="feed mono">
+<p class="fh"><span class="pt">Latest</span><span>Digital dollars</span></p>
+<div id="rl-feed"></div>
+</div>
+<button id="rl-pay" class="btn pay" type="button"><span>Pay</span></button>
+</div>
+<div class="under">
+<p class="mono cap"><span class="pt">Balance, 2026</span><br>A number drawn by one hundred lines</p>
+<p class="say">No chains, addresses or network fees on screen. One balance in dollars and one button to pay.</p>
+</div>
+<div class="plates" id="rl-g2">
+<canvas id="rl-c5" class="cv" aria-hidden="true"></canvas>
+<div class="films" aria-hidden="true"><img id="rl-gb" src="media/grid-creators.jpg" alt="" decoding="async"><video id="rl-gvb" src="media/grid-creators.mp4" preload="none" playsinline muted loop></video></div>
+<ul class="grid6">
+<li><div class="art"></div><p class="mono word"><span class="pt">LFG</span></p><h3>Open in seconds</h3><p>No application and no waiting. Sign up with your phone or email and you are in.</p></li>
+<li><div class="art"></div><p class="mono word"><span class="pt">The bag</span></p><h3>One dollar balance</h3><p>Everything you earn arrives as digital dollars (USDT) in a single balance.</p></li>
+<li><div class="art"></div><p class="mono word"><span class="pt">Receipts</span></p><h3>Income at a glance</h3><p>Earnings by source and by month, ready to export for your accountant.</p></li>
+<li><div class="art"></div><p class="mono word"><span class="pt">IRL</span></p><h3>A card on your balance <span class="bdg">Coming soon</span></h3><p>Pay online and in stores straight from your balance.</p><p class="fine">Provided by a licensed partner. Availability depends on your country and requires a short identity check.</p></li>
+<li><div class="art"></div><p class="mono word"><span class="pt">GG</span></p><h3>Pay any invoice <span class="bdg">Coming soon</span></h3><p>Rent, staff and suppliers paid to their bank account in local currency.</p><p class="fine">Provided by a licensed partner. Availability depends on your country and requires a short identity check.</p></li>
+<li><div class="art"></div><p class="mono word"><span class="pt">Link in bio</span></p><h3>Your pay page</h3><p>fundof.me/yourname for tips, commissions and invoices, under the name your audience knows.</p></li>
+</ul>
+</div>
+<ul class="row3">
+<li class="mono">Only you hold the keys</li>
+<li class="mono">Stage name in public, legal name private</li>
+<li class="mono">Income statements to show a landlord or a lender</li>
+</ul>
+</section>
+
+<section id="reach" class="fin">
+<canvas id="rl-c3" class="cv" aria-hidden="true"></canvas>
+<div class="films" aria-hidden="true">
+<img id="rl-ir" src="media/reach.jpg" alt="" decoding="async">
+</div>
+<div id="rl-ft" class="ftext">
+<h2 class="h1">You earned it. fundof.me keeps it within your reach.</h2>
+<div class="doors">
+<a class="door" href="https://fundof.com"><span class="mono">For platforms</span><span class="dn">fundof.com</span></a>
+</div>
+</div>
+<p id="rl-fp" class="mono fplate"><span class="pt">Within reach, 2026</span><br>A photograph behind one hundred lines</p>
+<footer class="foot mono"><span class="pt nm">fundof.me</span><span>Built on <span class="nm">Fundof</span>. <span class="nm">Fundof</span> is built on Hedles, infrastructure that is already live.</span><svg class="hm" width="172" height="20" viewBox="0 0 172 20" role="img" aria-label="Fundof, USDT, Hedles, 2026"><path d="M4 0H16L20 4V16L16 20H4L0 16V4Z" fill="#c8a96e"/><rect x="6" y="5.24" width="8.74" height="1.21" fill="#000"/><rect x="6" y="7.32" width="2.97" height="1.21" fill="#000"/><rect x="6" y="9.4" width="6.46" height="1.21" fill="#000"/><rect x="6" y="11.48" width="2.97" height="1.21" fill="#000"/><rect x="6" y="13.56" width="2.97" height="1.21" fill="#000"/><path d="M36 0H57A10 10 0 0 1 57 20H36A10 10 0 0 1 36 0Z" fill="#c8a96e"/><text x="46.9" y="12.88" text-anchor="middle" font-family="Geist Mono, ui-monospace, Menlo, monospace" font-size="8" font-weight="500" letter-spacing="0.64" fill="#000">USDT</text><path d="M79.4 0H121.6L128 10L121.6 20H79.4L73 10Z" fill="#c8a96e"/><text x="100.9" y="12.88" text-anchor="middle" font-family="Geist Mono, ui-monospace, Menlo, monospace" font-size="8" font-weight="500" letter-spacing="0.64" fill="#000">HEDLES</text><path d="M138 0H168L172 4V16L168 20H138L134 16V4Z" fill="#c8a96e"/><text x="153.4" y="12.88" text-anchor="middle" font-family="Geist Mono, ui-monospace, Menlo, monospace" font-size="8" font-weight="500" letter-spacing="0.64" fill="#000">2026</text></svg></footer>
+</section>
+<p class="legal">Fundof is a technology provider. Fundof is not a bank, does not accept deposits and does not hold or control user funds. Accounts are self-custody: only the user can access them. &quot;Digital dollars&quot; refers to USDT, which is issued by Tether and is not issued, backed or guaranteed by Fundof. Card, bank transfer and conversion services are provided by licensed third parties under their own terms, are subject to identity checks and are not available in all countries. Nothing on this site is financial, legal or tax advice.</p>
+
+</div>
+<script>
+class Site {
+constructor() {
+this.films = [
+{ v: 'rl-v0', img: 'rl-p0', who: 'nova', cx: 0.5, cy: 0.46, g: 1.4 },
+{ v: 'rl-v1', img: 'rl-p1', who: 'iris', cx: 0.5, cy: 0.5, g: 1.1, full: true },
+{ v: 'rl-v2', img: 'rl-p2', who: 'sable', cx: 0.5, cy: 0.46, g: 1.07 },
+{ v: 'rl-v3', img: 'rl-p3', who: 'kai', cx: 0.5, cy: 0.46, g: 1.05 },
+{ v: 'rl-v4', img: 'rl-p4', who: 'lux', cx: 0.5, cy: 0.5, g: 1 },
+{ v: 'rl-v5', img: 'rl-p5', who: 'rio', cx: 0.5, cy: 0.44, g: 1.05 },
+{ v: 'rl-v6', img: 'rl-p6', who: 'zola', cx: 0.5, cy: 0.5, g: 1.05 },
+{ v: 'rl-v7', img: 'rl-p7', who: 'sol', cx: 0.5, cy: 0.5, g: 1, full: true },
+{ v: 'rl-v8', img: 'rl-p8', who: 'atlas', cx: 0.5, cy: 0.5, g: 1.1, full: true }
+];
+this.moments = [
+{ v: 'rl-w0', img: 'rl-m0', title: 'The silhouette', cx: 0.5, cy: 0.3, w: 0.38 },
+{ v: 'rl-w1', img: 'rl-m1', title: 'The blank look', cx: 0.51, cy: 0.3, w: 0.6 },
+{ v: 'rl-w2', img: 'rl-m2', title: 'Looking away', cx: 0.5, cy: 0.3, w: 0.58 },
+{ v: 'rl-w3', img: 'rl-m3', title: 'Close', cx: 0.5, cy: 0.3, w: 0.76 },
+{ v: 'rl-w4', img: 'rl-m4', title: 'Over the shoulder', cx: 0.5, cy: 0.3, w: 0.3 },
+{ img: 'rl-m5', still: true, hold: 6.5, title: 'The jacket, from behind', cx: 0.5, cy: 0.3, w: 0.46 }
+];
+this.reach = { cx: 0.49, cy: 0.5, w: 0.48 };
+this.incomes = [['Tip', 500], ['Subscription', 1200], ['Pay-per-view', 800], ['Tip', 2000], ['Custom request', 6000], ['Subscription', 1200], ['Tip', 1000], ['Pay-per-view', 1500]];
+this.bills = [['Editor', 30000], ['Manager', 45000], ['Agency', 60000]];
+this.state = {
+who: 'nova', ttl: 'The silhouette', hov: -1, flash: 0, sun: false,
+feed: [
+{ label: 'Custom request', amt: '+$60.00', cls: 'in' },
+{ label: 'Tip', amt: '+$5.00', cls: 'in' },
+{ label: 'Subscription', amt: '+$12.00', cls: 'in' }
+]
+};
+this.dpr = 1;
+this.q = 1;
+this.ptr = { x: -9999, y: -9999, t: -100, on: false };
+this.ls = {};
+const stage = () => ({ cur: 0, nxt: -1, mix: 0, has: false, poster: false, inn: 0, gain: 0, lastA: -1, bok: false, named: false, held: false, stall: 0, lwa: 0, stillPut: -1 });
+this.top = { c: 's0', key: 'h', films: this.films, st: stage(), curve: [1, 1, 0], fade: true,
+pos: (w) => [w ? 0.64 : 0.5, w ? 0.47 : 0.4], sh: (w) => [w ? 0.66 : 0, 0.8, w ? 0 : 0.7],
+z0: ['rl-ht', 0.78, 0.95, 1.1, 1.15], z1: ['rl-pl', 0.8, 1.1, 0.8, 1.1], say: (f) => this.setState({ who: f.who }) };
+this.show = { c: 's6', key: 'j', films: this.moments, st: stage(), curve: [1.95, 1.22, 0.9], fade: false,
+pos: () => [0.5, 0.5], sh: () => [0, 0, 0],
+z0: ['rl-sp', 0.75, 1.05, 0.75, 1.05], z1: null, say: (f) => this.setState({ ttl: f.title }) };
+this.sp = { inn: 0, wave: -100, gap: 0.6, done: true };
+this.bl = { cents: 1248000, shown: 1248000, from: 1248000, t0: 0, evT: -100, evN: 0, dir: 1, next: -1, i: 0, b: 0, inn: 0, dirty: true, iw: 0, ih: 0 };
+this.fn = { inn: 0, has: false, ph: 0, lastA: -1 };
+this.pa = { c: 's4', img: 'rl-ga', vid: 'rl-gva', box: 'rl-g1', op: new Float32Array(6), tiles: new Float32Array(24), has: false, lastA: -1 };
+this.pb = { c: 's5', img: 'rl-gb', vid: 'rl-gvb', box: 'rl-g2', op: new Float32Array(6), tiles: new Float32Array(24), has: false, lastA: -1 };
+this.el = (id) => document.getElementById(id);
+this.money = (c) => {
+const n = Math.abs(Math.round(c));
+const d = Math.floor(n / 100);
+const s = String(d).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+const r = String(n % 100).padStart(2, '0');
+return '$' + s + '.' + r;
+};
+
+this.VS = `#version 300 es
+in vec2 a;
+void main(){ gl_Position = vec4(a, 0., 1.); }`;
+
+this.FS = `#version 300 es
+precision highp float;
+uniform vec2 uRes;
+uniform float uN, uT, uDpr, uMix, uOpen, uIn, uGain, uGl, uDisp;
+// One value per film, each from its own height, so a film of any size is read at the same share per line.
+uniform vec2 uLod;
+// The curve the light is read through. x: steepness, y: gain, z: lift. 1, 1, 0 draws exactly as before.
+// For her films: 1.95, 1.22, 0.9.
+uniform vec3 uCurve;
+uniform sampler2D uA, uB;
+uniform vec4 uFa, uFb, uPtr, uQ0, uQ1;
+uniform vec3 uEv;
+uniform vec2 uGn, uSh;
+uniform float uSb;
+out vec4 o;
+float h1(float n){ return fract(sin(n * 91.345) * 47453.5453); }
+float h2(vec2 p){ return fract(sin(dot(p, vec2(12.9898, 78.233))) * 43758.5453); }
+float inside(vec2 q){ return smoothstep(0., .03, q.x) * smoothstep(1., .97, q.x) * smoothstep(-.01, .0, q.y) * smoothstep(1.01, 1., q.y); }
+float chroma(vec3 c){ return max(c.r, max(c.g, c.b)) - min(c.r, min(c.g, c.b)); }
+// x: the light the lines are drawn from. y: how much gold is near.
+// Two curves in one: a steep one gives a flash-lit face its shape, and a lifted one lets the dark satin draw,
+// so the lines follow the sheen of the jacket: the shoulders, the seams, the waist.
+vec2 lum(sampler2D s, vec4 f, vec2 uv, float lod){
+  vec2 q = (uv - .5) * f.xy + .5 - f.zw;
+  vec3 c = textureLod(s, q, lod).rgb;
+  float m = inside(q);
+  float l = clamp((c.r - .02) / .98, 0., 1.) * m;
+  return vec2(max(pow(l, uCurve.x) * uCurve.y, uCurve.z * pow(l, .8)), smoothstep(.015, .08, chroma(c)) * m);
+}
+// The film itself. In a: how much of it is gold.
+vec4 film(sampler2D s, vec4 f, vec2 uv){
+  vec2 q = (uv - .5) * f.xy + .5 - f.zw;
+  vec3 c = textureLod(s, q, 0.).rgb;
+  float m = inside(q);
+  return vec4(c * m, smoothstep(.06, .15, chroma(c)) * m);
+}
+float quiet(vec2 p, vec4 z){
+  if (z.z <= 0.) return 0.;
+  return smoothstep(1., .35, length((p - z.xy) / z.zw));
+}
+void main(){
+  vec2 p = vec2(gl_FragCoord.x, uRes.y - gl_FragCoord.y);
+  vec2 uv = p / uRes;
+  float pitch = uRes.y / uN;
+  float i0 = floor(p.y / pitch);
+  float lens = uPtr.w * smoothstep(uPtr.z, uPtr.z * .62, distance(p, uPtr.xy));
+  float edge = lens * (1. - lens) * 4.;
+  vec3 col = vec3(0.);
+  float halo = 0., opn = 0., sn = 0.;
+  for (int k = -1; k <= 2; k++) {
+    float idx = i0 + float(k);
+    if (idx < 0. || idx >= uN) continue;
+    float yc = (idx + .5) * pitch;
+    vec2 cu = vec2(uv.x, yc / uRes.y);
+    float r1 = h1(idx + 1.7), r2 = h1(idx * 1.31 + 9.2);
+    float s = 0.;
+    vec2 la = lum(uA, uFa, cu, uLod.x);
+    // next to the gold the lines stay thin, so the gold stands clear of them
+    float L = la.x * (1. - la.y) * uGn.x, D = lum(uA, uFa, cu, uLod.x + 1.5).x * uGn.x;
+    if (uMix > 0.) {
+      s = smoothstep(0., 1., clamp(uMix * 1.9 - r1 * .5 - uv.x * .4, 0., 1.));
+      vec2 lc = lum(uB, uFb, cu, uLod.y);
+      float lb = lc.x * (1. - lc.y) * uGn.y, db = lum(uB, uFb, cu, uLod.y + 1.5).x * uGn.y;
+      float dip = 1. - .6 * sin(3.14159 * s);
+      L = mix(L, lb, s) * dip;
+      D = mix(D, db, s) * dip;
+    }
+    L = pow(clamp(L * 1.2, 0., 1.), .85) * uGain;
+    D = clamp(D * 1.2, 0., 1.) * uGain;
+    float op = max(lens, smoothstep(0., 1., clamp(uOpen * 1.7 - r2 * .7, 0., 1.)));
+    if (k == 0) { opn = op; sn = s; }
+    float wav = pitch * (.09 * sin(uv.x * 6. + uT * .5 + idx * .31) + .05 * sin(uv.x * 17. - uT * .8 + idx * 1.3));
+    float ycd = yc - (uDisp * pitch * D + wav) * (1. - op);
+    float gt = uT * (.03 + .05 * r1) + r2 * 7.;
+    float g = step(h1(floor(gt) + idx * 7.13), uGl) * exp(-pow((uv.x - (fract(gt) * 1.3 - .15)) / .03, 2.));
+    float et = (uT - uEv.x) / .9;
+    if (et > 0. && et < 1.4) {
+      float ex = uEv.z > 0. ? et * 1.2 - .1 : 1.1 - et * 1.2;
+      g += step(r2, uEv.y) * exp(-pow((uv.x - ex + (r1 - .5) * .12) / .035, 2.));
+    }
+    float hf = pitch * .5 * (.05 + .57 * L) + .5 * uDpr * g;
+    hf = max(hf, .4 * uDpr);
+    hf = mix(hf, pitch * .5 + 1., op);
+    float br = .3 + .7 * clamp(L * 1.7, 0., 1.) + .8 * g;
+    br = mix(br, L, smoothstep(0., .55, op));
+    float fm = smoothstep(0., .05, uIn * 1.7 - r1 * .6 - uv.x);
+    float f = uDpr * .6 * (.15 + .85 * L) * (1. + 3. * edge) * (1. - op);
+    float dy = p.y - ycd;
+    vec3 a = clamp(hf - abs(vec3(dy - f, dy, dy + f)) + .5, 0., 1.);
+    col = max(col, a * br * fm);
+    float sg = pitch * .55;
+    halo = max(halo, L * exp(-dy * dy / (2. * sg * sg)) * fm * (1. - op));
+  }
+  col += halo * .13;
+  float q = max(quiet(p, uQ0), quiet(p, uQ1));
+  col *= 1. - .78 * q;
+  vec4 fc = film(uA, uFa, uv);
+  float fa = clamp((fc.r - .02) / .98, 0., 1.) * uGn.x;
+  if (uMix > 0.) {
+    vec4 fd = film(uB, uFb, uv);
+    fa = mix(fa, clamp((fd.r - .02) / .98, 0., 1.) * uGn.y, sn);
+    fc = mix(fc, fd, sn);
+  }
+  fa = pow(clamp(fa * 1.1, 0., 1.), .9) * uGain;
+  col = mix(col, vec3(fa) * (1. - .55 * q), smoothstep(.2, 1., opn));
+  // the gold: where the film has color, the lines give way and the gold stands solid
+  col = mix(col, fc.rgb * (1. - .55 * q), fc.a * smoothstep(.55, 1., uGain));
+  col *= clamp(1. - uSh.x * smoothstep(.5, 0., uv.x) - uSh.y * smoothstep(150. * uDpr, 0., p.y) - uSb * smoothstep(.5, .95, uv.y), 0., 1.);
+  col += (h2(p + fract(uT) * 61.) - .5) * .014;
+  o = vec4(col, 1.);
+}`;
+
+this.FS2 = `#version 300 es
+precision highp float;
+uniform vec2 uRes;
+uniform float uT, uDpr, uWave, uHov, uIn, uThin, uDur;
+uniform vec4 uX;
+uniform vec2 uXe;
+uniform vec3 uL, uR;
+uniform vec2 uM;
+out vec4 o;
+float h1(float n){ return fract(sin(n * 91.345) * 47453.5453); }
+float h2(vec2 p){ return fract(sin(dot(p, vec2(12.9898, 78.233))) * 43758.5453); }
+float sm(float x){ x = clamp(x, 0., 1.); return x * x * x * (x * (x * 6. - 15.) + 10.); }
+void main(){
+  vec2 p = vec2(gl_FragCoord.x, uRes.y - gl_FragCoord.y);
+  float u = p.x / uRes.x;
+  float H = uRes.y;
+  float t1 = sm((u - uX.x) / (uX.y - uX.x));
+  float t2 = sm((u - uX.z) / (uX.w - uX.z));
+  float b = mix(mix(uL.y, uM.y, t1), uR.y, t2) * H;
+  float tw = uT - uWave;
+  vec3 col = vec3(0.);
+  float glow = 0.;
+  for (int s = 0; s < 6; s++) {
+    float s0, s1, gl, gr;
+    if (s == 0) { s0 = 0.; s1 = 40.; gl = 0.; gr = 0.; }
+    else if (s == 1) { s0 = 40.; s1 = 70.; gl = 1.; gr = 0.; }
+    else if (s == 2) { s0 = 70.; s1 = 80.; gl = 2.; gr = 0.; }
+    else if (s == 3) { s0 = 80.; s1 = 90.; gl = 2.; gr = 1.; }
+    else if (s == 4) { s0 = 90.; s1 = 95.; gl = 3.; gr = 1.; }
+    else { s0 = 95.; s1 = 100.; gl = 3.; gr = 2.; }
+    float a = mix(mix(uL.x + uL.z * gl, uM.x, t1), uR.x + uR.z * gr, t2) * H;
+    float n = clamp(floor((p.y - a) / b + .5), s0, s1 - 1.);
+    float dy = p.y - (a + b * n);
+    float r1 = h1(n + 3.1), r2 = h1(n * 1.7 + 11.);
+    float j = r1 * .5;
+    float tau = clamp((tw - j) / (uDur - j), 0., 1.);
+    float up = uXe.x + (uXe.y - uXe.x) * tau;
+    float live = step(j, tw) * step(tw, uDur);
+    float head = exp(-pow((u - up) / .011, 2.)) * live;
+    float tail = step(u, up) * exp(-(up - u) / .13) * .6 * live;
+    float arr = step(uDur, tw) * exp(-(tw - uDur) * 1.5);
+    float endz = smoothstep(uX.z, uXe.y, u);
+    float gt = uT * (.02 + .04 * r1) + r2 * 9.;
+    float idle = step(h1(floor(gt) + n * 5.3), .1) * exp(-pow((u - (uXe.x + (uXe.y - uXe.x) * fract(gt))) / .02, 2.)) * .5;
+    float e = head + tail + arr * endz * .85 + idle;
+    float mem = 1.;
+    if (uHov >= 0.) {
+      float g = uHov < 4. ? gl : gr + 4.;
+      mem = abs(g - uHov) < .5 ? 1.25 : .34;
+    }
+    float front = uXe.x + (uXe.y - uXe.x) * clamp(uIn * 1.5 - r2 * .5, 0., 1.);
+    float vis = smoothstep(uXe.x - .001, uXe.x + .003, u) * smoothstep(front + .001, front - .012, u);
+    float hf = (uThin > .5 ? .5 : .68) * uDpr + .75 * uDpr * min(e, 1.2);
+    float f = uDpr * .9 * min(head + arr * endz * .5, 1.);
+    vec3 al = clamp(hf - abs(vec3(dy - f, dy, dy + f)) + .5, 0., 1.);
+    float br = (.5 + .5 * min(e, 1.)) * mem * vis;
+    col = max(col, al * br);
+    glow = max(glow, min(e, 1.) * exp(-dy * dy / (2. * 36. * uDpr * uDpr)) * mem * vis);
+  }
+  col += glow * .22;
+  col += (h2(p + fract(uT) * 61.) - .5) * .012;
+  o = vec4(col, 1.);
+}`;
+
+this.FS3 = `#version 300 es
+precision highp float;
+uniform vec2 uRes;
+uniform float uT, uDpr, uIn, uPitch, uLod;
+uniform sampler2D uA;
+uniform vec4 uTile[6];
+uniform float uOp[6];
+uniform int uCount;
+uniform vec2 uGrid;
+// The curve the light is read through. x: steepness, y: gain, z: lift. 1, 1, 0 draws exactly as before.
+// For her squares: 1.95, 1.22, 0.9, so her face and her shoulders read in full.
+uniform vec3 uCurve;
+out vec4 o;
+float h1(float n){ return fract(sin(n * 91.345) * 47453.5453); }
+float h2(vec2 p){ return fract(sin(dot(p, vec2(12.9898, 78.233))) * 43758.5453); }
+float chroma(vec3 c){ return max(c.r, max(c.g, c.b)) - min(c.r, min(c.g, c.b)); }
+// The film inside the square under q. In a: 0 outside a square, fading in at its left and right edge.
+vec4 texAt(vec2 q, float lod, out float ti){
+  ti = -1.;
+  for (int i = 0; i < 6; i++) {
+    if (i >= uCount) break;
+    vec4 r = uTile[i];
+    if (q.x >= r.x && q.x <= r.z && q.y >= r.y && q.y <= r.w) {
+      vec2 l = (q - r.xy) / (r.zw - r.xy);
+      float ta = (r.z - r.x) / (r.w - r.y);
+      vec2 f = ta > 1.7778 ? vec2(1., 1.7778 / ta) : vec2(ta / 1.7778, 1.);
+      float m = smoothstep(0., .05, l.x) * smoothstep(1., .95, l.x);
+      l = (l - .5) * f + .5;
+      float fi = float(i);
+      vec2 cell = vec2(mod(fi, uGrid.x), floor(fi / uGrid.x));
+      ti = fi;
+      return vec4(textureLod(uA, (cell + clamp(l, .015, .985)) / uGrid, lod).rgb, m);
+    }
+  }
+  return vec4(0.);
+}
+// The light the lines are drawn from, and in gold how much gold is near.
+float lumAt(vec2 q, float lod, out float ti, out float gold){
+  vec4 t = texAt(q, lod, ti);
+  float l = clamp((t.r - .02) / .98, 0., 1.) * t.a;
+  gold = smoothstep(.015, .08, chroma(t.rgb)) * t.a;
+  return max(pow(l, uCurve.x) * uCurve.y, uCurve.z * pow(l, .8));
+}
+void main(){
+  vec2 p = vec2(gl_FragCoord.x, uRes.y - gl_FragCoord.y);
+  vec2 uv = p / uRes;
+  float y0 = -1., y1 = -1.;
+  for (int i = 0; i < 6; i++) {
+    if (i >= uCount) break;
+    vec4 r = uTile[i];
+    if (p.y >= r.y - uPitch * 1.4 && p.y <= r.w + 1.) { y0 = r.y; y1 = r.w; }
+  }
+  if (y0 < 0.) { o = vec4(0., 0., 0., 1.); return; }
+  float nl = max(4., floor((y1 - y0) / uPitch + .5));
+  float pitch = (y1 - y0) / nl;
+  float i0 = floor((p.y - y0) / pitch);
+  vec3 col = vec3(0.);
+  float halo = 0., opn = 0.;
+  for (int k = -1; k <= 2; k++) {
+    float idx = i0 + float(k);
+    if (idx < 0. || idx >= nl) continue;
+    float yc = y0 + (idx + .5) * pitch;
+    vec2 c = vec2(p.x, yc);
+    float seed = idx + y0 * .37;
+    float r1 = h1(seed + 1.7), r2 = h1(seed * 1.31 + 9.2);
+    float ti, tj, ga, gb;
+    float L = lumAt(c, uLod, ti, ga), D = lumAt(c, uLod + 1.5, tj, gb);
+    // next to the gold the lines stay thin, so the gold stands clear of them
+    L *= 1. - ga;
+    L = pow(clamp(L * 1.25, 0., 1.), .85);
+    D = clamp(D * 1.25, 0., 1.);
+    float op = 0.;
+    if (ti >= 0.) op = smoothstep(0., 1., clamp(uOp[int(ti)] * 1.7 - r2 * .7, 0., 1.));
+    if (k == 0) opn = op;
+    float wav = pitch * (.08 * sin(uv.x * 6. + uT * .5 + seed * .31) + .04 * sin(uv.x * 17. - uT * .8 + seed * 1.3));
+    float ycd = yc - (1.05 * pitch * D + wav) * (1. - op);
+    float gt = uT * (.03 + .05 * r1) + r2 * 7.;
+    float g = step(h1(floor(gt) + seed * 7.13), .09) * exp(-pow((uv.x - (fract(gt) * 1.3 - .15)) / .025, 2.));
+    float hf = pitch * .5 * (.06 + .56 * L) + .5 * uDpr * g;
+    hf = max(hf, .4 * uDpr);
+    hf = mix(hf, pitch * .5 + 1., op);
+    float br = .28 + .72 * clamp(L * 1.7, 0., 1.) + .8 * g;
+    br = mix(br, L, smoothstep(0., .55, op));
+    float fm = smoothstep(0., .05, uIn * 1.7 - r1 * .6 - uv.x);
+    float f = uDpr * .55 * (.15 + .85 * L) * (1. - op);
+    float dy = p.y - ycd;
+    vec3 a = clamp(hf - abs(vec3(dy - f, dy, dy + f)) + .5, 0., 1.);
+    col = max(col, a * br * fm);
+    float sg = pitch * .55;
+    halo = max(halo, L * exp(-dy * dy / (2. * sg * sg)) * fm * (1. - op));
+  }
+  col += halo * .13;
+  float tf;
+  vec4 t0 = texAt(p, 0., tf);
+  float fa = clamp((t0.r - .02) / .98, 0., 1.) * t0.a;
+  fa = pow(clamp(fa * 1.1, 0., 1.), .9);
+  col = mix(col, vec3(fa), smoothstep(.2, 1., opn));
+  // the gold: where the film has color, the lines give way and the gold stands solid
+  col = mix(col, t0.rgb * t0.a, smoothstep(.06, .15, chroma(t0.rgb)) * t0.a * smoothstep(0., .05, uIn * 1.7 - .3 - uv.x));
+  col += (h2(p + fract(uT) * 61.) - .5) * .012;
+  o = vec4(col, 1.);
+}`;
+
+this.mk = (id, fs, names) => {
+const c = this.el(id);
+if (!c) return null;
+let gl = null;
+try { gl = c.getContext('webgl2', { antialias: false, alpha: false, depth: false, stencil: false, powerPreference: 'high-performance' }); } catch (e) { gl = null; }
+if (!gl) return null;
+const sh = (t, s) => {
+const o = gl.createShader(t);
+gl.shaderSource(o, s);
+gl.compileShader(o);
+if (!gl.getShaderParameter(o, gl.COMPILE_STATUS)) { if (window.console) console.warn(gl.getShaderInfoLog(o)); return null; }
+return o;
+};
+const v = sh(gl.VERTEX_SHADER, this.VS);
+const f = sh(gl.FRAGMENT_SHADER, fs);
+if (!v || !f) return null;
+const p = gl.createProgram();
+gl.attachShader(p, v);
+gl.attachShader(p, f);
+gl.bindAttribLocation(p, 0, 'a');
+gl.linkProgram(p);
+if (!gl.getProgramParameter(p, gl.LINK_STATUS)) return null;
+gl.useProgram(p);
+const b = gl.createBuffer();
+gl.bindBuffer(gl.ARRAY_BUFFER, b);
+gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
+gl.enableVertexAttribArray(0);
+gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0);
+const u = {};
+names.forEach((n) => { u[n] = gl.getUniformLocation(p, n); });
+const sc = { c: c, gl: gl, u: u, w: 0, h: 0, cw: 0, ch: 0, rect: null, lost: false, ta: null, tb: null };
+c.addEventListener('webglcontextlost', (e) => { e.preventDefault(); sc.lost = true; });
+return sc;
+};
+this.tex = (sc) => {
+const gl = sc.gl;
+const t = gl.createTexture();
+gl.activeTexture(gl.TEXTURE0);
+gl.bindTexture(gl.TEXTURE_2D, t);
+gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([0, 0, 0, 255]));
+gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_LINEAR);
+gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+gl.generateMipmap(gl.TEXTURE_2D);
+return t;
+};
+this.put = (sc, t, src) => {
+const gl = sc.gl;
+try {
+gl.activeTexture(gl.TEXTURE0);
+gl.bindTexture(gl.TEXTURE_2D, t);
+gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, src);
+gl.generateMipmap(gl.TEXTURE_2D);
+return true;
+} catch (e) { if (src && src.tagName) this.err = (this.err || 0) + 1; return false; }
+};
+this.size = (sc) => {
+const r = sc.c.getBoundingClientRect();
+sc.rect = r;
+if (r.width < 2 || r.height < 2) return false;
+if (r.bottom < -80 || r.top > window.innerHeight + 80) return false;
+const d = this.dpr * this.q;
+const w = Math.max(2, Math.round(r.width * d));
+const h = Math.max(2, Math.round(r.height * d));
+if (sc.c.width !== w || sc.c.height !== h) { sc.c.width = w; sc.c.height = h; }
+sc.w = w; sc.h = h; sc.cw = r.width; sc.ch = r.height;
+return true;
+};
+this.play = (v) => {
+if (!v) return;
+v.muted = true;
+v.playsInline = true;
+const p = v.play();
+if (p && p.catch) p.catch((e) => { if (e && e.name === 'NotAllowedError') v.__blk = true; });
+};
+this.fitFor = (sc, f, at, tx, ty) => {
+const ac = sc.cw / sc.ch;
+let fx = 1, fy = 1;
+if (ac > at) fy = at / ac; else fx = ac / at;
+if (f.w && fx < f.w) { fy *= f.w / fx; fx = f.w; }
+let ox = (tx - 0.5) * fx - ((f.cx || 0.5) - 0.5);
+let oy = (ty - 0.5) * fy - ((f.cy || 0.5) - 0.5);
+const my = Math.abs(1 - fy) / 2;
+oy = Math.max(-my, Math.min(my, oy));
+if (f.full) { const mx = (1 - fx) / 2; ox = Math.max(-mx, Math.min(mx, ox)); }
+return [fx, fy, ox, oy];
+};
+this.srcOf = (f) => ((f.still || f.dead) ? { el: this.el(f.img), still: true } : { el: this.el(f.v), still: false });
+this.okSrc = (s) => !!s.el && (s.still ? (s.el.complete && s.el.naturalWidth > 0) : s.el.readyState >= 2);
+this.lodOf = (s, fy) => {
+const h = s.el ? (s.still ? s.el.naturalHeight : s.el.videoHeight) : 0;
+return Math.max(0, Math.log2(Math.max(1, (h || 1080) * fy / 100 * 0.5)));
+};
+this.zone = (sc, id, kx, ky) => {
+const e = this.el(id);
+if (!e || !sc.rect) return [0, 0, 0, 0];
+const r = e.getBoundingClientRect();
+if (r.width < 2) return [0, 0, 0, 0];
+const d = sc.w / sc.cw;
+return [(r.left + r.width / 2 - sc.rect.left) * d, (r.top + r.height / 2 - sc.rect.top) * d, r.width * kx * d, r.height * ky * d];
+};
+this.lensFor = (sc, key, t, dt, fx, fy, ghost) => {
+let S = this.ls[key];
+if (!S) { S = { x: sc.cw * fx, y: sc.ch * fy, w: 0, gt: t + 4 + Math.random() * 3, ph: Math.random() * 6 }; this.ls[key] = S; }
+const P = this.ptr;
+const r = sc.rect;
+const inside = P.on && P.x >= r.left && P.x <= r.right && P.y >= r.top && P.y <= r.bottom && (t - P.t) < 2.6;
+let tw = 0;
+if (inside) {
+const k = Math.min(1, dt * 10);
+S.x += (P.x - r.left - S.x) * k;
+S.y += (P.y - r.top - S.y) * k;
+tw = 1;
+S.gt = t + 5;
+} else if (ghost && !this.still && t > S.gt) {
+const a = t - S.gt;
+const D = 5;
+if (a > D) { S.gt = t + 5 + Math.random() * 4; S.ph = Math.random() * 6; }
+else {
+const e = Math.sin(Math.PI * a / D);
+tw = e * e * 0.92;
+S.x = sc.cw * (fx + 0.06 * Math.sin(a * 0.8 + S.ph));
+S.y = sc.ch * (fy + 0.09 * Math.sin(a * 0.6 + 1.3 + S.ph));
+}
+}
+S.w += (tw - S.w) * Math.min(1, dt * (tw > S.w ? 5 : 3.2));
+const d = sc.w / sc.cw;
+return [S.x * d, S.y * d, (sc.cw < 700 ? 92 : 150) * d, S.w];
+};
+this.base = (sc, t) => {
+const gl = sc.gl, u = sc.u;
+gl.viewport(0, 0, sc.w, sc.h);
+gl.activeTexture(gl.TEXTURE0);
+gl.bindTexture(gl.TEXTURE_2D, sc.ta);
+gl.activeTexture(gl.TEXTURE1);
+gl.bindTexture(gl.TEXTURE_2D, sc.tb || sc.ta);
+gl.uniform1i(u.uA, 0);
+gl.uniform1i(u.uB, 1);
+gl.uniform2f(u.uRes, sc.w, sc.h);
+gl.uniform1f(u.uN, 100);
+gl.uniform1f(u.uT, t);
+gl.uniform1f(u.uDpr, sc.w / sc.cw);
+};
+
+this.drawStage = (S, t, dt) => {
+const sc = this[S.c];
+if (!sc || sc.lost || this.filmOff) return;
+const H = S.st, F = S.films;
+const fc = F[H.cur];
+if (!this.size(sc)) {
+if (!H.held) { H.held = true; F.forEach((f) => { const v = f.v ? this.el(f.v) : null; if (v && !v.paused) v.pause(); }); }
+return;
+}
+if (H.held) { H.held = false; H.stall = 0; }
+const gl = sc.gl, u = sc.u;
+if (H.ts === undefined) H.ts = t;
+let A = this.srcOf(fc);
+if (!A.still && A.el) {
+const v = A.el;
+if (v.paused && !v.ended && !this.still && (H.went || H.gain > 0.8)) { H.went = true; this.play(v); }
+let fresh = false;
+if (v.readyState >= 2) {
+if (v.currentTime !== H.lastA || !H.has) { if (this.put(sc, sc.ta, v)) { H.has = true; H.lastA = v.currentTime; fresh = true; } }
+} else if (!H.has && !H.poster) {
+const im = this.el(fc.img);
+if (im && im.complete && im.naturalWidth) { if (this.put(sc, sc.ta, im)) H.poster = true; }
+}
+if (fresh || v.ended || !H.went || this.still) H.stall = 0; else H.stall += dt;
+const loading = !v.paused && v.readyState < 3;
+if ((v.__blk || H.stall > (loading ? 14 : 4)) && H.nxt < 0) {
+fc.dead = true; if (!v.__blk && !loading) fc.gone = true;
+H.ts = t; H.stillPut = -1; H.stall = 0; A = this.srcOf(fc);
+}
+} else if (fc.dead && !fc.still && !fc.gone && !this.still && H.nxt < 0) {
+const v = this.el(fc.v);
+if (v && !v.__blk && v.readyState >= 3) {
+fc.dead = false; H.stall = 0; H.lastA = -1; H.stillPut = -1;
+try { v.currentTime = 0; } catch (e) {}
+this.play(v);
+A = this.srcOf(fc);
+}
+}
+if (A.still && H.stillPut !== H.cur && this.okSrc(A)) { if (this.put(sc, sc.ta, A.el)) { H.has = true; H.stillPut = H.cur; } }
+let late = false, pre = false;
+if (A.still) { const e = t - H.ts, hold = fc.hold || 5.5; late = e > hold - 1.8; pre = e > hold - 3.2; }
+else if (A.el && A.el.duration) { late = A.el.ended || A.el.currentTime > A.el.duration - 1.8; pre = A.el.ended || A.el.currentTime > A.el.duration - 3.2; }
+if (!this.still && H.nxt < 0 && H.has && F.length > 1) {
+const n = (H.cur + 1) % F.length;
+const fn = F[n];
+if (fn.dead && !fn.gone && fn.v) { const bv = this.el(fn.v); if (bv && !bv.__blk && bv.readyState >= 3) fn.dead = false; }
+let B = this.srcOf(fn);
+if (!B.still && B.el) {
+if (!B.el.dataset.rq) { B.el.dataset.rq = '1'; B.el.preload = 'auto'; try { B.el.load(); } catch (e) {} }
+if (pre && B.el.readyState < 2 && B.el.paused) this.play(B.el);
+if (late && B.el.readyState < 2) { H.lwa += dt; if (H.lwa > 2.6) { fn.dead = true; B = this.srcOf(fn); } }
+}
+if (late && this.okSrc(B)) {
+H.nxt = n; H.mix = 0; H.bok = false; H.named = false; H.tm = undefined; H.lwa = 0;
+if (!B.still) { try { B.el.currentTime = 0; } catch (e) {} this.play(B.el); }
+}
+}
+if (H.nxt >= 0) {
+const fn = F[H.nxt];
+const B = this.srcOf(fn);
+if (B.still) { if (!H.bok && this.okSrc(B) && this.put(sc, sc.tb, B.el)) H.bok = true; }
+else if (B.el && B.el.readyState >= 2 && B.el.currentTime < 3) { if (this.put(sc, sc.tb, B.el)) H.bok = true; }
+if (H.bok) { if (H.tm === undefined) H.tm = t; H.mix = (t - H.tm) / 1.8; }
+if (H.mix > 0.5 && !H.named) { H.named = true; S.say(fn); }
+if (H.mix >= 1) {
+const x = sc.ta; sc.ta = sc.tb; sc.tb = x;
+if (!A.still && A.el) A.el.pause();
+H.stillPut = B.still ? H.nxt : -1;
+H.cur = H.nxt; H.nxt = -1; H.mix = 0; H.lastA = -1; H.ts = t; H.stall = 0;
+}
+}
+if (H.t0 === undefined) H.t0 = t;
+H.inn = Math.min(1, (t - H.t0) / 1.5);
+if ((H.has || H.poster) && H.inn > 0.4 && H.tg === undefined) H.tg = t;
+H.gain = H.tg === undefined ? 0 : Math.min(1, (t - H.tg) / 2);
+const wide = sc.cw >= 900;
+const ps = S.pos(wide);
+const tx = ps[0], ty = ps[1];
+const fcur = F[H.cur];
+const fa = this.fitFor(sc, fcur, 16 / 9, tx, ty);
+const fb = H.nxt >= 0 ? this.fitFor(sc, F[H.nxt], 16 / 9, tx, ty) : fa;
+this.base(sc, t);
+const g = H.gain;
+gl.uniform1f(u.uMix, H.nxt >= 0 ? Math.min(1, H.mix) : 0);
+gl.uniform1f(u.uOpen, 0);
+gl.uniform1f(u.uIn, H.inn);
+const away = S.fade ? Math.max(0, Math.min(1, -sc.rect.top / Math.max(1, sc.rect.height))) : 0;
+gl.uniform1f(u.uGain, g * g * (3 - 2 * g) * (1 - 0.9 * away));
+gl.uniform2f(u.uLod, this.lodOf(this.srcOf(fcur), fa[1]), H.nxt >= 0 ? this.lodOf(this.srcOf(F[H.nxt]), fb[1]) : 0);
+gl.uniform3f(u.uCurve, S.curve[0], S.curve[1], S.curve[2]);
+gl.uniform1f(u.uGl, this.still ? 0 : 0.07);
+gl.uniform1f(u.uDisp, 1.1);
+gl.uniform4f(u.uFa, fa[0], fa[1], fa[2], fa[3]);
+gl.uniform4f(u.uFb, fb[0], fb[1], fb[2], fb[3]);
+gl.uniform2f(u.uGn, fcur.g || 1, H.nxt >= 0 ? (F[H.nxt].g || 1) : 1);
+const sh = S.sh(wide);
+gl.uniform2f(u.uSh, sh[0], sh[1]);
+gl.uniform1f(u.uSb, sh[2]);
+const L = this.lensFor(sc, S.key, t, dt, tx, ty - 0.02, g > 0.99);
+gl.uniform4f(u.uPtr, L[0], L[1], L[2], L[3]);
+const zz = (z) => (z ? this.zone(sc, z[0], wide ? z[1] : z[3], wide ? z[2] : z[4]) : [0, 0, 0, 0]);
+const z0 = zz(S.z0), z1 = zz(S.z1);
+gl.uniform4f(u.uQ0, z0[0], z0[1], z0[2], z0[3]);
+gl.uniform4f(u.uQ1, z1[0], z1[1], z1[2], z1[3]);
+gl.uniform3f(u.uEv, -100, 0, 1);
+gl.drawArrays(gl.TRIANGLES, 0, 3);
+};
+
+this.drawSplit = (t, dt) => {
+const sc = this.s1;
+if (!sc || sc.lost) return;
+if (!this.size(sc)) return;
+const S = this.sp;
+const gl = sc.gl, u = sc.u;
+const DUR = 2.8;
+if (S.t0 === undefined) S.t0 = t;
+S.inn = Math.min(1, (t - S.t0) / 1.7);
+if (!this.still && S.inn >= 1 && t - S.wave > S.gap) { S.wave = t; S.gap = 7.4; S.done = false; }
+if (!S.done && t - S.wave > DUR) { S.done = true; this.setState({ flash: (this.state.flash || 0) + 1 }); }
+const thin = sc.cw < 700;
+gl.viewport(0, 0, sc.w, sc.h);
+gl.uniform2f(u.uRes, sc.w, sc.h);
+gl.uniform1f(u.uT, t);
+gl.uniform1f(u.uDpr, sc.w / sc.cw);
+gl.uniform1f(u.uWave, S.wave);
+gl.uniform1f(u.uHov, this.state.hov);
+gl.uniform1f(u.uIn, S.inn);
+gl.uniform1f(u.uThin, thin ? 1 : 0);
+gl.uniform1f(u.uDur, DUR);
+if (thin) { gl.uniform4f(u.uX, 0.05, 0.37, 0.63, 0.95); gl.uniform2f(u.uXe, 0, 1); }
+else { gl.uniform4f(u.uX, 0.165, 0.42, 0.58, 0.84); gl.uniform2f(u.uXe, 0.135, 0.895); }
+gl.uniform3f(u.uL, 0.0575, 0.0066, 0.075);
+gl.uniform2f(u.uM, 0.33, 0.0034);
+gl.uniform3f(u.uR, 0.06, 0.0068, 0.1);
+gl.drawArrays(gl.TRIANGLES, 0, 3);
+};
+
+this.ink = (sc) => {
+const c = this.el('rl-ink');
+if (!c) return;
+const B = this.bl;
+const W = Math.min(1600, Math.max(480, Math.round(sc.cw * 1.4)));
+const Hh = Math.max(120, Math.round(W * sc.ch / sc.cw));
+if (c.width !== W || c.height !== Hh) { c.width = W; c.height = Hh; }
+const x = c.getContext('2d');
+x.fillStyle = '#000';
+x.fillRect(0, 0, W, Hh);
+const s = this.money(B.shown);
+const wide = sc.cw >= 900;
+const maxW = W * (wide ? Math.min(0.72, (sc.cw - 330) / sc.cw) : 0.9);
+let fs = Math.round(Hh * 0.66);
+const fam = '"Geist", "Helvetica Neue", Arial, sans-serif';
+let cells = [];
+let total = 0;
+for (let pass = 0; pass < 2; pass++) {
+x.font = '700 ' + fs + 'px ' + fam;
+let dw = 0;
+for (let d = 0; d < 10; d++) dw = Math.max(dw, x.measureText(String(d)).width);
+cells = [];
+total = 0;
+for (let i = 0; i < s.length; i++) {
+const ch = s[i];
+const w = (ch >= '0' && ch <= '9') ? dw : x.measureText(ch).width;
+cells.push(w);
+total += w;
+}
+total += fs * -0.02 * (s.length - 1);
+if (total > maxW) fs = Math.floor(fs * maxW / total); else break;
+}
+x.font = '700 ' + fs + 'px ' + fam;
+x.fillStyle = '#fff';
+x.textBaseline = 'alphabetic';
+x.textAlign = 'center';
+let px = wide ? W * 0.012 : (W - total) / 2;
+const py = Hh * 0.5 + fs * 0.355;
+for (let i = 0; i < s.length; i++) {
+x.fillText(s[i], px + cells[i] / 2, py);
+px += cells[i] + fs * -0.02;
+}
+this.put(sc, sc.ta, c);
+B.iw = W; B.ih = Hh;
+};
+this.addFeed = (label, amt, cls) => {
+const f = (this.state.feed || []).map((e) => ({ label: e.label, amt: e.amt, cls: e.cls.replace(' new', '') }));
+f.unshift({ label: label, amt: amt, cls: cls + ' new' });
+this.setState({ feed: f.slice(0, 4) });
+};
+this.drawBal = (t, dt) => {
+const sc = this.s2;
+if (!sc || sc.lost) return;
+if (!this.size(sc)) return;
+const B = this.bl;
+const gl = sc.gl, u = sc.u;
+if (B.ti === undefined) B.ti = t;
+B.inn = Math.min(1, (t - B.ti) / 1.5);
+if (B.next < 0) B.next = t + 2.6;
+if (!this.still && t > B.next) {
+const ev = this.incomes[B.i % this.incomes.length];
+B.i++;
+B.from = B.shown; B.cents += ev[1]; B.t0 = t;
+B.evT = t; B.evN = Math.min(0.6, Math.max(0.05, ev[1] / 10000)); B.dir = 1;
+B.next = t + 3.4 + Math.random() * 1.6;
+this.addFeed(ev[0], '+' + this.money(ev[1]), 'in');
+}
+if (B.shown !== B.cents) {
+const a = Math.min(1, (t - B.t0) / 0.8);
+const e = 1 - Math.pow(1 - a, 3);
+B.shown = a >= 1 ? B.cents : Math.round(B.from + (B.cents - B.from) * e);
+B.dirty = true;
+}
+const W = Math.min(1600, Math.max(480, Math.round(sc.cw * 1.4)));
+if (B.dirty || B.iw !== W) { this.ink(sc); B.dirty = false; }
+this.base(sc, t);
+gl.uniform1f(u.uMix, 0);
+gl.uniform1f(u.uOpen, 0);
+gl.uniform1f(u.uIn, B.inn);
+gl.uniform1f(u.uGain, 1);
+const bl = Math.max(0, Math.log2(Math.max(1, (B.ih || 600) / 100 * 0.5)));
+gl.uniform2f(u.uLod, bl, bl);
+gl.uniform3f(u.uCurve, 1, 1, 0);
+gl.uniform1f(u.uGl, this.still ? 0 : 0.06);
+gl.uniform1f(u.uDisp, 0.9);
+gl.uniform4f(u.uFa, 1, 1, 0, 0);
+gl.uniform4f(u.uFb, 1, 1, 0, 0);
+gl.uniform2f(u.uGn, 1, 1);
+gl.uniform2f(u.uSh, 0, 0);
+gl.uniform1f(u.uSb, 0);
+const L = this.lensFor(sc, 'b', t, dt, 0.3, 0.5, false);
+gl.uniform4f(u.uPtr, L[0], L[1], L[2], L[3]);
+gl.uniform4f(u.uQ0, 0, 0, 0, 0);
+gl.uniform4f(u.uQ1, 0, 0, 0, 0);
+gl.uniform3f(u.uEv, B.evT, B.evN, B.dir);
+gl.drawArrays(gl.TRIANGLES, 0, 3);
+};
+
+this.drawFin = (t, dt) => {
+const sc = this.s3;
+if (!sc || sc.lost || this.filmOff) return;
+const N = this.fn;
+if (!this.size(sc)) return;
+const gl = sc.gl, u = sc.u;
+const S = { el: this.el('rl-ir'), still: true };
+if (!N.has && this.okSrc(S)) { if (this.put(sc, sc.ta, S.el)) N.has = true; }
+if (N.ti === undefined) N.ti = t;
+N.inn = Math.min(1, (t - N.ti) / 1.5);
+let op = 0;
+if (N.has && !this.still) {
+if (N.tp === undefined) N.tp = t;
+const c = (t - N.tp) % 18;
+op = c < 3.5 ? 0 : c < 7 ? (c - 3.5) / 3.5 : c < 14 ? 1 : c < 17.5 ? 1 - (c - 14) / 3.5 : 0;
+}
+const tx = sc.cw >= 900 ? 0.7 : 0.5, ty = 0.5;
+const fa = this.fitFor(sc, this.reach, 16 / 9, tx, ty);
+this.base(sc, t);
+gl.uniform1f(u.uMix, 0);
+gl.uniform1f(u.uOpen, op);
+gl.uniform1f(u.uIn, N.inn);
+gl.uniform1f(u.uGain, N.has ? 1 : 0);
+const fl = this.lodOf(S, fa[1]);
+gl.uniform2f(u.uLod, fl, fl);
+gl.uniform3f(u.uCurve, 1.95, 1.22, 0.9);
+gl.uniform1f(u.uGl, this.still ? 0 : 0.1);
+gl.uniform1f(u.uDisp, 1.1);
+gl.uniform4f(u.uFa, fa[0], fa[1], fa[2], fa[3]);
+gl.uniform4f(u.uFb, fa[0], fa[1], fa[2], fa[3]);
+gl.uniform2f(u.uGn, 1, 1);
+gl.uniform2f(u.uSh, 0, 0);
+gl.uniform1f(u.uSb, sc.cw >= 900 ? 0 : 0.6);
+const L = this.lensFor(sc, 'f', t, dt, tx, 0.4, false);
+gl.uniform4f(u.uPtr, L[0], L[1], L[2], L[3] * (1 - op));
+const z0 = this.zone(sc, 'rl-ft', 0.72, 0.9), z1 = this.zone(sc, 'rl-fp', 0.8, 1.1);
+gl.uniform4f(u.uQ0, z0[0], z0[1], z0[2], z0[3]);
+gl.uniform4f(u.uQ1, z1[0], z1[1], z1[2], z1[3]);
+gl.uniform3f(u.uEv, -100, 0, 1);
+gl.drawArrays(gl.TRIANGLES, 0, 3);
+};
+
+this.drawPlates = (K, t, dt) => {
+const sc = this[K.c];
+if (!sc || sc.lost || this.filmOff) return;
+const fv = K.vid ? this.el(K.vid) : null;
+if (!this.size(sc)) { if (fv && !fv.paused) fv.pause(); return; }
+const gl = sc.gl, u = sc.u;
+const im = this.el(K.img);
+if (!K.has && im && im.complete && im.naturalWidth) { if (this.put(sc, sc.ta, im)) K.has = true; }
+let rolling = false;
+if (fv && !this.still) {
+if (fv.paused && !fv.__blk && !(K.pt > t)) { K.pt = t + 1; this.play(fv); }
+if (fv.readyState >= 2 && fv.currentTime !== K.vt) { if (this.put(sc, sc.ta, fv)) { K.vt = fv.currentTime; K.has = true; } }
+rolling = !fv.paused && fv.readyState >= 2;
+}
+if (K.t0 === undefined) K.t0 = t;
+if (!K.arts) K.arts = Array.prototype.slice.call(document.querySelectorAll('#' + K.box + ' .art'));
+const arts = K.arts;
+const d = sc.w / sc.cw;
+const r0 = sc.rect;
+const P = this.ptr;
+const live = P.on;
+let hov = -1;
+let ah = 200;
+const n = Math.min(6, arts.length);
+for (let i = 0; i < n; i++) {
+const r = arts[i].getBoundingClientRect();
+K.tiles[i * 4] = (r.left - r0.left) * d;
+K.tiles[i * 4 + 1] = (r.top - r0.top) * d;
+K.tiles[i * 4 + 2] = (r.right - r0.left) * d;
+K.tiles[i * 4 + 3] = (r.bottom - r0.top) * d;
+ah = r.height;
+if (live) {
+const li = arts[i].parentNode.getBoundingClientRect();
+if (P.x >= li.left && P.x <= li.right && P.y >= li.top && P.y <= li.bottom) hov = i;
+}
+}
+if (rolling) {
+const ORD = [0, 4, 2, 5, 1, 3];
+const ct = fv.currentTime;
+const k = Math.floor(ct / 5) % 6;
+const tau = ct - Math.floor(ct / 5) * 5;
+if (hov >= 0) {
+const si = ORD.indexOf(hov);
+if ((K.hv !== hov || k !== si) && !fv.seeking) { K.hv = hov; try { fv.currentTime = si * 5 + 0.1; } catch (e) {} }
+} else {
+K.hv = -1;
+if (tau > 0.3 && tau < 4.5) hov = ORD[k];
+}
+K.an = t + 3;
+} else if (hov >= 0) K.an = t + 3;
+else if (!this.still && K.has) {
+if (K.an === undefined) K.an = t + 2.2;
+const a = t - K.an;
+if (a > 0) {
+const slot = Math.floor(a / 3.6);
+if (a - slot * 3.6 < 2.3) hov = [0, 4, 2, 5, 1, 3][slot % 6];
+}
+}
+for (let i = 0; i < 6; i++) {
+const tg = i === hov ? 1 : 0;
+K.op[i] += (tg - K.op[i]) * Math.min(1, dt * (tg ? 3 : 2.2));
+}
+gl.viewport(0, 0, sc.w, sc.h);
+gl.activeTexture(gl.TEXTURE0);
+gl.bindTexture(gl.TEXTURE_2D, sc.ta);
+gl.uniform1i(u.uA, 0);
+gl.uniform2f(u.uRes, sc.w, sc.h);
+gl.uniform1f(u.uT, t);
+gl.uniform1f(u.uDpr, d);
+gl.uniform1f(u.uIn, Math.min(1, (t - K.t0) / 1.5));
+gl.uniform1f(u.uPitch, 5.2 * d);
+gl.uniform1f(u.uLod, Math.max(0, Math.log2(Math.max(1, 360 / Math.max(60, ah) * 5.2 * 0.5))));
+gl.uniform3f(u.uCurve, 1.95, 1.22, 0.9);
+gl.uniform4fv(u.uTile, K.tiles);
+gl.uniform1fv(u.uOp, K.op);
+gl.uniform1i(u.uCount, n);
+gl.uniform2f(u.uGrid, 3, 2);
+gl.drawArrays(gl.TRIANGLES, 0, 3);
+};
+
+this.frame = (ts) => {
+this.raf = requestAnimationFrame(this.frame);
+if (this.tb === undefined) this.tb = ts || 0;
+const t = ((ts || 0) - this.tb) / 1000;
+const dt = Math.max(0, Math.min(0.05, t - (this.pt === undefined ? t : this.pt)));
+const raw = t - (this.pt === undefined ? t : this.pt);
+this.pt = t;
+if (raw > 0 && raw < 0.25) {
+this.acc = (this.acc || 0) * 0.95 + raw * 0.05;
+this.fc = (this.fc || 0) + 1;
+if (this.fc > 90 && this.acc > 0.026 && this.q > 0.62) { this.q = Math.max(0.6, this.q - 0.14); this.fc = 0; this.acc = 0.016; }
+}
+if ((this.err || 0) > 40 && !this.filmOff) this.plain();
+this.drawStage(this.top, t, dt);
+this.drawSplit(t, dt);
+this.drawPlates(this.pa, t, dt);
+this.drawStage(this.show, t, dt);
+this.drawBal(t, dt);
+this.drawPlates(this.pb, t, dt);
+this.drawFin(t, dt);
+};
+this.plain = () => {
+this.filmOff = true;
+const root = this.el('rl-root');
+if (root) root.classList.add('nofilm');
+const v0 = this.el('rl-v0');
+if (v0) { v0.loop = true; this.play(v0); }
+};
+this.fitPage = () => {
+const root = this.el('rl-root');
+if (!root) return;
+const ih = window.innerHeight;
+const iw = root.clientWidth || window.innerWidth;
+const hh = Math.max(560, Math.min(1100, ih));
+const fh = Math.max(560, Math.min(1000, ih));
+this.fw = iw; this.fhh = ih;
+root.style.setProperty('--hh', hh + 'px');
+root.style.setProperty('--fh', fh + 'px');
+const sh = Math.max(420, iw < 900 ? Math.min(ih * 0.86, iw * 1.15) : Math.min(ih * 0.92, iw * 0.5625, 1000));
+root.style.setProperty('--sh', Math.round(sh) + 'px');
+this.dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
+};
+this.onMove = (e) => {
+if (e.pointerType && e.pointerType === 'touch') return;
+const P = this.ptr;
+P.x = e.clientX; P.y = e.clientY; P.t = this.pt || 0; P.on = true;
+const tg = e.target;
+const a = tg && tg.closest ? tg.closest('.lk, .door') : null;
+if (a) {
+const b = a.classList.contains('door') ? a.querySelector('.dn') : a;
+if (b) { const r = b.getBoundingClientRect(); b.style.setProperty('--mx', ((e.clientX - r.left) / Math.max(1, r.width) * 100).toFixed(1) + '%'); }
+}
+const sc = this.s1;
+let hv = -1;
+if (sc && sc.rect && sc.cw >= 700) {
+const r = sc.rect;
+const u = (e.clientX - r.left) / r.width, v = (e.clientY - r.top) / r.height;
+if (u >= 0 && u <= 1 && v >= 0 && v <= 1) {
+if (u < 0.44) {
+const st = [0, 40, 70, 90], ns = [40, 30, 20, 10];
+for (let g = 0; g < 4; g++) { const top = 0.0575 + 0.0066 * st[g] + 0.075 * g; if (v > top - 0.03 && v < top + 0.0066 * ns[g] + 0.03) hv = g; }
+} else if (u > 0.56) {
+const st = [0, 80, 95], ns = [80, 15, 5];
+for (let g = 0; g < 3; g++) { const top = 0.06 + 0.0068 * st[g] + 0.1 * g; if (v > top - 0.03 && v < top + 0.0068 * ns[g] + 0.03) hv = 4 + g; }
+}
+}
+}
+if (hv !== this.state.hov) this.setState({ hov: hv });
+};
+this.onTouch = () => {
+if (this.still) return;
+[this.top, this.show].forEach((S) => {
+const H = S.st;
+const vids = S.films.map((f) => (f.v ? this.el(f.v) : null));
+if (!vids.some((v) => v && v.__blk)) return;
+S.films.forEach((f, i) => {
+const v = vids[i];
+if (!v) return;
+v.__blk = false; f.dead = false;
+const cur = i === H.cur && !H.held && H.went;
+v.muted = true;
+const p = v.play();
+if (p && p.then) p.then(() => { if (!cur) v.pause(); }).catch((e) => { if (e && e.name === 'NotAllowedError') v.__blk = true; });
+});
+H.stillPut = -1; H.stall = 0; H.lastA = -1;
+});
+[this.pa, this.pb].forEach((K) => { const v = K.vid ? this.el(K.vid) : null; if (v && v.__blk) { v.__blk = false; K.pt = 0; } });
+};
+this.onOut = () => { this.ptr.on = false; if (this.state.hov !== -1) this.setState({ hov: -1 }); };
+this.onResize = () => {
+const root = this.el('rl-root');
+const iw = root ? root.clientWidth : window.innerWidth;
+if (iw !== this.fw || Math.abs(window.innerHeight - this.fhh) > 130) this.fitPage();
+this.bl.dirty = true;
+};
+this.sunSet = (on) => {
+if (on === !!this.state.sun) return;
+this.setState({ sun: on });
+const v = this.el('rl-vs');
+if (!v) return;
+if (on) { v.loop = true; this.play(v); }
+else setTimeout(() => { if (!this.state.sun) v.pause(); }, 1100);
+};
+this.sunIn = (e) => { if (e && e.pointerType === 'mouse') this.sunSet(true); };
+this.sunOut = (e) => { if (e && e.pointerType === 'mouse') this.sunSet(false); };
+this.sunTap = (e) => {
+const pt = e && e.pointerType ? e.pointerType : '';
+if (pt === 'mouse') return;
+this.sunSet(!this.state.sun);
+};
+this.onSend = () => { const S = this.sp; S.wave = (this.pt || 0); S.gap = 7.4; S.done = false; };
+this.onPay = () => {
+const B = this.bl;
+const t = this.pt || 0;
+let k = 0;
+while (k < this.bills.length) {
+const bill = this.bills[(B.b + k) % this.bills.length];
+if (B.cents - bill[1] >= 5000) {
+B.b = (B.b + k + 1) % this.bills.length;
+B.from = B.shown; B.cents -= bill[1]; B.t0 = t;
+B.evT = t; B.evN = 0.5; B.dir = -1;
+B.next = Math.max(B.next, t + 2.4);
+this.addFeed(bill[0], '-' + this.money(bill[1]), 'out');
+return;
+}
+k++;
+}
+};
+}
+start() {
+this.still = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+this.fitPage();
+const R = ['uRes', 'uN', 'uT', 'uDpr', 'uMix', 'uOpen', 'uIn', 'uGain', 'uLod', 'uCurve', 'uGl', 'uDisp', 'uA', 'uB', 'uFa', 'uFb', 'uPtr', 'uQ0', 'uQ1', 'uEv', 'uGn', 'uSh', 'uSb'];
+this.s0 = this.mk('rl-c0', this.FS, R);
+this.s1 = this.mk('rl-c1', this.FS2, ['uRes', 'uT', 'uDpr', 'uWave', 'uHov', 'uIn', 'uThin', 'uDur', 'uX', 'uXe', 'uL', 'uR', 'uM']);
+this.s2 = this.mk('rl-c2', this.FS, R);
+this.s3 = this.mk('rl-c3', this.FS, R);
+const R3 = ['uRes', 'uT', 'uDpr', 'uIn', 'uPitch', 'uLod', 'uCurve', 'uA', 'uTile', 'uOp', 'uCount', 'uGrid'];
+this.s4 = this.mk('rl-c4', this.FS3, R3);
+this.s5 = this.mk('rl-c5', this.FS3, R3);
+this.s6 = this.mk('rl-c6', this.FS, R);
+const root = this.el('rl-root');
+if (!this.s0 || !this.s1 || !this.s2 || !this.s3 || !this.s4 || !this.s5 || !this.s6) {
+if (root) root.classList.add('nogl');
+const v0 = this.el('rl-v0');
+if (v0 && !this.still) { v0.loop = true; this.play(v0); }
+return;
+}
+[this.s0, this.s2, this.s3, this.s4, this.s5, this.s6].forEach((sc) => { sc.ta = this.tex(sc); sc.tb = this.tex(sc); });
+window.addEventListener('resize', this.onResize);
+window.addEventListener('pointermove', this.onMove, { passive: true });
+window.addEventListener('pointerdown', this.onTouch, { passive: true });
+document.documentElement.addEventListener('pointerleave', this.onOut);
+if (document.fonts && document.fonts.load) {
+document.fonts.load('700 120px Geist').then(() => { this.bl.dirty = true; }).catch(() => {});
+if (document.fonts.ready) document.fonts.ready.then(() => { this.bl.dirty = true; });
+}
+this.raf = requestAnimationFrame(this.frame);
+}
+renderVals() {
+const s = this.state || {};
+const h = s.hov === undefined ? -1 : s.hov;
+const lc = (g) => ((h < 0 || (h < 4) !== (g < 4)) ? '' : (h === g ? 'on' : 'off'));
+return {
+yes: true,
+who: s.who || 'nova',
+ttl: s.ttl || 'The silhouette',
+feed: s.feed || [],
+send: this.onSend,
+pay: this.onPay,
+suncls: s.sun ? 'on' : '',
+sunIn: this.sunIn,
+sunOut: this.sunOut,
+sunTap: this.sunTap,
+c0: lc(0), c1: lc(1), c2: lc(2), c3: lc(3), c4: lc(4), c5: lc(5), c6: lc(6),
+amtcls: 'amt ' + ((s.flash || 0) === 0 ? '' : ((s.flash % 2) ? 'fa' : 'fb'))
+};
+}
+setState(p) { Object.assign(this.state, p); this.render(); }
+render() {
+const v = this.renderVals();
+const w = this.el('rl-who');
+if (w && w.textContent !== v.who) w.textContent = v.who;
+const tl = this.el('rl-ttl');
+if (tl && tl.textContent !== v.ttl) tl.textContent = v.ttl;
+const cs = [v.c0, v.c1, v.c2, v.c3, v.c4, v.c5, v.c6];
+for (let i = 0; i < 7; i++) {
+const e = this.el('rl-lb' + i);
+if (e) { e.classList.toggle('on', cs[i] === 'on'); e.classList.toggle('off', cs[i] === 'off'); }
+}
+if (v.amtcls !== this.lastAmt) {
+this.lastAmt = v.amtcls;
+document.querySelectorAll('#rl-root .amt').forEach((e) => { e.className = v.amtcls.trim(); });
+}
+if (v.feed !== this.lastFeed) {
+this.lastFeed = v.feed;
+const box = this.el('rl-feed');
+if (box) {
+box.textContent = '';
+v.feed.forEach((f) => {
+const p = document.createElement('p');
+p.className = f.cls;
+const a = document.createElement('span'); a.textContent = f.label;
+const b = document.createElement('span'); b.textContent = f.amt;
+p.appendChild(a); p.appendChild(b); box.appendChild(p);
+});
+}
+}
+const sun = this.el('rl-sun');
+if (sun) sun.classList.toggle('on', v.suncls === 'on');
+}
+wire() {
+const on = (id, ev, fn) => { const e = this.el(id); if (e) e.addEventListener(ev, fn); };
+on('rl-send', 'click', this.onSend);
+on('rl-pay', 'click', this.onPay);
+on('rl-sun', 'pointerenter', this.sunIn);
+on('rl-sun', 'pointerleave', this.sunOut);
+on('rl-sun', 'click', this.sunTap);
+document.querySelectorAll('#rl-root a[href^="#"]').forEach((a) => {
+a.addEventListener('click', (e) => {
+const t = document.getElementById(a.getAttribute('href').slice(1));
+if (!t) return;
+e.preventDefault();
+t.scrollIntoView({ behavior: this.still ? 'auto' : 'smooth', block: 'start' });
+});
+});
+}
+}
+const site = new Site();
+site.render();
+site.wire();
+site.start();
+</script>
+</body>
+</html>
