@@ -9,7 +9,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-tmvrTe2SjQkj4w3/cqQ8t3lhsHN15asmHLvLLG7/HZs=' 'sha256-rtrbKoQDyVIFU0I7ua9FkxXTmI2UqUQj0ROn62arNCk=' 'sha256-GMW8CnvhPRC50tUrQ0eB2SwsO/MNvUInleSiw7KuX6Q='; style-src 'sha256-MMEHDx2npa7jnRRoDd4izB0UDjoz3mC6VFco3Z/AVEE=' 'sha256-dSxyEBYqy8lOqIJcyBZTms5JMDvomwofEuBVOwscwKI='; img-src 'self'; media-src 'self'; font-src 'self'; manifest-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-tmvrTe2SjQkj4w3/cqQ8t3lhsHN15asmHLvLLG7/HZs=' 'sha256-rtrbKoQDyVIFU0I7ua9FkxXTmI2UqUQj0ROn62arNCk=' 'sha256-j63hXL5e9Nt9u1xQCPbrRIb2UbI+LvN1CBAAe2OjTjc='; style-src 'sha256-gjV2Tzo/zin6lxN/zay0U45AE+NwU0xgm0dc44LmlrU=' 'sha256-EfgdnOTD7EEnox8b2TQQr3lb5nVdHAdBQvS6zUvxkTw='; img-src 'self'; media-src 'self'; font-src 'self'; manifest-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="dark">
 <meta name="format-detection" content="telephone=no">
@@ -184,6 +184,8 @@ html { color-scheme: dark; }
 .rl.nogl .hero .films, .rl.nogl .fin .films, .rl.nogl .show .films, .rl.nofilm .hero .films, .rl.nofilm .fin .films, .rl.nofilm .show .films { width: 100%; height: 100%; opacity: 1; }
 .rl.nogl .films video, .rl.nogl .films img, .rl.nofilm .films video, .rl.nofilm .films img { display: none; }
 .rl.nogl #rl-v0, .rl.nogl #rl-ir, .rl.nogl #rl-m5, .rl.nofilm #rl-v0, .rl.nofilm #rl-ir, .rl.nofilm #rl-m5 { display: block; width: 100%; height: 100%; object-fit: cover; }
+.rl.nogl #rl-v0, .rl.nofilm #rl-v0 { transition: opacity .45s; }
+.rl.nogl #rl-v0.out, .rl.nofilm #rl-v0.out { opacity: 0; }
 .rl.nogl .hero::after, .rl.nogl .fin::after, .rl.nogl .show::after, .rl.nofilm .hero::after, .rl.nofilm .fin::after, .rl.nofilm .show::after { content: ""; position: absolute; left: 0; top: 0; width: 100%; height: 100%; background: repeating-linear-gradient(to bottom, transparent 0, transparent 3px, #000 3px, #000 8px); }
 .rl.nogl .hero .cv, .rl.nogl .fin .cv, .rl.nogl .show .cv, .rl.nofilm .hero .cv, .rl.nofilm .fin .cv, .rl.nofilm .show .cv { display: none; }
 .rl.nogl .split .cv, .rl.nogl .bal .cv { display: none; }
@@ -263,6 +265,8 @@ html { color-scheme: dark; }
 .rl .hero .films, .rl .fin .films, .rl .show .films { width: 100%; height: 100%; opacity: 1; }
 .rl .films video, .rl .films img { display: none; }
 .rl #rl-v0, .rl #rl-ir, .rl #rl-m5 { display: block; width: 100%; height: 100%; object-fit: cover; }
+.rl #rl-v0 { transition: opacity .45s; }
+.rl #rl-v0.out { opacity: 0; }
 .rl .hero::after, .rl .fin::after, .rl .show::after { content: ""; position: absolute; left: 0; top: 0; width: 100%; height: 100%; background: repeating-linear-gradient(to bottom, transparent 0, transparent 3px, #000 3px, #000 8px); }
 .rl .hero .cv, .rl .fin .cv, .rl .show .cv { display: none; }
 .rl .split .cv, .rl .bal .cv { display: none; }
@@ -432,7 +436,7 @@ const stage = () => ({ cur: 0, nxt: -1, mix: 0, has: false, poster: false, inn: 
 this.top = { c: 's0', key: 'h', films: this.films, st: stage(), curve: [1, 1, 0], fade: true,
 pos: (w) => [w ? 0.64 : 0.5, w ? 0.47 : 0.4], sh: (w) => [w ? 0.66 : 0, 0.8, w ? 0 : 0.7],
 z0: ['rl-ht', 0.78, 0.95, 1.1, 1.15], z1: ['rl-pl', 0.8, 1.1, 0.8, 1.1], say: (f) => this.setState({ who: f.who }) };
-this.show = { c: 's6', key: 'j', films: this.moments, st: stage(), curve: [1.95, 1.22, 0.9], fade: false,
+this.show = { c: 's6', key: 'j', films: this.moments, st: stage(), curve: [1.95, 1.22, 0.9], fade: false, quick: true,
 pos: () => [0.5, 0.5], sh: () => [0, 0, 0],
 z0: null, z1: null, say: () => {} };
 this.sp = { inn: 0, wave: -100, gap: 0.6, done: true };
@@ -832,6 +836,9 @@ return true;
 this.size = (sc) => {
 const r = sc.c.getBoundingClientRect();
 sc.rect = r;
+sc.on = false;
+// near: within two screens below, or one above
+sc.near = r.width >= 2 && r.top < window.innerHeight * 3 && r.bottom > -window.innerHeight;
 if (r.width < 2 || r.height < 2) return false;
 if (r.bottom < -80 || r.top > window.innerHeight + 80) return false;
 const d = this.dpr * this.q;
@@ -839,7 +846,29 @@ const w = Math.max(2, Math.round(r.width * d));
 const h = Math.max(2, Math.round(r.height * d));
 if (sc.c.width !== w || sc.c.height !== h) { sc.c.width = w; sc.c.height = h; }
 sc.w = w; sc.h = h; sc.cw = r.width; sc.ch = r.height;
+sc.on = true;
 return true;
+};
+// A phone fetches a film only when it is asked to play. So a film that is near is started once, out of
+// sight, and stopped again at its first picture. When its piece comes on screen it plays without a wait.
+this.warm = (sc, v) => {
+if (!this.phone || !v || !sc.near || v.dataset.pr || this.still || this.blocked || this.saver) return;
+const H = this.top.st, F = this.top.films;
+if (!H.went || !(H.gain >= 1)) return;
+// The films at the top come first. While they are on screen, nothing is fetched ahead unless their
+// next film arrived early, which says the connection has room. And one film is fetched at a time.
+if (!H.held) {
+const a = this.el(F[H.cur].v), b = this.el(F[(H.cur + 1) % F.length].v);
+if (!a || !b || b.readyState < 3 || a.currentTime > 3) return;
+}
+if (this.wv && this.wv.dataset.pr === '1' && this.wv.readyState < 3) return;
+this.wv = v;
+v.dataset.pr = '1';
+v.muted = true;
+v.playsInline = true;
+v.addEventListener('playing', () => { v.dataset.pr = '2'; if (!sc.on) { v.pause(); try { v.currentTime = 0; } catch (e) {} } }, { once: true });
+const p = v.play();
+if (p && p.catch) p.catch(() => {});
 };
 this.play = (v) => {
 if (!v) return;
@@ -926,6 +955,7 @@ const H = S.st, F = S.films;
 const fc = F[H.cur];
 if (!this.size(sc)) {
 if (!H.held) { H.held = true; F.forEach((f) => { const v = f.v ? this.el(f.v) : null; if (v && !v.paused) v.pause(); }); }
+if (S.quick && fc.v) this.warm(sc, this.el(fc.v));
 return;
 }
 if (H.held) { H.held = false; H.stall = 0; }
@@ -934,7 +964,7 @@ if (H.ts === undefined) H.ts = t;
 let A = this.srcOf(fc);
 if (!A.still && A.el) {
 const v = A.el;
-if (v.paused && !v.ended && !this.still && (H.went || H.gain > 0.8)) { H.went = true; this.play(v); }
+if (v.paused && !v.ended && !this.still && (H.went || H.gain > (S.quick && this.phone ? 0.2 : 0.8))) { H.went = true; this.play(v); }
 let fresh = false;
 if (v.readyState >= 2) {
 if (v.currentTime !== H.lastA || !H.has) {
@@ -1166,7 +1196,7 @@ const sc = this.s3;
 if (!sc || sc.lost || this.filmOff) return;
 const N = this.fn;
 const fv = this.el(N.vid);
-if (!this.size(sc)) { if (fv && !fv.paused) fv.pause(); return; }
+if (!this.size(sc)) { if (fv && !fv.paused && fv.dataset.pr !== '1') fv.pause(); this.warm(sc, fv); return; }
 const gl = sc.gl, u = sc.u;
 let S = { el: this.el('rl-ir'), still: true };
 if (!N.has && this.okSrc(S)) { if (this.put(sc, sc.ta, S.el)) N.has = true; }
@@ -1219,7 +1249,7 @@ this.drawPlates = (K, t, dt) => {
 const sc = this[K.c];
 if (!sc || sc.lost || this.filmOff) return;
 const fv = K.vid ? this.el(K.vid) : null;
-if (!this.size(sc)) { if (fv && !fv.paused) fv.pause(); return; }
+if (!this.size(sc)) { if (fv && !fv.paused && fv.dataset.pr !== '1') fv.pause(); this.warm(sc, fv); return; }
 const gl = sc.gl, u = sc.u;
 const im = this.el(K.img);
 if (!K.has && im && im.complete && im.naturalWidth) { if (this.put(sc, sc.ta, im)) K.has = true; }
@@ -1351,13 +1381,39 @@ this.drawBal(t, dt);
 this.drawPlates(this.pb, t, dt);
 this.drawFin(t, dt);
 };
+// Without the lines the films play as plain pictures, one after another, and the plate follows them.
+this.turn = () => {
+const v0 = this.el('rl-v0');
+if (!v0) return;
+if (!this.pl) {
+const P = this.pl = { i: 0,
+src: this.films.map((f) => { const v = this.el(f.v); return v ? v.getAttribute('src') : ''; }),
+img: this.films.map((f) => { const m = this.el(f.img); return m ? m.getAttribute('src') : ''; }) };
+v0.loop = false;
+const go = () => {
+P.i = (P.i + 1) % P.src.length;
+if (!P.src[P.i]) P.i = 0;
+v0.classList.add('out');
+window.setTimeout(() => {
+v0.poster = P.img[P.i];
+v0.src = P.src[P.i];
+this.setState({ who: this.films[P.i].who });
+if (!this.still) this.play(v0);
+window.setTimeout(() => v0.classList.remove('out'), 1200);
+}, 450);
+};
+v0.addEventListener('ended', go);
+v0.addEventListener('error', () => { if (P.i) go(); });
+v0.addEventListener('loadeddata', () => v0.classList.remove('out'));
+}
+if (!this.still) this.play(v0);
+};
 this.plain = () => {
 this.filmOff = true;
 this.setState({ who: this.films[0].who });
 const root = this.el('rl-root');
 if (root) root.classList.add('nofilm');
-const v0 = this.el('rl-v0');
-if (v0) { v0.loop = true; this.play(v0); }
+this.turn();
 };
 this.fitPage = () => {
 const root = this.el('rl-root');
@@ -1447,7 +1503,8 @@ vids.forEach((v) => { this.refused.delete(v); });
 [this.pa, this.pb, this.fn].forEach((K) => { K.pt = 0; });
 const f0 = this.top.films[this.top.st.cur];
 const v0 = f0 && f0.v ? this.el(f0.v) : null;
-if (v0 && v0.getAttribute('src')) { if (this.nogl) v0.loop = true; else this.top.st.went = true; this.play(v0); }
+if (this.nogl || this.filmOff) this.turn();
+else if (v0 && v0.getAttribute('src')) { this.top.st.went = true; this.play(v0); }
 };
 // a touch that has just started held-back films is not also a wish to pause them
 this.onMo = () => { if (this.freed) { this.freed = false; return; } this.setMotion(this.still); };
@@ -1459,7 +1516,7 @@ const now = Date.now();
 const per = (n, was) => (this.ckT ? Math.round((n - was) * 1000 / Math.max(1, now - this.ckT)) : 0);
 const fps = per(this.fN || 0, this.ckN), up = per(this.sent, this.ckU);
 this.ckT = now; this.ckN = this.fN || 0; this.ckU = this.sent;
-L.push('build 1118-2212  ' + navigator.userAgent);
+L.push('build 1118-2246  ' + navigator.userAgent);
 L.push('view ' + window.innerWidth + 'x' + window.innerHeight + '  dpr ' + window.devicePixelRatio + '  q ' + this.q.toFixed(2) + '  fps ' + fps);
 L.push('film pictures sent ' + up + ' a second  reports ' + (window.HTMLVideoElement && HTMLVideoElement.prototype.requestVideoFrameCallback ? 'yes' : 'no'));
 L.push('less motion ' + yn('(prefers-reduced-motion: reduce)') + '  still ' + (this.still ? 'YES' : 'no') + '  webgl ' + (this.nogl ? 'NO' : 'yes') + '  plain ' + (this.filmOff ? 'YES' : 'no') + '  errors ' + (this.err || 0) + '  lost ' + (this.lostN || 0) + '  resting ' + (this.rest ? 'YES' : 'no'));
@@ -1473,7 +1530,7 @@ const H = this.top.st;
 L.push('hero film ' + H.cur + '  has ' + (H.has ? 1 : 0) + '  went ' + (H.went ? 1 : 0) + '  gain ' + (H.gain || 0).toFixed(2) + '  dead ' + this.top.films.map((f, i) => (f.dead ? i : '')).join(''));
 Array.prototype.slice.call(document.querySelectorAll('#rl-root video')).forEach((v) => {
 if (!v.getAttribute('src')) return;
-L.push(v.id.replace('rl-', '') + '  ready ' + v.readyState + '  ' + (v.paused ? 'paused' : 'PLAYING') + '  t ' + v.currentTime.toFixed(1) + (v.error ? '  ERROR ' + v.error.code : '') + (this.refused.has(v) ? '  BLOCKED' : '') + (v.dataset.no ? '  ' + v.dataset.no : ''));
+L.push(v.id.replace('rl-', '') + '  ready ' + v.readyState + '  ' + (v.paused ? 'paused' : 'PLAYING') + '  t ' + v.currentTime.toFixed(1) + (v.error ? '  ERROR ' + v.error.code : '') + (this.refused.has(v) ? '  BLOCKED' : '') + (v.dataset.no ? '  ' + v.dataset.no : '') + (v.dataset.pr ? '  fetched ahead' : ''));
 });
 let box = this.el('rl-check');
 if (!box) { box = document.createElement('pre'); box.id = 'rl-check'; document.body.appendChild(box); }
@@ -1519,8 +1576,10 @@ try { pick = window.sessionStorage.getItem('rl-motion'); } catch (e) {}
 this.calm = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
 this.still = pick ? pick === 'off' : this.calm;
 this.label();
-// phones get lighter films
-if (window.innerWidth <= 900) ['rl-gva', 'rl-gvb', 'rl-vr', 'rl-w0', 'rl-w1', 'rl-w2', 'rl-w3', 'rl-w4'].forEach((id) => { const v = this.el(id); const u = v && v.getAttribute('src'); if (u) v.setAttribute('src', u.replace('.mp4', '-s.mp4')); });
+// phones get lighter films, and fetch the ones that are near before they are needed
+this.phone = window.innerWidth <= 900;
+this.saver = !!(navigator.connection && navigator.connection.saveData);
+if (this.phone) ['rl-gva', 'rl-gvb', 'rl-vr', 'rl-w0', 'rl-w1', 'rl-w2', 'rl-w3', 'rl-w4'].forEach((id) => { const v = this.el(id); const u = v && v.getAttribute('src'); if (u) v.setAttribute('src', u.replace('.mp4', '-s.mp4')); });
 if (window.location.hash === '#check') { this.check(); window.setInterval(this.check, 1000); }
 // nothing plays while the page is in the background
 document.addEventListener('visibilitychange', () => {
@@ -1544,8 +1603,7 @@ const root = this.el('rl-root');
 if (!ok) {
 if (root) root.classList.add('nogl');
 this.nogl = true;
-const v0 = this.el('rl-v0');
-if (v0 && !this.still) { v0.loop = true; this.play(v0); }
+this.turn();
 return;
 }
 [this.s0, this.s2, this.s3, this.s4, this.s5, this.s6].forEach((sc) => { if (sc) { sc.ta = this.tex(sc); sc.tb = this.tex(sc); } });
