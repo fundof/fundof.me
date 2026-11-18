@@ -9,11 +9,11 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-tmvrTe2SjQkj4w3/cqQ8t3lhsHN15asmHLvLLG7/HZs=' 'sha256-rtrbKoQDyVIFU0I7ua9FkxXTmI2UqUQj0ROn62arNCk=' 'sha256-j63hXL5e9Nt9u1xQCPbrRIb2UbI+LvN1CBAAe2OjTjc='; style-src 'sha256-gjV2Tzo/zin6lxN/zay0U45AE+NwU0xgm0dc44LmlrU=' 'sha256-EfgdnOTD7EEnox8b2TQQr3lb5nVdHAdBQvS6zUvxkTw='; img-src 'self'; media-src 'self'; font-src 'self'; manifest-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-RkIKaW4NfzqHJuDSkF1DT4ajAd6iZ0aVKGxCkaEr6sA=' 'sha256-rtrbKoQDyVIFU0I7ua9FkxXTmI2UqUQj0ROn62arNCk=' 'sha256-AYNkR/laZjzxX8RZl+rrLGR8pC6oUTV85bTtHbOLR8w='; style-src 'sha256-RZZTybhEiW7GS3wlQJCgc9iCmXQuCwBo/6ZokvSpi8g=' 'sha256-EfgdnOTD7EEnox8b2TQQr3lb5nVdHAdBQvS6zUvxkTw='; img-src 'self'; media-src 'self'; font-src 'self'; manifest-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="dark">
 <meta name="format-detection" content="telephone=no">
-<script>if (location.hash === '#check') {
+<script>if (/check/.test(location.hash)) {
   addEventListener('error', function (e) {
     var b = document.getElementById('rl-err');
     if (!b) { b = document.createElement('pre'); b.id = 'rl-err'; (document.body || document.documentElement).appendChild(b); }
@@ -57,6 +57,7 @@ a:hover { color: #ffffff; }
 .rl .mono { font-family: "Geist Mono", ui-monospace, Menlo, monospace; font-size: 12px; line-height: 1.7; letter-spacing: .08em; text-transform: uppercase; color: var(--mute); }
 .rl .pt { color: var(--ink); font-weight: 500; }
 .rl .cv { position: absolute; left: 0; top: 0; width: 100%; height: 100%; display: block; }
+.rl .lt { position: absolute; display: block; pointer-events: none; }
 .rl .films { position: absolute; left: 0; top: 0; width: 2px; height: 2px; overflow: hidden; opacity: .01; }
 .rl .films video { display: block; width: 2px; height: 2px; }
 .rl .films img { display: none; }
@@ -739,6 +740,150 @@ void main(){
   o = vec4(col, 1.);
 }`;
 
+// The light. On a screen that can show more than white, the brightest part of every line goes past it.
+// WebGL cannot tell a browser "brighter than white"; WebGPU can. So each picture is still drawn by WebGL,
+// and a second surface on top of it, a WebGPU one in the extended range, shows that picture with its
+// highlights lifted. Where any part of this is missing, the WebGL picture is what is shown, as before.
+this.WG = `
+@group(0) @binding(0) var t: texture_2d<f32>;
+@group(0) @binding(1) var<uniform> u: vec4f;
+@vertex fn v(@builtin(vertex_index) i: u32) -> @builtin(position) vec4f {
+  var p = array<vec2f, 3>(vec2f(-1.0, -1.0), vec2f(3.0, -1.0), vec2f(-1.0, 3.0));
+  return vec4f(p[i], 0.0, 1.0);
+}
+@fragment fn f(@builtin(position) p: vec4f) -> @location(0) vec4f {
+  let c = textureLoad(t, vec2i(p.xy), 0).rgb;
+  let l = max(c.r, max(c.g, c.b));
+  let k = smoothstep(0.62, 1.0, l);
+  return vec4f(c * (1.0 + u.x * k * k), 1.0);
+}`;
+// Before the light is shown it is proved on four colours. WebGL draws them, they go the way the pictures
+// will go, and the result is read back: the right way up, the grey untouched, the white past white.
+this.proof = async (dev, pipe, buf, g) => {
+const c = document.createElement('canvas');
+c.width = c.height = 4;
+const gl = c.getContext('webgl2', { antialias: false, alpha: false, depth: false, stencil: false });
+if (!gl) return false;
+try {
+gl.enable(gl.SCISSOR_TEST);
+[[0, 2, 1, 0, 0], [2, 2, 0, 1, 0], [0, 0, 0.5, 0.5, 0.5], [2, 0, 1, 1, 1]].forEach((q) => { gl.scissor(q[0], q[1], 2, 2); gl.clearColor(q[2], q[3], q[4], 1); gl.clear(gl.COLOR_BUFFER_BIT); });
+const U = GPUTextureUsage;
+dev.pushErrorScope('validation');
+const tex = dev.createTexture({ size: [4, 4], format: 'rgba8unorm', usage: U.COPY_DST | U.TEXTURE_BINDING | U.RENDER_ATTACHMENT });
+dev.queue.copyExternalImageToTexture({ source: c }, { texture: tex }, [4, 4]);
+const out = dev.createTexture({ size: [4, 4], format: 'rgba16float', usage: U.RENDER_ATTACHMENT | U.COPY_SRC });
+const enc = dev.createCommandEncoder();
+const pass = enc.beginRenderPass({ colorAttachments: [{ view: out.createView(), loadOp: 'clear', storeOp: 'store', clearValue: [0, 0, 0, 1] }] });
+pass.setPipeline(pipe);
+pass.setBindGroup(0, dev.createBindGroup({ layout: pipe.getBindGroupLayout(0), entries: [{ binding: 0, resource: tex.createView() }, { binding: 1, resource: { buffer: buf } }] }));
+pass.draw(3);
+pass.end();
+const rb = dev.createBuffer({ size: 1024, usage: GPUBufferUsage.COPY_DST | GPUBufferUsage.MAP_READ });
+enc.copyTextureToBuffer({ texture: out }, { buffer: rb, bytesPerRow: 256 }, [4, 4]);
+dev.queue.submit([enc.finish()]);
+const bad = await dev.popErrorScope();
+await rb.mapAsync(GPUMapMode.READ);
+const d = new Uint16Array(rb.getMappedRange());
+// a half float, read by hand
+const hf = (v) => { const e = (v >> 10) & 31, m = v & 1023; return (v >> 15 ? -1 : 1) * (e ? Math.pow(2, e - 15) * (1 + m / 1024) : m / 16777216); };
+const at = (x, y, r, gg, b) => [r, gg, b].every((want, k) => Math.abs(hf(d[y * 128 + x * 4 + k]) - want) < 0.02);
+const ok = !bad && at(0, 0, 1 + g, 0, 0) && at(3, 0, 0, 1 + g, 0) && at(0, 3, 0.5, 0.5, 0.5) && at(3, 3, 1 + g, 1 + g, 1 + g);
+rb.unmap();
+[rb, tex, out].forEach((x) => x.destroy());
+return ok;
+} finally {
+const lose = gl.getExtension('WEBGL_lose_context');
+if (lose) lose.loseContext();
+}
+};
+// The address asks for the light: #light, or #light1, #light2, #light3 for its strength. It is read when the
+// first picture stands and again whenever the address changes, so the light can be turned up, down or off
+// while the page is open.
+this.light = async () => {
+const h = window.location.hash, m = /^#light([1-3])?/.exec(h);
+// how far past white: 0.2, 0.35 or 0.55 in the screen's own encoding, about one and a half, two or three times as bright
+const g = m ? [0.2, 0.35, 0.55][(Number(m[1]) || 2) - 1] : 0;
+if (this.gpu) {
+if (m) { this.gpu.dev.queue.writeBuffer(this.gpu.buf, 0, new Float32Array([g, 0, 0, 0])); this.poke(); } else if (!h) this.dark();
+return;
+}
+if (!m || this.wake || this.spent || this.filmOff || !navigator.gpu || !window.matchMedia('(dynamic-range: high)').matches) return;
+this.wake = true;
+let dev = null;
+try {
+const ad = await navigator.gpu.requestAdapter();
+// an adapter that draws in software is as little use here as software WebGL
+dev = ad && !ad.isFallbackAdapter && !(ad.info && ad.info.isFallbackAdapter) ? await ad.requestDevice() : null;
+if (dev) {
+// ask a surface for the extended range, and see whether the browser agrees
+const probe = document.createElement('canvas').getContext('webgpu');
+probe.configure({ device: dev, format: 'rgba16float', toneMapping: { mode: 'extended' }, alphaMode: 'opaque' });
+const cf = probe.getConfiguration ? probe.getConfiguration() : null;
+probe.unconfigure();
+const mod = dev.createShaderModule({ code: this.WG });
+const pipe = dev.createRenderPipeline({ layout: 'auto', vertex: { module: mod, entryPoint: 'v' }, fragment: { module: mod, entryPoint: 'f', targets: [{ format: 'rgba16float' }] } });
+const buf = dev.createBuffer({ size: 16, usage: GPUBufferUsage.UNIFORM | GPUBufferUsage.COPY_DST });
+dev.queue.writeBuffer(buf, 0, new Float32Array([g, 0, 0, 0]));
+if (cf && cf.toneMapping && cf.toneMapping.mode === 'extended' && await this.proof(dev, pipe, buf, g) && !this.filmOff) {
+const mine = dev;
+dev = null;
+this.gpu = { dev: mine, pipe: pipe, buf: buf };
+// a surface that goes away is asked for once more
+mine.lost.then((i) => { if (!this.gpu || this.gpu.dev !== mine) return; this.dark(); if (!this.again && i.reason !== 'destroyed') { this.again = true; window.setTimeout(this.light, 3000); } });
+mine.addEventListener('uncapturederror', () => { if (this.gpu && this.gpu.dev === mine) this.dark(); });
+this.poke();
+}
+}
+} catch (e) {}
+if (dev) { try { dev.destroy(); } catch (e) {} }
+this.wake = false;
+// where the light could not be made it is not asked for again on this visit
+if (!this.gpu) this.spent = true;
+// the address may have changed while the light was being made
+else if (window.location.hash !== h) this.light();
+};
+this.lit = (sc) => {
+const G = this.gpu;
+if (!G) return;
+try {
+let L = sc.L;
+if (!L) {
+const c = document.createElement('canvas');
+c.className = 'lt';
+c.setAttribute('aria-hidden', 'true');
+sc.c.parentNode.insertBefore(c, sc.c.nextSibling);
+const x = c.getContext('webgpu');
+x.configure({ device: G.dev, format: 'rgba16float', toneMapping: { mode: 'extended' }, alphaMode: 'opaque' });
+L = sc.L = { c: c, x: x, w: 0, h: 0, tex: null, bind: null, box: '', shown: false };
+}
+const w = sc.c.width, h = sc.c.height;
+if (L.w !== w || L.h !== h) {
+L.c.width = w; L.c.height = h; L.w = w; L.h = h;
+if (L.tex) L.tex.destroy();
+L.tex = G.dev.createTexture({ size: [w, h], format: 'rgba8unorm', usage: GPUTextureUsage.COPY_DST | GPUTextureUsage.TEXTURE_BINDING | GPUTextureUsage.RENDER_ATTACHMENT });
+L.bind = G.dev.createBindGroup({ layout: G.pipe.getBindGroupLayout(0), entries: [{ binding: 0, resource: L.tex.createView() }, { binding: 1, resource: { buffer: G.buf } }] });
+}
+const e = sc.c, box = e.offsetLeft + ' ' + e.offsetTop + ' ' + e.offsetWidth + ' ' + e.offsetHeight;
+if (box !== L.box) { L.box = box; const st = L.c.style; st.left = e.offsetLeft + 'px'; st.top = e.offsetTop + 'px'; st.width = e.offsetWidth + 'px'; st.height = e.offsetHeight + 'px'; }
+G.dev.queue.copyExternalImageToTexture({ source: e }, { texture: L.tex }, [w, h]);
+const enc = G.dev.createCommandEncoder();
+const pass = enc.beginRenderPass({ colorAttachments: [{ view: L.x.getCurrentTexture().createView(), loadOp: 'clear', storeOp: 'store', clearValue: [0, 0, 0, 1] }] });
+pass.setPipeline(G.pipe);
+pass.setBindGroup(0, L.bind);
+pass.draw(3);
+pass.end();
+G.dev.queue.submit([enc.finish()]);
+if (!L.shown) { L.shown = true; e.style.visibility = 'hidden'; }
+} catch (e) { this.dark(); }
+};
+// back to the WebGL picture
+this.dark = () => {
+const G = this.gpu;
+this.gpu = null;
+(this.all || []).forEach((sc) => { if (sc.L) { sc.c.style.visibility = ''; sc.L.c.remove(); sc.L = null; } });
+if (G) { try { G.dev.destroy(); } catch (e) {} }
+if (this.poke) this.poke();
+};
 // Without a graphics chip the browser draws WebGL in software, far too slowly for film. Such a machine
 // gets the plain pictures, the same as a browser without WebGL.
 this.soft = (gl) => {
@@ -1058,6 +1203,7 @@ gl.uniform4f(u.uQ0, z0[0], z0[1], z0[2], z0[3]);
 gl.uniform4f(u.uQ1, z1[0], z1[1], z1[2], z1[3]);
 gl.uniform3f(u.uEv, -100, 0, 1);
 gl.drawArrays(gl.TRIANGLES, 0, 3);
+this.lit(sc);
 };
 
 // One hundred lines run from the fans through the checkout and part into the shares.
@@ -1089,6 +1235,7 @@ gl.uniform3f(u.uL, 0.0575, 0.0066, 0.075);
 gl.uniform2f(u.uM, 0.33, 0.0034);
 gl.uniform3f(u.uR, 0.06, 0.0068, 0.1);
 gl.drawArrays(gl.TRIANGLES, 0, 3);
+this.lit(sc);
 };
 
 this.ink = (sc) => {
@@ -1188,6 +1335,7 @@ gl.uniform4f(u.uQ0, 0, 0, 0, 0);
 gl.uniform4f(u.uQ1, 0, 0, 0, 0);
 gl.uniform3f(u.uEv, t - B.evT, B.evN, B.dir);
 gl.drawArrays(gl.TRIANGLES, 0, 3);
+this.lit(sc);
 };
 
 // The closing piece: the lines open on the film behind them and close again.
@@ -1241,6 +1389,7 @@ gl.uniform4f(u.uQ0, z0[0], z0[1], z0[2], z0[3]);
 gl.uniform4f(u.uQ1, 0, 0, 0, 0);
 gl.uniform3f(u.uEv, -100, 0, 1);
 gl.drawArrays(gl.TRIANGLES, 0, 3);
+this.lit(sc);
 };
 
 // Six squares drawn by one canvas behind them. One film holds all six signs in turn, five seconds each;
@@ -1330,6 +1479,7 @@ gl.uniform1fv(u.uOp, K.op);
 gl.uniform1i(u.uCount, n);
 gl.uniform2f(u.uGrid, 3, 2);
 gl.drawArrays(gl.TRIANGLES, 0, 3);
+this.lit(sc);
 };
 
 // Frame pacing. When frames run slow the page draws at a lower resolution. When that does not make them
@@ -1365,6 +1515,8 @@ this.pt = t;
 this.fN = (this.fN || 0) + 1;
 // the lines move by a clock of their own, and it stands while the films are paused
 if (!this.still) this.at += dt;
+// the light is asked for once the first picture stands, so it never competes with it
+if (!this.lt && (this.top.st.gain >= 1 || t > 4)) { this.lt = true; this.light(); }
 // a surface that stays away for six seconds: the plain pictures are shown instead of a frozen one
 this.lostT = this.all.some((sc) => sc.lost) ? (this.lostT || 0) + Math.max(0, Math.min(0.25, raw)) : 0;
 if (this.lostT > 6 && !this.filmOff) this.plain();
@@ -1410,6 +1562,7 @@ if (!this.still) this.play(v0);
 };
 this.plain = () => {
 this.filmOff = true;
+this.dark();
 this.setState({ who: this.films[0].who });
 const root = this.el('rl-root');
 if (root) root.classList.add('nofilm');
@@ -1516,9 +1669,9 @@ const now = Date.now();
 const per = (n, was) => (this.ckT ? Math.round((n - was) * 1000 / Math.max(1, now - this.ckT)) : 0);
 const fps = per(this.fN || 0, this.ckN), up = per(this.sent, this.ckU);
 this.ckT = now; this.ckN = this.fN || 0; this.ckU = this.sent;
-L.push('build 1118-2246  ' + navigator.userAgent);
+L.push('build 1118-2353  ' + navigator.userAgent);
 L.push('view ' + window.innerWidth + 'x' + window.innerHeight + '  dpr ' + window.devicePixelRatio + '  q ' + this.q.toFixed(2) + '  fps ' + fps);
-L.push('film pictures sent ' + up + ' a second  reports ' + (window.HTMLVideoElement && HTMLVideoElement.prototype.requestVideoFrameCallback ? 'yes' : 'no'));
+L.push('film pictures sent ' + up + ' a second  reports ' + (window.HTMLVideoElement && HTMLVideoElement.prototype.requestVideoFrameCallback ? 'yes' : 'no') + '  light ' + (this.gpu ? 'ON' : 'off'));
 L.push('less motion ' + yn('(prefers-reduced-motion: reduce)') + '  still ' + (this.still ? 'YES' : 'no') + '  webgl ' + (this.nogl ? 'NO' : 'yes') + '  plain ' + (this.filmOff ? 'YES' : 'no') + '  errors ' + (this.err || 0) + '  lost ' + (this.lostN || 0) + '  resting ' + (this.rest ? 'YES' : 'no'));
 let pk = '-';
 try { pk = window.sessionStorage.getItem('rl-motion') || '-'; } catch (e) { pk = 'x'; }
@@ -1580,7 +1733,7 @@ this.label();
 this.phone = window.innerWidth <= 900;
 this.saver = !!(navigator.connection && navigator.connection.saveData);
 if (this.phone) ['rl-gva', 'rl-gvb', 'rl-vr', 'rl-w0', 'rl-w1', 'rl-w2', 'rl-w3', 'rl-w4'].forEach((id) => { const v = this.el(id); const u = v && v.getAttribute('src'); if (u) v.setAttribute('src', u.replace('.mp4', '-s.mp4')); });
-if (window.location.hash === '#check') { this.check(); window.setInterval(this.check, 1000); }
+if (/check/.test(window.location.hash)) { this.check(); window.setInterval(this.check, 1000); }
 // nothing plays while the page is in the background
 document.addEventListener('visibilitychange', () => {
 const vids = Array.prototype.slice.call(document.querySelectorAll('#rl-root video'));
@@ -1612,6 +1765,7 @@ window.addEventListener('resize', this.onResize);
 ['pointermove', 'pointerdown', 'pointerup', 'touchstart', 'touchmove', 'click', 'keydown', 'keyup', 'wheel', 'scroll', 'resize', 'focusin', 'focus', 'pageshow'].forEach((ev) => window.addEventListener(ev, this.poke, { passive: true, capture: true }));
 ['load', 'loadeddata', 'canplay', 'seeked'].forEach((ev) => root.addEventListener(ev, this.poke, true));
 document.addEventListener('visibilitychange', this.poke);
+window.addEventListener('hashchange', () => { if (this.lt) this.light(); });
 if (window.ResizeObserver) new ResizeObserver(this.poke).observe(root);
 window.addEventListener('pointermove', this.onMove, { passive: true });
 ['pointerdown', 'pointerup', 'touchend', 'click', 'keydown'].forEach((ev) => window.addEventListener(ev, this.onTouch, { passive: true }));
