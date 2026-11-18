@@ -9,7 +9,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-tmvrTe2SjQkj4w3/cqQ8t3lhsHN15asmHLvLLG7/HZs=' 'sha256-rtrbKoQDyVIFU0I7ua9FkxXTmI2UqUQj0ROn62arNCk=' 'sha256-cHWq1OGgtOVZzNPxaJXRAGGQICgVvEGlHvXzyHzBcIY='; style-src 'sha256-MMEHDx2npa7jnRRoDd4izB0UDjoz3mC6VFco3Z/AVEE=' 'sha256-dSxyEBYqy8lOqIJcyBZTms5JMDvomwofEuBVOwscwKI='; img-src 'self'; media-src 'self'; font-src 'self'; manifest-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-tmvrTe2SjQkj4w3/cqQ8t3lhsHN15asmHLvLLG7/HZs=' 'sha256-rtrbKoQDyVIFU0I7ua9FkxXTmI2UqUQj0ROn62arNCk=' 'sha256-eKDIQQ5HCA08sgf9LRhk9taArQ0PQVBMt9BZecoBCxw='; style-src 'sha256-MMEHDx2npa7jnRRoDd4izB0UDjoz3mC6VFco3Z/AVEE=' 'sha256-dSxyEBYqy8lOqIJcyBZTms5JMDvomwofEuBVOwscwKI='; img-src 'self'; media-src 'self'; font-src 'self'; manifest-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="dark">
 <meta name="format-detection" content="telephone=no">
@@ -423,6 +423,9 @@ feed: [
 };
 this.dpr = 1;
 this.q = 1;
+this.at = 0;
+this.wk = 8;
+this.sent = 0;
 this.ptr = { x: -9999, y: -9999, t: -100, on: false };
 this.ls = {};
 const stage = () => ({ cur: 0, nxt: -1, mix: 0, has: false, poster: false, inn: 0, gain: 0, lastA: -1, bok: false, named: false, held: false, stall: 0, lwa: 0, stillPut: -1 });
@@ -462,6 +465,7 @@ uniform vec2 uLod;
 uniform vec3 uCurve;
 uniform sampler2D uA, uB;
 uniform vec4 uFa, uFb, uPtr, uQ0, uQ1;
+// A payment on the balance. x: seconds since it happened, y: its size, z: in or out.
 uniform vec3 uEv;
 uniform vec2 uGn, uSh;
 uniform float uSb;
@@ -526,7 +530,7 @@ void main(){
     float ycd = yc - (uDisp * pitch * D + wav) * (1. - op);
     float gt = uT * (.03 + .05 * r1) + r2 * 7.;
     float g = step(h1(floor(gt) + idx * 7.13), uGl) * exp(-pow((uv.x - (fract(gt) * 1.3 - .15)) / .03, 2.));
-    float et = (uT - uEv.x) / .9;
+    float et = uEv.x / .9;
     if (et > 0. && et < 1.4) {
       float ex = uEv.z > 0. ? et * 1.2 - .1 : 1.1 - et * 1.2;
       g += step(r2, uEv.y) * exp(-pow((uv.x - ex + (r1 - .5) * .12) / .035, 2.));
@@ -566,7 +570,8 @@ void main(){
 this.FS2 = `#version 300 es
 precision highp float;
 uniform vec2 uRes;
-uniform float uT, uDpr, uWave, uHov, uIn, uThin, uDur;
+// uWave: seconds since the payment was sent. uGl: how many lines carry a glint.
+uniform float uT, uDpr, uWave, uHov, uIn, uThin, uDur, uGl;
 uniform vec4 uX;
 uniform vec2 uXe;
 uniform vec3 uL, uR;
@@ -582,7 +587,7 @@ void main(){
   float t1 = sm((u - uX.x) / (uX.y - uX.x));
   float t2 = sm((u - uX.z) / (uX.w - uX.z));
   float b = mix(mix(uL.y, uM.y, t1), uR.y, t2) * H;
-  float tw = uT - uWave;
+  float tw = uWave;
   vec3 col = vec3(0.);
   float glow = 0.;
   for (int s = 0; s < 6; s++) {
@@ -606,7 +611,7 @@ void main(){
     float arr = step(uDur, tw) * exp(-(tw - uDur) * 1.5);
     float endz = smoothstep(uX.z, uXe.y, u);
     float gt = uT * (.02 + .04 * r1) + r2 * 9.;
-    float idle = step(h1(floor(gt) + n * 5.3), .1) * exp(-pow((u - (uXe.x + (uXe.y - uXe.x) * fract(gt))) / .02, 2.)) * .5;
+    float idle = step(h1(floor(gt) + n * 5.3), uGl) * exp(-pow((u - (uXe.x + (uXe.y - uXe.x) * fract(gt))) / .02, 2.)) * .5;
     float e = head + tail + arr * endz * .85 + idle;
     float mem = 1.;
     if (uHov >= 0.) {
@@ -630,7 +635,7 @@ void main(){
 this.FS3 = `#version 300 es
 precision highp float;
 uniform vec2 uRes;
-uniform float uT, uDpr, uIn, uPitch, uLod;
+uniform float uT, uDpr, uIn, uPitch, uLod, uGl;
 uniform sampler2D uA;
 uniform vec4 uTile[6];
 uniform float uOp[6];
@@ -704,7 +709,7 @@ void main(){
     float wav = pitch * (.08 * sin(uv.x * 6. + uT * .5 + seed * .31) + .04 * sin(uv.x * 17. - uT * .8 + seed * 1.3));
     float ycd = yc - (1.05 * pitch * D + wav) * (1. - op);
     float gt = uT * (.03 + .05 * r1) + r2 * 7.;
-    float g = step(h1(floor(gt) + seed * 7.13), .09) * exp(-pow((uv.x - (fract(gt) * 1.3 - .15)) / .025, 2.));
+    float g = step(h1(floor(gt) + seed * 7.13), uGl) * exp(-pow((uv.x - (fract(gt) * 1.3 - .15)) / .025, 2.));
     float hf = pitch * .5 * (.06 + .56 * L) + .5 * uDpr * g;
     hf = max(hf, .4 * uDpr);
     hf = mix(hf, pitch * .5 + 1., op);
@@ -793,6 +798,26 @@ gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
 gl.generateMipmap(gl.TEXTURE_2D);
 return t;
 };
+// A film is handed to the graphics chip once for each of its pictures, not once for each redraw.
+// The browser reports every new picture of a film. Where it does not, or falls silent, or the film
+// has moved on without a report, the film is sent on every redraw, as before.
+this.seen = new WeakMap();
+this.inTex = new WeakMap();
+this.watch = (v) => {
+let W = this.seen.get(v);
+if (W) return W;
+W = { n: 0, at: -1e9, on: typeof v.requestVideoFrameCallback === 'function' };
+this.seen.set(v, W);
+if (W.on) {
+const tick = () => { W.n++; W.at = performance.now(); v.requestVideoFrameCallback(tick); };
+v.requestVideoFrameCallback(tick);
+}
+return W;
+};
+this.due = (v, tex) => {
+const W = this.watch(v), K = this.inTex.get(tex);
+return !K || K.v !== v || !W.on || W.n !== K.n || performance.now() - W.at > 250 || Math.abs(v.currentTime - K.ct) > 0.06;
+};
 this.put = (sc, t, src) => {
 const gl = sc.gl;
 try {
@@ -800,6 +825,7 @@ gl.activeTexture(gl.TEXTURE0);
 gl.bindTexture(gl.TEXTURE_2D, t);
 gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, src);
 gl.generateMipmap(gl.TEXTURE_2D);
+if (src.tagName === 'VIDEO') { this.inTex.set(t, { v: src, n: this.watch(src).n, ct: src.currentTime }); this.sent++; } else this.inTex.delete(t);
 return true;
 } catch (e) { if (src && src.tagName) this.err = (this.err || 0) + 1; return false; }
 };
@@ -888,7 +914,7 @@ gl.uniform1i(u.uA, 0);
 gl.uniform1i(u.uB, 1);
 gl.uniform2f(u.uRes, sc.w, sc.h);
 gl.uniform1f(u.uN, 100);
-gl.uniform1f(u.uT, t);
+gl.uniform1f(u.uT, this.at);
 gl.uniform1f(u.uDpr, sc.w / sc.cw);
 };
 
@@ -911,7 +937,10 @@ const v = A.el;
 if (v.paused && !v.ended && !this.still && (H.went || H.gain > 0.8)) { H.went = true; this.play(v); }
 let fresh = false;
 if (v.readyState >= 2) {
-if (v.currentTime !== H.lastA || !H.has) { if (this.put(sc, sc.ta, v)) { H.has = true; H.lastA = v.currentTime; fresh = true; } }
+if (v.currentTime !== H.lastA || !H.has) {
+if (!H.has || this.due(v, sc.ta)) { if (this.put(sc, sc.ta, v)) { H.has = true; H.lastA = v.currentTime; fresh = true; } }
+else { H.lastA = v.currentTime; fresh = true; }
+}
 } else if (!H.has && !H.poster) {
 const im = this.el(fc.img);
 if (im && im.complete && im.naturalWidth) { if (this.put(sc, sc.ta, im)) H.poster = true; }
@@ -954,7 +983,7 @@ if (H.nxt >= 0) {
 const fn = F[H.nxt];
 const B = this.srcOf(fn);
 if (B.still) { if (!H.bok && this.okSrc(B) && this.put(sc, sc.tb, B.el)) H.bok = true; }
-else if (B.el && B.el.readyState >= 2 && B.el.currentTime < 3) { if (this.put(sc, sc.tb, B.el)) H.bok = true; }
+else if (B.el && B.el.readyState >= 2 && B.el.currentTime < 3) { if (!H.bok || this.due(B.el, sc.tb)) { if (this.put(sc, sc.tb, B.el)) H.bok = true; } }
 if (H.bok) { if (H.tm === undefined) H.tm = t; H.mix = (t - H.tm) / 1.8; }
 if (H.mix > 0.5 && !H.named) { H.named = true; S.say(fn); }
 if (H.mix >= 1) {
@@ -1016,13 +1045,14 @@ if (!S.done && t - S.wave > DUR) { S.done = true; this.setState({ flash: (this.s
 const thin = sc.cw < 700;
 gl.viewport(0, 0, sc.w, sc.h);
 gl.uniform2f(u.uRes, sc.w, sc.h);
-gl.uniform1f(u.uT, t);
+gl.uniform1f(u.uT, this.at);
 gl.uniform1f(u.uDpr, sc.w / sc.cw);
-gl.uniform1f(u.uWave, S.wave);
+gl.uniform1f(u.uWave, t - S.wave);
 gl.uniform1f(u.uHov, this.state.hov);
 gl.uniform1f(u.uIn, S.inn);
 gl.uniform1f(u.uThin, thin ? 1 : 0);
 gl.uniform1f(u.uDur, DUR);
+gl.uniform1f(u.uGl, this.still ? 0 : 0.1);
 if (thin) { gl.uniform4f(u.uX, 0.05, 0.37, 0.63, 0.95); gl.uniform2f(u.uXe, 0, 1); }
 else { gl.uniform4f(u.uX, 0.165, 0.42, 0.58, 0.84); gl.uniform2f(u.uXe, 0.135, 0.895); }
 gl.uniform3f(u.uL, 0.0575, 0.0066, 0.075);
@@ -1126,7 +1156,7 @@ const L = this.lensFor(sc, 'b', t, dt, 0.3, 0.5, false);
 gl.uniform4f(u.uPtr, L[0], L[1], L[2], L[3]);
 gl.uniform4f(u.uQ0, 0, 0, 0, 0);
 gl.uniform4f(u.uQ1, 0, 0, 0, 0);
-gl.uniform3f(u.uEv, B.evT, B.evN, B.dir);
+gl.uniform3f(u.uEv, t - B.evT, B.evN, B.dir);
 gl.drawArrays(gl.TRIANGLES, 0, 3);
 };
 
@@ -1143,7 +1173,10 @@ if (!N.has && this.okSrc(S)) { if (this.put(sc, sc.ta, S.el)) N.has = true; }
 // the film takes over from the photograph with its first frame
 if (fv && !this.still) {
 if (fv.paused && !this.refused.has(fv) && !(N.pt > t)) { N.pt = t + 1; this.play(fv); }
-if (fv.readyState >= 2 && fv.currentTime !== N.vt) { if (this.put(sc, sc.ta, fv)) { N.vt = fv.currentTime; N.has = true; N.film = true; } }
+if (fv.readyState >= 2 && fv.currentTime !== N.vt) {
+if (!N.film || this.due(fv, sc.ta)) { if (this.put(sc, sc.ta, fv)) { N.vt = fv.currentTime; N.has = true; N.film = true; } }
+else N.vt = fv.currentTime;
+}
 }
 if (N.film) S = { el: fv, still: false };
 if (N.ti === undefined) N.ti = t;
@@ -1193,7 +1226,10 @@ if (!K.has && im && im.complete && im.naturalWidth) { if (this.put(sc, sc.ta, im
 let rolling = false;
 if (fv && !this.still) {
 if (fv.paused && !this.refused.has(fv) && !(K.pt > t)) { K.pt = t + 1; this.play(fv); }
-if (fv.readyState >= 2 && fv.currentTime !== K.vt) { if (this.put(sc, sc.ta, fv)) { K.vt = fv.currentTime; K.has = true; } }
+if (fv.readyState >= 2 && fv.currentTime !== K.vt) {
+if (this.due(fv, sc.ta)) { if (this.put(sc, sc.ta, fv)) { K.vt = fv.currentTime; K.has = true; } }
+else K.vt = fv.currentTime;
+}
 rolling = !fv.paused && fv.readyState >= 2;
 }
 if (K.t0 === undefined) K.t0 = t;
@@ -1252,10 +1288,11 @@ gl.activeTexture(gl.TEXTURE0);
 gl.bindTexture(gl.TEXTURE_2D, sc.ta);
 gl.uniform1i(u.uA, 0);
 gl.uniform2f(u.uRes, sc.w, sc.h);
-gl.uniform1f(u.uT, t);
+gl.uniform1f(u.uT, this.at);
 gl.uniform1f(u.uDpr, d);
 gl.uniform1f(u.uIn, Math.min(1, (t - K.t0) / 1.5));
 gl.uniform1f(u.uPitch, 5.2 * d);
+gl.uniform1f(u.uGl, this.still ? 0 : 0.09);
 gl.uniform1f(u.uLod, Math.max(0, Math.log2(Math.max(1, 360 / Math.max(60, ah) * 5.2 * 0.5))));
 gl.uniform3f(u.uCurve, 1.95, 1.22, 0.9);
 gl.uniform4fv(u.uTile, K.tiles);
@@ -1296,9 +1333,14 @@ const dt = Math.max(0, Math.min(0.05, t - (this.pt === undefined ? t : this.pt))
 const raw = t - (this.pt === undefined ? t : this.pt);
 this.pt = t;
 this.fN = (this.fN || 0) + 1;
+// the lines move by a clock of their own, and it stands while the films are paused
+if (!this.still) this.at += dt;
 // a surface that stays away for six seconds: the plain pictures are shown instead of a frozen one
 this.lostT = this.all.some((sc) => sc.lost) ? (this.lostT || 0) + Math.max(0, Math.min(0.25, raw)) : 0;
 if (this.lostT > 6 && !this.filmOff) this.plain();
+// Paused, and nothing has touched the page for a while: the picture stands as it is, and nothing is drawn.
+this.rest = this.still && !this.lostT && t > this.wk;
+if (this.rest) return;
 this.pace(raw, t);
 if ((this.err || 0) > 40 && !this.filmOff) this.plain();
 this.drawStage(this.top, t, dt);
@@ -1381,6 +1423,7 @@ this.fresh = () => {
 this.fn.has = false; this.fn.film = false; this.fn.vt = -1;
 [this.pa, this.pb].forEach((K) => { K.has = false; K.vt = -1; });
 this.bl.dirty = true;
+this.poke();
 };
 this.label = () => {
 const b = this.el('rl-mo');
@@ -1393,6 +1436,7 @@ b.setAttribute('aria-label', off ? 'Play films' : 'Pause films');
 this.block = (v) => { this.refused.add(v); if (!this.blocked) { this.blocked = true; this.label(); } };
 this.setMotion = (on) => {
 this.still = !on;
+this.poke();
 if (on) this.blocked = false;
 this.label();
 try { window.sessionStorage.setItem('rl-motion', on ? 'on' : 'off'); } catch (e) {}
@@ -1412,11 +1456,13 @@ this.check = () => {
 const L = [];
 const yn = (q) => ((window.matchMedia && window.matchMedia(q).matches) ? 'yes' : 'no');
 const now = Date.now();
-const fps = this.ckT ? Math.round(((this.fN || 0) - this.ckN) * 1000 / Math.max(1, now - this.ckT)) : 0;
-this.ckT = now; this.ckN = this.fN || 0;
-L.push('build 1118-2032  ' + navigator.userAgent);
+const per = (n, was) => (this.ckT ? Math.round((n - was) * 1000 / Math.max(1, now - this.ckT)) : 0);
+const fps = per(this.fN || 0, this.ckN), up = per(this.sent, this.ckU);
+this.ckT = now; this.ckN = this.fN || 0; this.ckU = this.sent;
+L.push('build 1118-2113  ' + navigator.userAgent);
 L.push('view ' + window.innerWidth + 'x' + window.innerHeight + '  dpr ' + window.devicePixelRatio + '  q ' + this.q.toFixed(2) + '  fps ' + fps);
-L.push('less motion ' + yn('(prefers-reduced-motion: reduce)') + '  still ' + (this.still ? 'YES' : 'no') + '  webgl ' + (this.nogl ? 'NO' : 'yes') + '  plain ' + (this.filmOff ? 'YES' : 'no') + '  errors ' + (this.err || 0) + '  lost ' + (this.lostN || 0));
+L.push('film pictures sent ' + up + ' a second  reports ' + (window.HTMLVideoElement && HTMLVideoElement.prototype.requestVideoFrameCallback ? 'yes' : 'no'));
+L.push('less motion ' + yn('(prefers-reduced-motion: reduce)') + '  still ' + (this.still ? 'YES' : 'no') + '  webgl ' + (this.nogl ? 'NO' : 'yes') + '  plain ' + (this.filmOff ? 'YES' : 'no') + '  errors ' + (this.err || 0) + '  lost ' + (this.lostN || 0) + '  resting ' + (this.rest ? 'YES' : 'no'));
 let pk = '-';
 try { pk = window.sessionStorage.getItem('rl-motion') || '-'; } catch (e) { pk = 'x'; }
 L.push('held back ' + (this.blocked ? 'YES' : 'no') + '  choice ' + pk + '  page ' + document.visibilityState);
@@ -1433,6 +1479,8 @@ let box = this.el('rl-check');
 if (!box) { box = document.createElement('pre'); box.id = 'rl-check'; document.body.appendChild(box); }
 box.textContent = L.join('\n');
 };
+// What wakes a resting page: a touch, a key, the pointer, a scroll, a new size, a picture that arrives.
+this.poke = () => { this.wk = (this.pt || 0) + 8; };
 this.onOut = () => { this.ptr.on = false; if (this.state.hov !== -1) this.setState({ hov: -1 }); };
 this.onResize = () => {
 const iw = window.innerWidth;
@@ -1482,8 +1530,8 @@ if ((this.nogl || this.filmOff) && !this.still) { const v0 = this.el('rl-v0'); i
 });
 this.fitPage();
 const R = ['uRes', 'uN', 'uT', 'uDpr', 'uMix', 'uOpen', 'uIn', 'uGain', 'uLod', 'uCurve', 'uGl', 'uDisp', 'uA', 'uB', 'uFa', 'uFb', 'uPtr', 'uQ0', 'uQ1', 'uEv', 'uGn', 'uSh', 'uSb'];
-const R2 = ['uRes', 'uT', 'uDpr', 'uWave', 'uHov', 'uIn', 'uThin', 'uDur', 'uX', 'uXe', 'uL', 'uR', 'uM'];
-const R3 = ['uRes', 'uT', 'uDpr', 'uIn', 'uPitch', 'uLod', 'uCurve', 'uA', 'uTile', 'uOp', 'uCount', 'uGrid'];
+const R2 = ['uRes', 'uT', 'uDpr', 'uWave', 'uHov', 'uIn', 'uThin', 'uDur', 'uX', 'uXe', 'uL', 'uR', 'uM', 'uGl'];
+const R3 = ['uRes', 'uT', 'uDpr', 'uIn', 'uPitch', 'uLod', 'uCurve', 'uA', 'uTile', 'uOp', 'uCount', 'uGrid', 'uGl'];
 // One drawing surface for each piece that is on this page. A phone allows only a few.
 let ok = true;
 [['s0', 'rl-c0', this.FS, R], ['s1', 'rl-c1', this.FS2, R2], ['s2', 'rl-c2', this.FS, R], ['s3', 'rl-c3', this.FS, R], ['s4', 'rl-c4', this.FS3, R3], ['s5', 'rl-c5', this.FS3, R3], ['s6', 'rl-c6', this.FS, R]].forEach((p) => {
@@ -1503,12 +1551,16 @@ return;
 [this.s0, this.s2, this.s3, this.s4, this.s5, this.s6].forEach((sc) => { if (sc) { sc.ta = this.tex(sc); sc.tb = this.tex(sc); } });
 this.all = [this.s0, this.s1, this.s2, this.s3, this.s4, this.s5, this.s6].filter((sc) => sc);
 window.addEventListener('resize', this.onResize);
+['pointermove', 'pointerdown', 'pointerup', 'touchstart', 'touchmove', 'click', 'keydown', 'keyup', 'wheel', 'scroll', 'resize', 'focusin', 'focus', 'pageshow'].forEach((ev) => window.addEventListener(ev, this.poke, { passive: true, capture: true }));
+['load', 'loadeddata', 'canplay', 'seeked'].forEach((ev) => root.addEventListener(ev, this.poke, true));
+document.addEventListener('visibilitychange', this.poke);
+if (window.ResizeObserver) new ResizeObserver(this.poke).observe(root);
 window.addEventListener('pointermove', this.onMove, { passive: true });
 ['pointerdown', 'pointerup', 'touchend', 'click', 'keydown'].forEach((ev) => window.addEventListener(ev, this.onTouch, { passive: true }));
 document.documentElement.addEventListener('pointerleave', this.onOut);
 if (document.fonts && document.fonts.load) {
-document.fonts.load('700 120px Geist').then(() => { this.bl.dirty = true; }).catch(() => {});
-if (document.fonts.ready) document.fonts.ready.then(() => { this.bl.dirty = true; });
+document.fonts.load('700 120px Geist').then(() => { this.bl.dirty = true; this.poke(); }).catch(() => {});
+if (document.fonts.ready) document.fonts.ready.then(() => { this.bl.dirty = true; this.poke(); });
 }
 this.raf = requestAnimationFrame(this.frame);
 }
