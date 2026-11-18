@@ -9,7 +9,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-tmvrTe2SjQkj4w3/cqQ8t3lhsHN15asmHLvLLG7/HZs=' 'sha256-rtrbKoQDyVIFU0I7ua9FkxXTmI2UqUQj0ROn62arNCk=' 'sha256-x95pY07RsVmEvDGEzlbuCpb7vDhVrs2PK5bzEGX6I2Y='; style-src 'sha256-mynlft4anQmZ9MmMljB1QOG6jamjaHwEy5KgnVi9P5Q=' 'sha256-IZMVtL1O3yWqAI7FLBwKaxC89oaUyUQnAh6+u8ASztM='; img-src 'self'; media-src 'self'; font-src 'self'; manifest-src 'self'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-tmvrTe2SjQkj4w3/cqQ8t3lhsHN15asmHLvLLG7/HZs=' 'sha256-rtrbKoQDyVIFU0I7ua9FkxXTmI2UqUQj0ROn62arNCk=' 'sha256-sFzrOmJEH9T29osiwTzPIKqZX9p8E4k/EB+yA2zDfuc='; style-src 'sha256-c9STpIHTvSqNd2PcVMUl2+ECarkGj99sRlg/fVhq3lk=' 'sha256-IZMVtL1O3yWqAI7FLBwKaxC89oaUyUQnAh6+u8ASztM='; img-src 'self'; media-src 'self'; font-src 'self'; manifest-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="dark">
 <meta name="format-detection" content="telephone=no">
@@ -58,7 +58,9 @@ a:hover { color: #ffffff; }
 .rl .pt { color: var(--ink); font-weight: 500; }
 .rl .cv { position: absolute; left: 0; top: 0; width: 100%; height: 100%; display: block; }
 .rl .films { position: absolute; left: 0; top: 0; width: 2px; height: 2px; overflow: hidden; opacity: .01; }
-.rl .films video, .rl .films img { display: block; width: 2px; height: 2px; }
+.rl .films video { display: block; width: 2px; height: 2px; }
+.rl .films img { display: none; }
+.rl :where(.show) .films img { display: block; width: 2px; height: 2px; }
 
 .rl .bar { position: absolute; z-index: 3; left: 0; right: 0; top: 0; display: flex; justify-content: space-between; align-items: center; padding: 34px var(--pad) 0; }
 .rl .wm { font-size: 23px; font-weight: 500; letter-spacing: -.02em; }
@@ -716,12 +718,19 @@ void main(){
   o = vec4(col, 1.);
 }`;
 
+// Without a graphics chip the browser draws WebGL in software, far too slowly for film. Such a machine
+// gets the plain pictures, the same as a browser without WebGL.
+this.soft = (gl) => {
+const x = gl.getExtension('WEBGL_debug_renderer_info');
+return /swiftshader|llvmpipe|softpipe|software|basic render/i.test(String(gl.getParameter(x ? x.UNMASKED_RENDERER_WEBGL : gl.RENDERER)));
+};
 this.mk = (id, fs, names, old) => {
 const c = this.el(id);
 if (!c) return null;
 let gl = null;
-try { gl = c.getContext('webgl2', { antialias: false, alpha: false, depth: false, stencil: false, powerPreference: 'high-performance' }); } catch (e) { gl = null; }
+try { gl = c.getContext('webgl2', { antialias: false, alpha: false, depth: false, stencil: false, powerPreference: 'high-performance', failIfMajorPerformanceCaveat: true }); } catch (e) { gl = null; }
 if (!gl) return null;
+if (!old && this.soft(gl)) { const x = gl.getExtension('WEBGL_lose_context'); if (x) x.loseContext(); return null; }
 const sh = (t, s) => {
 const o = gl.createShader(t);
 gl.shaderSource(o, s);
@@ -1292,7 +1301,7 @@ this.fitPage = () => {
 const root = this.el('rl-root');
 if (!root) return;
 const ih = window.innerHeight;
-const iw = root.clientWidth || window.innerWidth;
+const iw = window.innerWidth;
 const hh = Math.max(560, Math.min(1100, ih));
 const fh = Math.max(560, Math.min(1000, ih));
 this.fw = iw; this.fhh = ih;
@@ -1385,7 +1394,7 @@ const yn = (q) => ((window.matchMedia && window.matchMedia(q).matches) ? 'yes' :
 const now = Date.now();
 const fps = this.ckT ? Math.round(((this.fN || 0) - this.ckN) * 1000 / Math.max(1, now - this.ckT)) : 0;
 this.ckT = now; this.ckN = this.fN || 0;
-L.push('build 1118-1843  ' + navigator.userAgent);
+L.push('build 1118-1859  ' + navigator.userAgent);
 L.push('view ' + window.innerWidth + 'x' + window.innerHeight + '  dpr ' + window.devicePixelRatio + '  q ' + this.q.toFixed(2) + '  fps ' + fps);
 L.push('less motion ' + yn('(prefers-reduced-motion: reduce)') + '  still ' + (this.still ? 'YES' : 'no') + '  webgl ' + (this.nogl ? 'NO' : 'yes') + '  plain ' + (this.filmOff ? 'YES' : 'no') + '  errors ' + (this.err || 0) + '  lost ' + (this.lostN || 0));
 let pk = '-';
@@ -1406,8 +1415,7 @@ box.textContent = L.join('\n');
 };
 this.onOut = () => { this.ptr.on = false; if (this.state.hov !== -1) this.setState({ hov: -1 }); };
 this.onResize = () => {
-const root = this.el('rl-root');
-const iw = root ? root.clientWidth : window.innerWidth;
+const iw = window.innerWidth;
 if (iw !== this.fw || Math.abs(window.innerHeight - this.fhh) > 130) this.fitPage();
 this.bl.dirty = true;
 };
@@ -1453,7 +1461,7 @@ const R3 = ['uRes', 'uT', 'uDpr', 'uIn', 'uPitch', 'uLod', 'uCurve', 'uA', 'uTil
 let ok = true;
 [['s0', 'rl-c0', this.FS, R], ['s1', 'rl-c1', this.FS2, R2], ['s2', 'rl-c2', this.FS, R], ['s3', 'rl-c3', this.FS, R], ['s4', 'rl-c4', this.FS3, R3], ['s5', 'rl-c5', this.FS3, R3], ['s6', 'rl-c6', this.FS, R]].forEach((p) => {
 this[p[0]] = null;
-if (!this.el(p[1])) return;
+if (!ok || !this.el(p[1])) return;
 this[p[0]] = this.mk(p[1], p[2], p[3]);
 if (!this[p[0]]) ok = false;
 });
