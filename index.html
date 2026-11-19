@@ -9,7 +9,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-RkIKaW4NfzqHJuDSkF1DT4ajAd6iZ0aVKGxCkaEr6sA=' 'sha256-hkxrpFLCbK+SXbOcvErOLLo5UjcCmL/XwenT0cEeMms=' 'sha256-rtrbKoQDyVIFU0I7ua9FkxXTmI2UqUQj0ROn62arNCk=' 'sha256-ryR8mIfvRc8QpIuz9qpOdSuKAjvhELK68rv40U/a4ME='; style-src 'sha256-X1AqcsgmSmpnn5UEhBhliJR7bC3z/WGrmlUm1gz8LWU=' 'sha256-Ycz9pOn6Ni2qVq69FzUa7OhmZ4YzPxQOXJLe8m2BJQU='; img-src 'self'; media-src 'self'; font-src 'self'; manifest-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-RkIKaW4NfzqHJuDSkF1DT4ajAd6iZ0aVKGxCkaEr6sA=' 'sha256-hkxrpFLCbK+SXbOcvErOLLo5UjcCmL/XwenT0cEeMms=' 'sha256-rtrbKoQDyVIFU0I7ua9FkxXTmI2UqUQj0ROn62arNCk=' 'sha256-2CdcSo8aby2344P5rU+G3Rx17iJW+5Jusem8WeWtXfI='; style-src 'sha256-X1AqcsgmSmpnn5UEhBhliJR7bC3z/WGrmlUm1gz8LWU=' 'sha256-Ycz9pOn6Ni2qVq69FzUa7OhmZ4YzPxQOXJLe8m2BJQU='; img-src 'self'; media-src 'self'; font-src 'self'; manifest-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="dark">
 <meta name="format-detection" content="telephone=no">
@@ -853,20 +853,25 @@ const lose = gl.getExtension('WEBGL_lose_context');
 if (lose) lose.loseContext();
 }
 };
-// The address asks for the light: #light, or #light1, #light2, #light3 for its strength. It is read when the
-// first picture stands and again whenever the address changes, so the light can be turned up, down or off
-// while the page is open.
+// The light is on by itself where it has been seen to work: a browser of the Chrome family on a Mac, with a
+// screen that can show more than white. Anywhere else the address can ask for it. #light1, #light2 and #light3
+// set its strength, #light0 turns it off. The address is read when the first picture stands and again whenever
+// it changes, so the light can be turned up, down or off while the page is open.
 // what the light is told: how far past white, the ground, and the ink
 this.lv = (g) => new Float32Array([g, 0, 0, 0, this.g0[0], this.g0[1], this.g0[2], 0, this.g1[0], this.g1[1], this.g1[2], 0]);
 this.light = async () => {
-const h = window.location.hash, m = /^#light([1-3])?/.exec(h);
+const h = window.location.hash, m = /^#light([0-3])?/.exec(h);
+const ua = navigator.userAgentData;
+const own = !!ua && ua.platform === 'macOS' && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+// its strength: what the address says, or the middle one where the light is on by itself
+const n = m ? (m[1] === undefined ? 2 : Number(m[1])) : (own ? 2 : 0);
 // how far past white: 0.2, 0.35 or 0.55 in the screen's own encoding, about one and a half, two or three times as bright
-const g = m ? [0.2, 0.35, 0.55][(Number(m[1]) || 2) - 1] : 0;
+const g = n ? [0.2, 0.35, 0.55][n - 1] : 0;
 if (this.gpu) {
-if (m) { this.gpu.dev.queue.writeBuffer(this.gpu.buf, 0, this.lv(g)); this.poke(); } else if (!h) this.dark();
+if (g) { this.gpu.to = g; this.poke(); } else this.dark();
 return;
 }
-if (!m || this.wake || this.spent || this.filmOff || !navigator.gpu || !window.matchMedia('(dynamic-range: high)').matches) return;
+if (!g || this.wake || this.spent || this.filmOff || !navigator.gpu || !window.matchMedia('(dynamic-range: high)').matches) return;
 this.wake = true;
 let dev = null;
 try {
@@ -886,7 +891,9 @@ dev.queue.writeBuffer(buf, 0, this.lv(g));
 if (cf && cf.toneMapping && cf.toneMapping.mode === 'extended' && await this.proof(dev, pipe, buf, g) && !this.filmOff) {
 const mine = dev;
 dev = null;
-this.gpu = { dev: mine, pipe: pipe, buf: buf };
+// the proof ran at full strength; on the page the light starts from nothing and comes up
+mine.queue.writeBuffer(buf, 0, this.lv(0));
+this.gpu = { dev: mine, pipe: pipe, buf: buf, g: 0, to: g };
 // a surface that goes away is asked for once more
 mine.lost.then((i) => { if (!this.gpu || this.gpu.dev !== mine) return; this.dark(); if (!this.again && i.reason !== 'destroyed') { this.again = true; window.setTimeout(this.light, 3000); } });
 mine.addEventListener('uncapturederror', () => { if (this.gpu && this.gpu.dev === mine) this.dark(); });
@@ -900,6 +907,15 @@ this.wake = false;
 if (!this.gpu) this.spent = true;
 // the address may have changed while the light was being made
 else if (window.location.hash !== h) this.light();
+};
+// The light comes up and goes down like a dimmer, never in one step. With the films paused it is set at once.
+this.glow = (dt) => {
+const G = this.gpu;
+if (!G || G.g === G.to) return;
+const d = G.to - G.g;
+G.g = this.still || Math.abs(d) < 0.004 ? G.to : G.g + d * (1 - Math.exp(-dt * 3.2));
+try { G.dev.queue.writeBuffer(G.buf, 0, this.lv(G.g)); } catch (e) { this.dark(); return; }
+this.poke();
 };
 this.lit = (sc) => {
 const G = this.gpu;
@@ -1583,6 +1599,7 @@ this.fN = (this.fN || 0) + 1;
 if (!this.still) this.at += dt;
 // the light is asked for once the first picture stands, so it never competes with it
 if (!this.lt && (this.top.st.gain >= 1 || t > 4)) { this.lt = true; this.light(); }
+this.glow(dt);
 // a surface that stays away for six seconds: the plain pictures are shown instead of a frozen one
 this.lostT = this.all.some((sc) => sc.lost) ? (this.lostT || 0) + Math.max(0, Math.min(0.25, raw)) : 0;
 if (this.lostT > 6 && !this.filmOff) this.plain();
@@ -1809,7 +1826,7 @@ const now = Date.now();
 const per = (n, was) => (this.ckT ? Math.round((n - was) * 1000 / Math.max(1, now - this.ckT)) : 0);
 const fps = per(this.fN || 0, this.ckN), up = per(this.sent, this.ckU);
 this.ckT = now; this.ckN = this.fN || 0; this.ckU = this.sent;
-L.push('build 1119-1455  ' + navigator.userAgent);
+L.push('build 1119-1550  ' + navigator.userAgent);
 L.push('view ' + window.innerWidth + 'x' + window.innerHeight + '  dpr ' + window.devicePixelRatio + '  q ' + this.q.toFixed(2) + '  fps ' + fps);
 L.push('film pictures sent ' + up + ' a second  reports ' + (window.HTMLVideoElement && HTMLVideoElement.prototype.requestVideoFrameCallback ? 'yes' : 'no') + '  light ' + (this.gpu ? 'ON' : 'off'));
 L.push('less motion ' + yn('(prefers-reduced-motion: reduce)') + '  still ' + (this.still ? 'YES' : 'no') + '  webgl ' + (this.nogl ? 'NO' : 'yes') + '  plain ' + (this.filmOff ? 'YES' : 'no') + '  errors ' + (this.err || 0) + '  lost ' + (this.lostN || 0) + '  resting ' + (this.rest ? 'YES' : 'no'));
