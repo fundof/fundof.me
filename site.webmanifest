@@ -3,8 +3,8 @@
  "short_name": "fundof.me",
  "start_url": "/",
  "display": "browser",
- "background_color": "#000000",
- "theme_color": "#000000",
+ "background_color": "#8e0f1b",
+ "theme_color": "#8e0f1b",
  "icons": [
   {
    "src": "icon-192.png",

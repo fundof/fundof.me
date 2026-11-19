@@ -9,7 +9,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-RkIKaW4NfzqHJuDSkF1DT4ajAd6iZ0aVKGxCkaEr6sA=' 'sha256-rtrbKoQDyVIFU0I7ua9FkxXTmI2UqUQj0ROn62arNCk=' 'sha256-Ju1HyoVQnDfUDU+mIHBcPM4KJ6ZfT59Anl+c0PKUOaw='; style-src 'sha256-RZZTybhEiW7GS3wlQJCgc9iCmXQuCwBo/6ZokvSpi8g=' 'sha256-EfgdnOTD7EEnox8b2TQQr3lb5nVdHAdBQvS6zUvxkTw='; img-src 'self'; media-src 'self'; font-src 'self'; manifest-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-RkIKaW4NfzqHJuDSkF1DT4ajAd6iZ0aVKGxCkaEr6sA=' 'sha256-hkxrpFLCbK+SXbOcvErOLLo5UjcCmL/XwenT0cEeMms=' 'sha256-rtrbKoQDyVIFU0I7ua9FkxXTmI2UqUQj0ROn62arNCk=' 'sha256-ryR8mIfvRc8QpIuz9qpOdSuKAjvhELK68rv40U/a4ME='; style-src 'sha256-X1AqcsgmSmpnn5UEhBhliJR7bC3z/WGrmlUm1gz8LWU=' 'sha256-Ycz9pOn6Ni2qVq69FzUa7OhmZ4YzPxQOXJLe8m2BJQU='; img-src 'self'; media-src 'self'; font-src 'self'; manifest-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="dark">
 <meta name="format-detection" content="telephone=no">
@@ -20,19 +20,28 @@
     b.textContent += (e.message || 'error') + ' ' + (e.lineno || 0) + ':' + (e.colno || 0) + '\n';
   });
 }</script>
+<script>// Arriving from the other side. The address says where it was pressed there; it is read once and taken out again.
+// The page then opens under a cover of its own color, so the cut that began there can end here.
+(function () {
+  var m = /^#o=([0-9.]+),([0-9.]+)$/.exec(location.hash);
+  if (!m) return;
+  window.rlO = [Math.min(1, Number(m[1])), Math.min(1, Number(m[2]))];
+  document.documentElement.className += ' cov';
+  try { history.replaceState(null, '', location.pathname + location.search); } catch (e) {}
+})();</script>
 <link rel="preload" href="fonts/geist-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/geist-mono-400.woff2" as="font" type="font/woff2" crossorigin>
 <title>fundof.me: the account for creators that only you control</title>
 <meta name="description" content="One place where your income lands, stays yours and gets spent. Open in seconds, with no application and no bank in the middle.">
 <link rel="canonical" href="https://fundof.me/">
-<meta name="theme-color" content="#000000">
+<meta name="theme-color" content="#8e0f1b">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Fundof">
 <meta property="og:title" content="fundof.me: the account for creators that only you control">
 <meta property="og:description" content="One place where your income lands, stays yours and gets spent. Open in seconds, with no application and no bank in the middle.">
 <meta property="og:url" content="https://fundof.me/">
 <meta property="og:image" content="https://fundof.me/og.jpg">
-<meta property="og:image:alt" content="A portrait drawn in horizontal lines of light on black.">
+<meta property="og:image:alt" content="A portrait drawn in horizontal lines of light on red.">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
@@ -46,10 +55,11 @@
 @font-face { font-family: "Geist Mono"; font-style: normal; font-weight: 400; font-display: swap; src: url(fonts/geist-mono-400.woff2) format("woff2"); }
 @font-face { font-family: "Geist Mono"; font-style: normal; font-weight: 500; font-display: swap; src: url(fonts/geist-mono-500.woff2) format("woff2"); }
 @property --lw { syntax: '<length>'; inherits: false; initial-value: 1px; }
-html, body { margin: 0; background: #000; }
-a { color: #f3f3ef; }
-a:hover { color: #ffffff; }
-.rl { --ink: #f3f3ef; --mute: #9d9d97; --hair: rgba(243,243,239,.17); --pad: 56px; --hh: 860px; --fh: 820px; --sh: 760px; position: relative; overflow: hidden; background: #000; color: var(--ink); font-family: Geist, "Helvetica Neue", Arial, sans-serif; font-size: 17px; line-height: 1.45; -webkit-font-smoothing: antialiased; }
+:root { --bg: #8e0f1b; --ink: #f8f1e7; --hot: #ffffff; --mute: rgba(248,241,231,.76); --hair: rgba(248,241,231,.28); --far: #000000; }
+html, body { margin: 0; background: var(--bg); }
+a { color: var(--ink); }
+a:hover { color: var(--hot); }
+.rl { --pad: 56px; --hh: 860px; --fh: 820px; --sh: 760px; position: relative; overflow: hidden; background: var(--bg); color: var(--ink); font-family: Geist, "Helvetica Neue", Arial, sans-serif; font-size: 17px; line-height: 1.45; -webkit-font-smoothing: antialiased; }
 .rl * { box-sizing: border-box; }
 .rl h1, .rl h2, .rl h3, .rl p, .rl ul { margin: 0; padding: 0; }
 .rl ul { list-style: none; }
@@ -98,16 +108,16 @@ a:hover { color: #ffffff; }
 .rl .amt { display: inline-block; color: var(--mute); }
 .rl .amt.fa { animation: rl-fa 1.5s ease-out; }
 .rl .amt.fb { animation: rl-fb 1.5s ease-out; }
-@keyframes rl-fa { 0% { color: #fff; text-shadow: 0 0 14px rgba(255,255,255,.9); } 100% { color: #9d9d97; text-shadow: 0 0 0 rgba(255,255,255,0); } }
-@keyframes rl-fb { 0% { color: #fff; text-shadow: 0 0 14px rgba(255,255,255,.9); } 100% { color: #9d9d97; text-shadow: 0 0 0 rgba(255,255,255,0); } }
+@keyframes rl-fa { 0% { color: var(--hot); text-shadow: 0 0 14px rgba(255,255,255,.9); } 100% { color: var(--mute); text-shadow: 0 0 0 rgba(255,255,255,0); } }
+@keyframes rl-fb { 0% { color: var(--hot); text-shadow: 0 0 14px rgba(255,255,255,.9); } 100% { color: var(--mute); text-shadow: 0 0 0 rgba(255,255,255,0); } }
 
 .rl .under { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 24px; align-items: start; margin-top: 44px; }
 .rl .say { grid-column: 4 / span 5; font-size: 20px; line-height: 1.4; color: var(--ink); text-wrap: pretty; }
 .rl .act { grid-column: 10 / span 3; display: flex; justify-content: flex-end; }
-.rl .btn { --lw: 1px; appearance: none; -webkit-appearance: none; border: 0; border-radius: 0; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; min-width: 190px; height: 54px; padding: 0 22px; background: repeating-linear-gradient(to bottom, #f3f3ef 0, #f3f3ef var(--lw), transparent var(--lw), transparent 4px); font: 500 12px/1 "Geist Mono", ui-monospace, Menlo, monospace; letter-spacing: .1em; text-transform: uppercase; color: var(--ink); transition: --lw .5s cubic-bezier(.2, .8, .2, 1); }
-.rl .btn span { padding: 7px 12px; background: #000; transition: background-color .3s, color .3s; }
+.rl .btn { --lw: 1px; appearance: none; -webkit-appearance: none; border: 0; border-radius: 0; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; min-width: 190px; height: 54px; padding: 0 22px; background: repeating-linear-gradient(to bottom, var(--ink) 0, var(--ink) var(--lw), transparent var(--lw), transparent 4px); font: 500 12px/1 "Geist Mono", ui-monospace, Menlo, monospace; letter-spacing: .1em; text-transform: uppercase; color: var(--ink); transition: --lw .5s cubic-bezier(.2, .8, .2, 1); }
+.rl .btn span { padding: 7px 12px; background: var(--bg); transition: background-color .3s, color .3s; }
 .rl .btn:hover { --lw: 4px; }
-.rl .btn:hover span { background: transparent; color: #000; }
+.rl .btn:hover span { background: transparent; color: var(--bg); }
 .rl .btn:active { --lw: 2px; }
 .rl .btn:focus-visible { outline: 1px solid var(--ink); outline-offset: 4px; }
 
@@ -135,7 +145,7 @@ a:hover { color: #ffffff; }
 .rl .feed p.new { animation: rl-new .8s ease-out; }
 @keyframes rl-new { from { opacity: 0; translate: -14px 0; } to { opacity: 1; translate: 0 0; } }
 .rl .pay { position: absolute; right: 0; bottom: 0; }
-.rl .num { display: none; margin-top: 12px; font-size: clamp(54px, 10vw, 150px); line-height: 1; font-weight: 700; letter-spacing: -.02em; color: transparent; background: repeating-linear-gradient(to bottom, #f3f3ef 0, #f3f3ef 3px, transparent 3px, transparent 6px); -webkit-background-clip: text; background-clip: text; }
+.rl .num { display: none; margin-top: 12px; font-size: clamp(54px, 10vw, 150px); line-height: 1; font-weight: 700; letter-spacing: -.02em; color: transparent; background: repeating-linear-gradient(to bottom, var(--ink) 0, var(--ink) 3px, transparent 3px, transparent 6px); -webkit-background-clip: text; background-clip: text; }
 .rl .ink { display: none; }
 
 .rl .show { position: relative; margin-top: 150px; height: var(--sh); min-height: 420px; }
@@ -155,8 +165,20 @@ a:hover { color: #ffffff; }
 .rl .mono .nm { text-transform: none; }
 .rl .legal { margin: 0; padding: 22px var(--pad) 36px; max-width: 1180px; font: 400 10.5px/1.6 "Geist Mono", ui-monospace, Menlo, monospace; letter-spacing: .02em; color: var(--mute); }
 
+.rl .nav .lk { color: var(--mute); background-image: linear-gradient(var(--hair), var(--hair)); transition: color .25s; }
+.rl .nav .lk:hover { color: var(--ink); }
+.rl .nav .lk.here { color: var(--ink); background-image: linear-gradient(var(--ink), var(--ink)); }
+
+.xo { position: fixed; z-index: 8; left: 0; top: 0; width: 100%; height: 100%; pointer-events: none; will-change: transform; }
+.xb { background: var(--far); box-shadow: -1.5px 0 0 var(--ink); }
+.xb.xl { box-shadow: 1.5px 0 0 var(--ink); }
+.xc { background: var(--bg); box-shadow: 1.5px 0 0 var(--ink); }
+.xc.xl { box-shadow: -1.5px 0 0 var(--ink); }
+html.cov::before { content: ""; position: fixed; z-index: 7; left: 0; top: 0; width: 100%; height: 100%; background: var(--bg); animation: rl-cov 1ms linear 3s forwards; }
+@keyframes rl-cov { to { visibility: hidden; } }
+
 html { color-scheme: dark; }
-::selection { background: #f3f3ef; color: #000; }
+::selection { background: var(--ink); color: var(--bg); }
 .rl a, .rl button { -webkit-tap-highlight-color: transparent; }
 .rl .mo { appearance: none; -webkit-appearance: none; position: relative; display: inline-block; box-sizing: border-box; width: 8px; height: 10px; margin: 0 0 0 14px; padding: 0; border: 0 solid var(--ink); border-width: 0 2px; border-radius: 0; background: none; vertical-align: -1px; cursor: pointer; opacity: .72; transition: opacity .25s; }
 .rl .mo::before { content: ""; position: absolute; left: -18px; right: -18px; top: -17px; bottom: -17px; }
@@ -168,12 +190,12 @@ html { color-scheme: dark; }
 
 .rl .grid6 li:focus { outline: none; }
 .rl .grid6 li:focus-visible { outline: 1px solid var(--ink); outline-offset: 10px; }
-.rl .skip { position: absolute; z-index: 5; left: var(--pad); top: -80px; padding: 10px 14px; background: var(--ink); color: #000; }
+.rl .skip { position: absolute; z-index: 5; left: var(--pad); top: -80px; padding: 10px 14px; background: var(--ink); color: var(--bg); }
 .rl .skip:focus { top: 12px; }
 .rl section:focus { outline: none; }
 #rl-err { position: fixed; z-index: 9; left: 0; right: 0; top: 0; margin: 0; padding: 10px 12px; background: #f3f3ef; color: #000; font: 400 10px/1.5 ui-monospace, Menlo, Consolas, monospace; white-space: pre-wrap; word-break: break-all; }
 #rl-check { position: fixed; z-index: 9; left: 0; right: 0; bottom: 0; max-height: 64vh; overflow: auto; margin: 0; padding: 10px 12px; border-top: 1px solid rgba(243,243,239,.3); background: rgba(0,0,0,.93); color: #f3f3ef; font: 400 10px/1.5 ui-monospace, Menlo, Consolas, monospace; white-space: pre-wrap; word-break: break-all; -webkit-user-select: text; user-select: text; }
-@media (prefers-contrast: more) { .rl { --mute: #d2d2cc; --hair: rgba(243,243,239,.5); } }
+@media (prefers-contrast: more) { :root { --mute: rgba(248,241,231,.92); --hair: rgba(248,241,231,.6); } }
 
 @supports (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) {
@@ -185,9 +207,10 @@ html { color-scheme: dark; }
 .rl.nogl .hero .films, .rl.nogl .fin .films, .rl.nogl .show .films, .rl.nofilm .hero .films, .rl.nofilm .fin .films, .rl.nofilm .show .films { width: 100%; height: 100%; opacity: 1; }
 .rl.nogl .films video, .rl.nogl .films img, .rl.nofilm .films video, .rl.nofilm .films img { display: none; }
 .rl.nogl #rl-v0, .rl.nogl #rl-ir, .rl.nogl #rl-m5, .rl.nofilm #rl-v0, .rl.nofilm #rl-ir, .rl.nofilm #rl-m5 { display: block; width: 100%; height: 100%; object-fit: cover; }
+.rl.nogl #rl-v0, .rl.nogl #rl-p0, .rl.nogl #rl-ir, .rl.nogl #rl-m5, .rl.nofilm #rl-v0, .rl.nofilm #rl-ir, .rl.nofilm #rl-m5 { mix-blend-mode: screen; }
 .rl.nogl #rl-v0, .rl.nofilm #rl-v0 { transition: opacity .45s; }
 .rl.nogl #rl-v0.out, .rl.nofilm #rl-v0.out { opacity: 0; }
-.rl.nogl .hero::after, .rl.nogl .fin::after, .rl.nogl .show::after, .rl.nofilm .hero::after, .rl.nofilm .fin::after, .rl.nofilm .show::after { content: ""; position: absolute; left: 0; top: 0; width: 100%; height: 100%; background: repeating-linear-gradient(to bottom, transparent 0, transparent 3px, #000 3px, #000 8px); }
+.rl.nogl .hero::after, .rl.nogl .fin::after, .rl.nogl .show::after, .rl.nofilm .hero::after, .rl.nofilm .fin::after, .rl.nofilm .show::after { content: ""; position: absolute; left: 0; top: 0; width: 100%; height: 100%; background: repeating-linear-gradient(to bottom, transparent 0, transparent 3px, var(--bg) 3px, var(--bg) 8px); }
 .rl.nogl .hero .cv, .rl.nogl .fin .cv, .rl.nogl .show .cv, .rl.nofilm .hero .cv, .rl.nofilm .fin .cv, .rl.nofilm .show .cv { display: none; }
 .rl.nogl .split .cv, .rl.nogl .bal .cv { display: none; }
 .rl.nogl .split { aspect-ratio: auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 26px 48px; align-items: start; margin-left: 0; margin-right: 0; }
@@ -201,8 +224,8 @@ html { color-scheme: dark; }
 .rl.nogl .num { display: block; order: 1; }
 .rl.nogl .feed { order: 3; width: min(100%, 420px); margin-top: 22px; }
 .rl.nogl .pay { order: 4; align-self: flex-start; margin-top: 22px; }
-.rl.nogl .art, .rl.nofilm .art { position: relative; background-repeat: no-repeat; background-size: 333.34% auto; }
-.rl.nogl .art::after, .rl.nofilm .art::after { content: ""; position: absolute; left: 0; top: 0; width: 100%; height: 100%; background: repeating-linear-gradient(to bottom, transparent 0, transparent 3px, #000 3px, #000 8px); }
+.rl.nogl .art, .rl.nofilm .art { position: relative; background-repeat: no-repeat; background-size: 333.34% auto; background-color: var(--bg); background-blend-mode: screen; }
+.rl.nogl .art::after, .rl.nofilm .art::after { content: ""; position: absolute; left: 0; top: 0; width: 100%; height: 100%; background: repeating-linear-gradient(to bottom, transparent 0, transparent 3px, var(--bg) 3px, var(--bg) 8px); }
 .rl.nogl .grid6 li:nth-child(1) .art, .rl.nofilm .grid6 li:nth-child(1) .art { background-position: 2.38% 0; }
 .rl.nogl .grid6 li:nth-child(2) .art, .rl.nofilm .grid6 li:nth-child(2) .art { background-position: 50% 0; }
 .rl.nogl .grid6 li:nth-child(3) .art, .rl.nofilm .grid6 li:nth-child(3) .art { background-position: 97.62% 0; }
@@ -266,9 +289,10 @@ html { color-scheme: dark; }
 .rl .hero .films, .rl .fin .films, .rl .show .films { width: 100%; height: 100%; opacity: 1; }
 .rl .films video, .rl .films img { display: none; }
 .rl #rl-v0, .rl #rl-ir, .rl #rl-m5 { display: block; width: 100%; height: 100%; object-fit: cover; }
+.rl #rl-v0, .rl #rl-p0, .rl #rl-ir, .rl #rl-m5 { mix-blend-mode: screen; }
 .rl #rl-v0 { transition: opacity .45s; }
 .rl #rl-v0.out { opacity: 0; }
-.rl .hero::after, .rl .fin::after, .rl .show::after { content: ""; position: absolute; left: 0; top: 0; width: 100%; height: 100%; background: repeating-linear-gradient(to bottom, transparent 0, transparent 3px, #000 3px, #000 8px); }
+.rl .hero::after, .rl .fin::after, .rl .show::after { content: ""; position: absolute; left: 0; top: 0; width: 100%; height: 100%; background: repeating-linear-gradient(to bottom, transparent 0, transparent 3px, var(--bg) 3px, var(--bg) 8px); }
 .rl .hero .cv, .rl .fin .cv, .rl .show .cv { display: none; }
 .rl .split .cv, .rl .bal .cv { display: none; }
 .rl .split { aspect-ratio: auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 26px 48px; align-items: start; margin-left: 0; margin-right: 0; }
@@ -282,8 +306,8 @@ html { color-scheme: dark; }
 .rl .num { display: block; order: 1; }
 .rl .feed { order: 3; width: min(100%, 420px); margin-top: 22px; }
 .rl .pay { order: 4; align-self: flex-start; margin-top: 22px; }
-.rl .art { position: relative; background-repeat: no-repeat; background-size: 333.34% auto; }
-.rl .art::after { content: ""; position: absolute; left: 0; top: 0; width: 100%; height: 100%; background: repeating-linear-gradient(to bottom, transparent 0, transparent 3px, #000 3px, #000 8px); }
+.rl .art { position: relative; background-repeat: no-repeat; background-size: 333.34% auto; background-color: var(--bg); background-blend-mode: screen; }
+.rl .art::after { content: ""; position: absolute; left: 0; top: 0; width: 100%; height: 100%; background: repeating-linear-gradient(to bottom, transparent 0, transparent 3px, var(--bg) 3px, var(--bg) 8px); }
 .rl .grid6 li:nth-child(1) .art { background-position: 2.38% 0; }
 .rl .grid6 li:nth-child(2) .art { background-position: 50% 0; }
 .rl .grid6 li:nth-child(3) .art { background-position: 97.62% 0; }
@@ -302,7 +326,7 @@ html { color-scheme: dark; }
 
 <header class="bar">
 <a class="wm" href="#top"><svg class="mk" width="16.8" height="20" viewBox="0 0 16.8 20" aria-hidden="true"><rect x="0" y="0.84" width="16.8" height="2.32" fill="currentColor"/><rect x="0" y="4.84" width="5.71" height="2.32" fill="currentColor"/><rect x="0" y="8.84" width="12.43" height="2.32" fill="currentColor"/><rect x="0" y="12.84" width="5.71" height="2.32" fill="currentColor"/><rect x="0" y="16.84" width="5.71" height="2.32" fill="currentColor"/></svg>fundof.me</a>
-<nav class="nav"><a class="mono lk" href="https://fundof.com">For platforms</a><a class="mono lk" href="#account">For creators</a></nav>
+<nav class="nav"><a class="mono lk" href="https://fundof.com">For platforms</a><a class="mono lk here" aria-current="page" href="#account">For creators</a></nav>
 </header>
 
 <section id="top" class="hero">
@@ -404,7 +428,7 @@ html { color-scheme: dark; }
 <a class="door" href="https://fundof.com"><span class="mono">For platforms</span><span class="dn">fundof.com</span></a>
 </div>
 </div>
-<footer class="foot mono"><span class="pt nm">fundof.me</span><svg class="hm" width="20" height="20" viewBox="0 0 20 20" role="img" aria-label="Fundof"><path d="M4 0H16L20 4V16L16 20H4L0 16V4Z" fill="#c8a96e"/><rect x="6" y="5.24" width="8.74" height="1.21" fill="#000"/><rect x="6" y="7.32" width="2.97" height="1.21" fill="#000"/><rect x="6" y="9.4" width="6.46" height="1.21" fill="#000"/><rect x="6" y="11.48" width="2.97" height="1.21" fill="#000"/><rect x="6" y="13.56" width="2.97" height="1.21" fill="#000"/></svg></footer>
+<footer class="foot mono"><span class="pt nm">fundof.me</span><svg class="hm" width="20" height="20" viewBox="0 0 20 20" role="img" aria-label="Fundof"><path d="M4 0H16L20 4V16L16 20H4L0 16V4Z" fill="#f8f1e7"/><rect x="6" y="5.24" width="8.74" height="1.21" fill="#8e0f1b"/><rect x="6" y="7.32" width="2.97" height="1.21" fill="#8e0f1b"/><rect x="6" y="9.4" width="6.46" height="1.21" fill="#8e0f1b"/><rect x="6" y="11.48" width="2.97" height="1.21" fill="#8e0f1b"/><rect x="6" y="13.56" width="2.97" height="1.21" fill="#8e0f1b"/></svg></footer>
 </section>
 <p class="legal">Fundof is a technology provider. Fundof is not a bank, does not accept deposits and does not hold or control user funds. Accounts are self-custody: only the user can access them. &quot;Digital dollars&quot; refers to USDT, which is issued by Tether and is not issued, backed or guaranteed by Fundof. Card, bank transfer and conversion services are provided by licensed third parties under their own terms, are subject to identity checks and are not available in all countries. Nothing on this site is financial, legal or tax advice.</p>
 
@@ -413,6 +437,11 @@ html { color-scheme: dark; }
 <script>
 class Site {
 constructor() {
+this.g0 = [0.5569, 0.0588, 0.1059];
+this.g1 = [0.9843, 0.9569, 0.9176];
+this.au = [1.06, 0.93, 0.72];
+// where this page was arrived at from, when it was arrived at from the other side
+this.arr = window.rlO || null;
 this.films = [
 { v: 'rl-v0', img: 'rl-p0', who: 'precious', cx: 0.5, cy: 0.46, g: 1.4 },
 { v: 'rl-v1', img: 'rl-p1', who: 'reward', cx: 0.5, cy: 0.5, g: 1.1, full: true },
@@ -491,6 +520,7 @@ uniform vec4 uFa, uFb, uPtr, uQ0, uQ1;
 uniform vec3 uEv;
 uniform vec2 uGn, uSh;
 uniform float uSb;
+uniform vec3 uG0, uG1, uAu;
 out vec4 o;
 float h1(float n){ return fract(sin(n * 91.345) * 47453.5453); }
 float h2(vec2 p){ return fract(sin(dot(p, vec2(12.9898, 78.233))) * 43758.5453); }
@@ -582,9 +612,12 @@ void main(){
   }
   fa = pow(clamp(fa * 1.1, 0., 1.), .9) * uGain;
   col = mix(col, vec3(fa) * (1. - .55 * q), smoothstep(.2, 1., opn));
+  float sh = clamp(1. - uSh.x * smoothstep(.5, 0., uv.x) - uSh.y * smoothstep(150. * uDpr, 0., p.y) - uSb * smoothstep(.5, .95, uv.y), 0., 1.);
+  // Until here col is light: 0 where nothing is drawn, 1 where a line is at its brightest.
+  // Now it is laid on the ground this site stands on, in the ink its lines are drawn in.
+  col = uG0 + col * sh * (uG1 - uG0);
   // the gold: where the film has color, the lines give way and the gold stands solid
-  col = mix(col, fc.rgb * (1. - .55 * q), fc.a * smoothstep(.55, 1., uGain));
-  col *= clamp(1. - uSh.x * smoothstep(.5, 0., uv.x) - uSh.y * smoothstep(150. * uDpr, 0., p.y) - uSb * smoothstep(.5, .95, uv.y), 0., 1.);
+  col = mix(col, uG0 + (fc.rgb * uAu * (1. - .55 * q) - uG0) * sh, fc.a * smoothstep(.55, 1., uGain));
   col += (h2(p + fract(uT) * 61.) - .5) * .014;
   o = vec4(col, 1.);
 }`;
@@ -598,6 +631,7 @@ uniform vec4 uX;
 uniform vec2 uXe;
 uniform vec3 uL, uR;
 uniform vec2 uM;
+uniform vec3 uG0, uG1;
 out vec4 o;
 float h1(float n){ return fract(sin(n * 91.345) * 47453.5453); }
 float h2(vec2 p){ return fract(sin(dot(p, vec2(12.9898, 78.233))) * 43758.5453); }
@@ -650,6 +684,7 @@ void main(){
     glow = max(glow, min(e, 1.) * exp(-dy * dy / (2. * 36. * uDpr * uDpr)) * mem * vis);
   }
   col += glow * .22;
+  col = uG0 + col * (uG1 - uG0);
   col += (h2(p + fract(uT) * 61.) - .5) * .012;
   o = vec4(col, 1.);
 }`;
@@ -666,6 +701,7 @@ uniform vec2 uGrid;
 // The curve the light is read through. x: steepness, y: gain, z: lift. 1, 1, 0 leaves the light as it is.
 // For her squares: 1.95, 1.22, 0.9, so her face and her shoulders read in full.
 uniform vec3 uCurve;
+uniform vec3 uG0, uG1, uAu;
 out vec4 o;
 float h1(float n){ return fract(sin(n * 91.345) * 47453.5453); }
 float h2(vec2 p){ return fract(sin(dot(p, vec2(12.9898, 78.233))) * 43758.5453); }
@@ -706,7 +742,7 @@ void main(){
     vec4 r = uTile[i];
     if (p.y >= r.y - uPitch * 1.4 && p.y <= r.w + 1.) { y0 = r.y; y1 = r.w; }
   }
-  if (y0 < 0.) { o = vec4(0., 0., 0., 1.); return; }
+  if (y0 < 0.) { o = vec4(uG0, 1.); return; }
   float nl = max(4., floor((y1 - y0) / uPitch + .5));
   float pitch = (y1 - y0) / nl;
   float i0 = floor((p.y - y0) / pitch);
@@ -751,8 +787,9 @@ void main(){
   float fa = clamp((t0.r - .02) / .98, 0., 1.) * t0.a;
   fa = pow(clamp(fa * 1.1, 0., 1.), .9);
   col = mix(col, vec3(fa), smoothstep(.2, 1., opn));
+  col = uG0 + col * (uG1 - uG0);
   // the gold: where the film has color, the lines give way and the gold stands solid
-  col = mix(col, t0.rgb * t0.a, smoothstep(.06, .15, chroma(t0.rgb)) * t0.a * smoothstep(0., .05, uIn * 1.7 - .3 - uv.x));
+  col = mix(col, uG0 + (t0.rgb * uAu - uG0) * t0.a, smoothstep(.06, .15, chroma(t0.rgb)) * t0.a * smoothstep(0., .05, uIn * 1.7 - .3 - uv.x));
   col += (h2(p + fract(uT) * 61.) - .5) * .012;
   o = vec4(col, 1.);
 }`;
@@ -763,16 +800,19 @@ void main(){
 // highlights lifted. Where any part of this is missing, the WebGL picture is what is shown, as before.
 this.WG = `
 @group(0) @binding(0) var t: texture_2d<f32>;
-@group(0) @binding(1) var<uniform> u: vec4f;
+struct U { g: vec4f, g0: vec4f, g1: vec4f }
+@group(0) @binding(1) var<uniform> u: U;
 @vertex fn v(@builtin(vertex_index) i: u32) -> @builtin(position) vec4f {
   var p = array<vec2f, 3>(vec2f(-1.0, -1.0), vec2f(3.0, -1.0), vec2f(-1.0, 3.0));
   return vec4f(p[i], 0.0, 1.0);
 }
 @fragment fn f(@builtin(position) p: vec4f) -> @location(0) vec4f {
   let c = textureLoad(t, vec2i(p.xy), 0).rgb;
-  let l = max(c.r, max(c.g, c.b));
+  // n: how far from the ground toward the ink this point is, so the ground itself is never lifted
+  let n = (c - u.g0.rgb) / max(u.g1.rgb - u.g0.rgb, vec3f(0.001));
+  let l = max(n.r, max(n.g, n.b));
   let k = smoothstep(0.62, 1.0, l);
-  return vec4f(c * (1.0 + u.x * k * k), 1.0);
+  return vec4f(c * (1.0 + u.g.x * k * k), 1.0);
 }`;
 // Before the light is shown it is proved on four colours. WebGL draws them, they go the way the pictures
 // will go, and the result is read back: the right way up, the grey untouched, the white past white.
@@ -816,12 +856,14 @@ if (lose) lose.loseContext();
 // The address asks for the light: #light, or #light1, #light2, #light3 for its strength. It is read when the
 // first picture stands and again whenever the address changes, so the light can be turned up, down or off
 // while the page is open.
+// what the light is told: how far past white, the ground, and the ink
+this.lv = (g) => new Float32Array([g, 0, 0, 0, this.g0[0], this.g0[1], this.g0[2], 0, this.g1[0], this.g1[1], this.g1[2], 0]);
 this.light = async () => {
 const h = window.location.hash, m = /^#light([1-3])?/.exec(h);
 // how far past white: 0.2, 0.35 or 0.55 in the screen's own encoding, about one and a half, two or three times as bright
 const g = m ? [0.2, 0.35, 0.55][(Number(m[1]) || 2) - 1] : 0;
 if (this.gpu) {
-if (m) { this.gpu.dev.queue.writeBuffer(this.gpu.buf, 0, new Float32Array([g, 0, 0, 0])); this.poke(); } else if (!h) this.dark();
+if (m) { this.gpu.dev.queue.writeBuffer(this.gpu.buf, 0, this.lv(g)); this.poke(); } else if (!h) this.dark();
 return;
 }
 if (!m || this.wake || this.spent || this.filmOff || !navigator.gpu || !window.matchMedia('(dynamic-range: high)').matches) return;
@@ -839,8 +881,8 @@ const cf = probe.getConfiguration ? probe.getConfiguration() : null;
 probe.unconfigure();
 const mod = dev.createShaderModule({ code: this.WG });
 const pipe = dev.createRenderPipeline({ layout: 'auto', vertex: { module: mod, entryPoint: 'v' }, fragment: { module: mod, entryPoint: 'f', targets: [{ format: 'rgba16float' }] } });
-const buf = dev.createBuffer({ size: 16, usage: GPUBufferUsage.UNIFORM | GPUBufferUsage.COPY_DST });
-dev.queue.writeBuffer(buf, 0, new Float32Array([g, 0, 0, 0]));
+const buf = dev.createBuffer({ size: 48, usage: GPUBufferUsage.UNIFORM | GPUBufferUsage.COPY_DST });
+dev.queue.writeBuffer(buf, 0, this.lv(g));
 if (cf && cf.toneMapping && cf.toneMapping.mode === 'extended' && await this.proof(dev, pipe, buf, g) && !this.filmOff) {
 const mine = dev;
 dev = null;
@@ -932,6 +974,13 @@ gl.bindAttribLocation(p, 0, 'a');
 gl.linkProgram(p);
 if (!gl.getProgramParameter(p, gl.LINK_STATUS)) return null;
 gl.useProgram(p);
+// the ground this site stands on and the ink its lines are drawn in; until the first picture the surface shows the ground
+gl.uniform3fv(gl.getUniformLocation(p, 'uG0'), this.g0);
+gl.uniform3fv(gl.getUniformLocation(p, 'uG1'), this.g1);
+// on red the gold of the films is warmed a little, so it stays gold next to it
+gl.uniform3fv(gl.getUniformLocation(p, 'uAu'), this.au);
+gl.clearColor(this.g0[0], this.g0[1], this.g0[2], 1);
+gl.clear(gl.COLOR_BUFFER_BIT);
 const b = gl.createBuffer();
 gl.bindBuffer(gl.ARRAY_BUFFER, b);
 gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
@@ -1186,8 +1235,8 @@ H.cur = H.nxt; H.nxt = -1; H.mix = 0; H.lastA = -1; H.ts = t; H.stall = 0;
 }
 }
 if (H.t0 === undefined) H.t0 = t;
-H.inn = Math.min(1, (t - H.t0) / 1.5);
-if ((H.has || H.poster) && H.inn > 0.4 && H.tg === undefined) H.tg = t;
+H.inn = this.arr && S === this.top ? 1 : Math.min(1, (t - H.t0) / 1.5);
+if ((H.has || H.poster) && H.inn > 0.4 && H.tg === undefined) H.tg = this.xing && this.xing.wait && S === this.top ? t - 2 : t;
 H.gain = H.tg === undefined ? 0 : Math.min(1, (t - H.tg) / 2);
 const wide = sc.cw >= 900;
 const ps = S.pos(wide);
@@ -1549,6 +1598,80 @@ this.drawStage(this.show, t, dt);
 this.drawBal(t, dt);
 this.drawPlates(this.pb, t, dt);
 this.drawFin(t, dt);
+this.ask(t);
+};
+// The crossing. fundof.com and fundof.me are two addresses, so the browser's own page transition cannot carry
+// from one to the other. The page does it by hand, in one sharp move. A sheet of the other side's color, with
+// a hairline of light on its edge, cuts across the window. When the window is one flat color the browser goes.
+// The other side opens under a cover of that same color, fully drawn, and the cover leaves the way the color
+// came, so the cut that began on one address ends on the other.
+// The sheet moves as one piece. The browser can move it without asking the page, so the cut stays clean
+// even while a page is still being put together.
+this.sheet = (cls, from, to) => {
+const d = document.createElement('div');
+d.className = 'xo ' + cls;
+d.setAttribute('aria-hidden', 'true');
+document.body.appendChild(d);
+return d.animate([{ transform: 'translateX(' + from + ')' }, { transform: 'translateX(' + to + ')' }], { duration: 460, easing: 'cubic-bezier(.77, 0, .2, 1)', fill: 'both' });
+};
+this.cross = (a, e) => {
+// a new tab, a new window, or less motion asked for: the browser goes as it always does
+if (e.defaultPrevented || e.button || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || a.target === '_blank' || this.still) return;
+e.preventDefault();
+if (this.xing) return;
+let x = e.clientX, y = e.clientY;
+// pressed with a key: from the middle of the door
+if (!x && !y) { const r = a.getBoundingClientRect(); x = r.left + r.width / 2; y = r.top + r.height / 2; }
+const W = window.innerWidth, H = window.innerHeight;
+const X = this.xing = { out: true, gone: false, to: a.href.replace(/#.*$/, ''), at: (x / W).toFixed(3) + ',' + (y / H).toFixed(3) };
+// the color comes in from the side that was pressed
+const an = x > W / 2 ? this.sheet('xb', '100%', '0') : this.sheet('xb xl', '-100%', '0');
+an.finished.then(() => this.leave(X)).catch(() => this.leave(X));
+};
+this.leave = (X) => {
+if (X.gone) return;
+X.gone = true;
+this.go(X);
+// if the browser could not go, the page comes back
+window.setTimeout(() => { if (this.xing === X && document.visibilityState === 'visible') this.stay(); }, 4000);
+};
+// the address of the other side carries the place that was pressed, so the cut can go on from there
+this.go = (X) => { window.location.href = X.to + '#o=' + X.at; };
+// Arriving: the page is drawn in full under the cover, and the cover leaves when the first picture stands.
+this.land = () => {
+const root = document.documentElement;
+const O = this.arr;
+if (!O || !root.classList.contains('cov')) { root.classList.remove('cov'); return; }
+const X = this.xing = { out: false, wait: true, born: -1 };
+X.an = O[0] > 0.5 ? this.sheet('xc', '0', '-100%') : this.sheet('xc xl', '0', '100%');
+X.an.pause();
+X.an.finished.then(() => this.stay()).catch(() => this.stay());
+root.classList.remove('cov');
+// without the lines there is no picture to wait for
+if (this.nogl) this.open(X);
+};
+this.open = (X) => {
+if (!X.wait) return;
+X.wait = false;
+X.an.play();
+};
+// asked with every picture that is drawn: does the first picture stand?
+this.ask = (t) => {
+const X = this.xing;
+if (!X || X.out || !X.wait) return;
+if (X.born < 0) X.born = t;
+const H = this.top.st;
+// one picture after the first, so the first is on the screen; or after a moment without one
+if ((H.gain >= 1 && X.seen) || t - X.born > 1.2) this.open(X);
+X.seen = H.gain >= 1;
+};
+this.stay = () => {
+const X = this.xing;
+this.xing = null;
+document.documentElement.classList.remove('cov');
+if (!X) return;
+document.querySelectorAll('.xo').forEach((d) => d.remove());
+this.poke();
 };
 // Without the lines the films play as plain pictures, one after another, and the plate follows them.
 this.turn = () => {
@@ -1686,7 +1809,7 @@ const now = Date.now();
 const per = (n, was) => (this.ckT ? Math.round((n - was) * 1000 / Math.max(1, now - this.ckT)) : 0);
 const fps = per(this.fN || 0, this.ckN), up = per(this.sent, this.ckU);
 this.ckT = now; this.ckN = this.fN || 0; this.ckU = this.sent;
-L.push('build 1119-0633  ' + navigator.userAgent);
+L.push('build 1119-1455  ' + navigator.userAgent);
 L.push('view ' + window.innerWidth + 'x' + window.innerHeight + '  dpr ' + window.devicePixelRatio + '  q ' + this.q.toFixed(2) + '  fps ' + fps);
 L.push('film pictures sent ' + up + ' a second  reports ' + (window.HTMLVideoElement && HTMLVideoElement.prototype.requestVideoFrameCallback ? 'yes' : 'no') + '  light ' + (this.gpu ? 'ON' : 'off'));
 L.push('less motion ' + yn('(prefers-reduced-motion: reduce)') + '  still ' + (this.still ? 'YES' : 'no') + '  webgl ' + (this.nogl ? 'NO' : 'yes') + '  plain ' + (this.filmOff ? 'YES' : 'no') + '  errors ' + (this.err || 0) + '  lost ' + (this.lostN || 0) + '  resting ' + (this.rest ? 'YES' : 'no'));
@@ -1774,6 +1897,7 @@ if (!ok) {
 if (root) root.classList.add('nogl');
 this.nogl = true;
 this.turn();
+this.land();
 return;
 }
 [this.s0, this.s2, this.s3, this.s4, this.s5, this.s6].forEach((sc) => { if (sc) { sc.ta = this.tex(sc); sc.tb = this.tex(sc); } });
@@ -1791,6 +1915,7 @@ if (document.fonts && document.fonts.load) {
 document.fonts.load('700 120px Geist').then(() => { this.bl.dirty = true; this.poke(); }).catch(() => {});
 if (document.fonts.ready) document.fonts.ready.then(() => { this.bl.dirty = true; this.poke(); });
 }
+this.land();
 this.raf = requestAnimationFrame(this.frame);
 }
 renderVals() {
@@ -1847,6 +1972,10 @@ t.scrollIntoView({ behavior: this.still ? 'auto' : 'smooth', block: 'start' });
 if (a.classList.contains('skip')) { t.setAttribute('tabindex', '-1'); t.focus({ preventScroll: true }); }
 });
 });
+// the doors to the other side
+document.querySelectorAll('#rl-root .nav a:not([href^="#"]), #rl-root a.door').forEach((a) => a.addEventListener('click', (e) => this.cross(a, e)));
+// back from the other side: the page stands as it was left
+window.addEventListener('pageshow', (e) => { if (e.persisted) this.stay(); });
 }
 }
 const site = new Site();
