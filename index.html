@@ -9,7 +9,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-RkIKaW4NfzqHJuDSkF1DT4ajAd6iZ0aVKGxCkaEr6sA=' 'sha256-hkxrpFLCbK+SXbOcvErOLLo5UjcCmL/XwenT0cEeMms=' 'sha256-rtrbKoQDyVIFU0I7ua9FkxXTmI2UqUQj0ROn62arNCk=' 'sha256-2CdcSo8aby2344P5rU+G3Rx17iJW+5Jusem8WeWtXfI='; style-src 'sha256-X1AqcsgmSmpnn5UEhBhliJR7bC3z/WGrmlUm1gz8LWU=' 'sha256-Ycz9pOn6Ni2qVq69FzUa7OhmZ4YzPxQOXJLe8m2BJQU='; img-src 'self'; media-src 'self'; font-src 'self'; manifest-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-RkIKaW4NfzqHJuDSkF1DT4ajAd6iZ0aVKGxCkaEr6sA=' 'sha256-hkxrpFLCbK+SXbOcvErOLLo5UjcCmL/XwenT0cEeMms=' 'sha256-rtrbKoQDyVIFU0I7ua9FkxXTmI2UqUQj0ROn62arNCk=' 'sha256-AR9jB2hVXeT/Oo2VBMam4WMSZxT2x9dKImJDpgcRows='; style-src 'sha256-Qs8cKjutrSJBP5E7yUszL+nMu6xbG1CSD/TrPQFUD4o=' 'sha256-Ycz9pOn6Ni2qVq69FzUa7OhmZ4YzPxQOXJLe8m2BJQU='; img-src 'self'; media-src 'self'; font-src 'self'; manifest-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="dark">
 <meta name="format-detection" content="telephone=no">
@@ -194,6 +194,7 @@ html { color-scheme: dark; }
 .rl .skip:focus { top: 12px; }
 .rl section:focus { outline: none; }
 #rl-err { position: fixed; z-index: 9; left: 0; right: 0; top: 0; margin: 0; padding: 10px 12px; background: #f3f3ef; color: #000; font: 400 10px/1.5 ui-monospace, Menlo, Consolas, monospace; white-space: pre-wrap; word-break: break-all; }
+@media (max-width: 700px) { #rl-check { max-height: 32vh !important; } }
 #rl-check { position: fixed; z-index: 9; left: 0; right: 0; bottom: 0; max-height: 64vh; overflow: auto; margin: 0; padding: 10px 12px; border-top: 1px solid rgba(243,243,239,.3); background: rgba(0,0,0,.93); color: #f3f3ef; font: 400 10px/1.5 ui-monospace, Menlo, Consolas, monospace; white-space: pre-wrap; word-break: break-all; -webkit-user-select: text; user-select: text; }
 @media (prefers-contrast: more) { :root { --mute: rgba(248,241,231,.92); --hair: rgba(248,241,231,.6); } }
 
@@ -1826,7 +1827,7 @@ const now = Date.now();
 const per = (n, was) => (this.ckT ? Math.round((n - was) * 1000 / Math.max(1, now - this.ckT)) : 0);
 const fps = per(this.fN || 0, this.ckN), up = per(this.sent, this.ckU);
 this.ckT = now; this.ckN = this.fN || 0; this.ckU = this.sent;
-L.push('build 1119-1550  ' + navigator.userAgent);
+L.push('build 1119-1822  ' + navigator.userAgent);
 L.push('view ' + window.innerWidth + 'x' + window.innerHeight + '  dpr ' + window.devicePixelRatio + '  q ' + this.q.toFixed(2) + '  fps ' + fps);
 L.push('film pictures sent ' + up + ' a second  reports ' + (window.HTMLVideoElement && HTMLVideoElement.prototype.requestVideoFrameCallback ? 'yes' : 'no') + '  light ' + (this.gpu ? 'ON' : 'off'));
 L.push('less motion ' + yn('(prefers-reduced-motion: reduce)') + '  still ' + (this.still ? 'YES' : 'no') + '  webgl ' + (this.nogl ? 'NO' : 'yes') + '  plain ' + (this.filmOff ? 'YES' : 'no') + '  errors ' + (this.err || 0) + '  lost ' + (this.lostN || 0) + '  resting ' + (this.rest ? 'YES' : 'no'));
@@ -1851,7 +1852,11 @@ this.poke = () => { this.wk = (this.pt || 0) + 8; };
 this.onOut = () => { this.ptr.on = false; if (this.state.hov !== -1) this.setState({ hov: -1 }); };
 this.onResize = () => {
 const iw = window.innerWidth;
-if (iw !== this.fw || Math.abs(window.innerHeight - this.fhh) > 130) this.fitPage();
+// On a phone the browser's own bars slide away as the page is scrolled, and the window grows by their height.
+// The page keeps its measure then, or everything below the first screen would jump. A new width fits it
+// again, and so does a height that changes by far more than any bar.
+const bar = window.matchMedia('(pointer: coarse)').matches ? Math.max(130, this.fhh * 0.3) : 130;
+if (iw !== this.fw || Math.abs(window.innerHeight - this.fhh) > bar) this.fitPage();
 this.bl.dirty = true;
 };
 this.onSend = () => {
