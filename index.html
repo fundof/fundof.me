@@ -9,7 +9,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-RkIKaW4NfzqHJuDSkF1DT4ajAd6iZ0aVKGxCkaEr6sA=' 'sha256-rtrbKoQDyVIFU0I7ua9FkxXTmI2UqUQj0ROn62arNCk=' 'sha256-AYNkR/laZjzxX8RZl+rrLGR8pC6oUTV85bTtHbOLR8w='; style-src 'sha256-RZZTybhEiW7GS3wlQJCgc9iCmXQuCwBo/6ZokvSpi8g=' 'sha256-EfgdnOTD7EEnox8b2TQQr3lb5nVdHAdBQvS6zUvxkTw='; img-src 'self'; media-src 'self'; font-src 'self'; manifest-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-RkIKaW4NfzqHJuDSkF1DT4ajAd6iZ0aVKGxCkaEr6sA=' 'sha256-rtrbKoQDyVIFU0I7ua9FkxXTmI2UqUQj0ROn62arNCk=' 'sha256-Ju1HyoVQnDfUDU+mIHBcPM4KJ6ZfT59Anl+c0PKUOaw='; style-src 'sha256-RZZTybhEiW7GS3wlQJCgc9iCmXQuCwBo/6ZokvSpi8g=' 'sha256-EfgdnOTD7EEnox8b2TQQr3lb5nVdHAdBQvS6zUvxkTw='; img-src 'self'; media-src 'self'; font-src 'self'; manifest-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="dark">
 <meta name="format-detection" content="telephone=no">
@@ -373,6 +373,23 @@ html { color-scheme: dark; }
 <li class="mono">Stage name in public, legal name private</li>
 <li class="mono">Income statements to show a landlord or a lender</li>
 </ul>
+</section>
+
+<section id="jacket" class="show">
+<canvas id="rl-c6" class="cv" aria-hidden="true"></canvas>
+<div class="films" aria-hidden="true">
+<img id="rl-m0" src="media/figure.jpg" alt="" loading="lazy" decoding="async">
+<img id="rl-m1" src="media/blank.jpg" alt="" loading="lazy" decoding="async">
+<img id="rl-m2" src="media/away.jpg" alt="" loading="lazy" decoding="async">
+<img id="rl-m3" src="media/close.jpg" alt="" loading="lazy" decoding="async">
+<img id="rl-m4" src="media/over.jpg" alt="" loading="lazy" decoding="async">
+<img id="rl-m5" src="media/back.jpg" alt="" loading="lazy" decoding="async">
+<video id="rl-w0" src="media/figure.mp4" preload="none" playsinline muted></video>
+<video id="rl-w1" src="media/blank.mp4" preload="none" playsinline muted></video>
+<video id="rl-w2" src="media/away.mp4" preload="none" playsinline muted></video>
+<video id="rl-w3" src="media/close.mp4" preload="none" playsinline muted></video>
+<video id="rl-w4" src="media/over.mp4" preload="none" playsinline muted></video>
+</div>
 </section>
 
 <section id="reach" class="fin">
@@ -1669,7 +1686,7 @@ const now = Date.now();
 const per = (n, was) => (this.ckT ? Math.round((n - was) * 1000 / Math.max(1, now - this.ckT)) : 0);
 const fps = per(this.fN || 0, this.ckN), up = per(this.sent, this.ckU);
 this.ckT = now; this.ckN = this.fN || 0; this.ckU = this.sent;
-L.push('build 1118-2353  ' + navigator.userAgent);
+L.push('build 1119-0633  ' + navigator.userAgent);
 L.push('view ' + window.innerWidth + 'x' + window.innerHeight + '  dpr ' + window.devicePixelRatio + '  q ' + this.q.toFixed(2) + '  fps ' + fps);
 L.push('film pictures sent ' + up + ' a second  reports ' + (window.HTMLVideoElement && HTMLVideoElement.prototype.requestVideoFrameCallback ? 'yes' : 'no') + '  light ' + (this.gpu ? 'ON' : 'off'));
 L.push('less motion ' + yn('(prefers-reduced-motion: reduce)') + '  still ' + (this.still ? 'YES' : 'no') + '  webgl ' + (this.nogl ? 'NO' : 'yes') + '  plain ' + (this.filmOff ? 'YES' : 'no') + '  errors ' + (this.err || 0) + '  lost ' + (this.lostN || 0) + '  resting ' + (this.rest ? 'YES' : 'no'));
